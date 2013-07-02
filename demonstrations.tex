@@ -1,0 +1,96 @@
+\subsection{$\frac{1}{\Mm_\text{mix}} = \sum_s \frac{y_s}{\Mm_s}$}
+\label{demo-Mm}
+\[
+\begin{split}
+\Mm_\text{mix} & = \frac{m_\text{mix}}{c_\text{mix}}
+                 = \frac{m_\text{mix}}{\sum_s c_s}
+                 = \frac{m_\text{mix}}{\sum_s \frac{m_s}{\Mm_s}}\\
+\Rightarrow
+\frac{1}{\Mm_\text{mix}}
+               & = \frac{\sum_s\frac{m_s}{\Mm_s}}{m_\text{mix}}
+                 = \sum_s\frac{\frac{m_s}{\Mm_s}}{m_\text{mix}}
+                 = \sum_s\frac{\frac{m_s}{m_\text{mix}}}{\Mm_s}
+                 = \sum_s\frac{y_s}{\Mm_s}
+\end{split}
+\]
+
+\subsection{Equilibrium--inverse rate constant}
+
+for the reaction:
+\begin{equation}
+\ce{\scoefabs[A] A + \scoefabs[B] B <=>[k_1(T,p)][k_{-1}(T,p)] \scoefabs[C] C + \scoefabs[D] D}
+\label{eq:equat}
+\end{equation}
+
+We consider this equilibrium being composed of elemental steps
+(%
+\ce{\scoefabs[A] A + \scoefabs[B] B -> \scoefabs[C] C + \scoefabs[D] D} and
+(\ce{\scoefabs[C] C + \scoefabs[D] D -> \scoefabs[A] A + \scoefabs[B] B}
+are elementary processes). 
+
+\subsubsection{Thermo}
+\label{demo-eq}
+
+By definition, the equilibrium constant will be
+\begin{equation}
+K = \prod_s \conc[S]_{\eq}^{\scoef[s]}
+\label{eq:Kdef}
+\end{equation}
+$\conc[S]_{\eq}$ being the concentration of species \ce{S} at equilibrium.
+For ideal gas: $p = \conc\Rg T \Rightarrow \conc = \frac{p}{\Rg T}$, with \Rg\ the ideal
+gas constant and \conc\ the concentration. Thus
+\begin{equation}
+\begin{split}
+K & = \prod_s \left(\frac{p^{(\eq)}_s}{\Rg T}\right)^{\scoef[s]} \\
+  & = \prod_s \left(\frac{p^{(\eq)}_s}{\pz}\frac{\pz}{\Rg T}\right)^{\scoef[s]} \\
+  & = \left(\frac{\pz}{\Rg T}\right)^{\sum_s\scoef[s]} \prod_s \left(\frac{p^{(\eq)}_s}{\pz}\right)^{\scoef[s]} \label{eq:K}
+\end{split}
+\end{equation}
+Also, for ideal gas:
+\begin{equation}
+g(T) = g^0(T) + \Rg T \ln\left(\frac{p}{\pz}\right)
+\end{equation}
+wich gives
+\begin{equation}
+\frac{p}{\pz} = \exp\left(\frac{g(T) - g^0(T)}{\Rg T}\right)
+\end{equation}
+replacing in \ref{eq:K}
+\begin{equation}
+\begin{split}
+K & = \left(\frac{\pz}{\Rg T}\right)^{\sum_s\scoef[s]} \prod_s \exp\left(\scoef[s] \frac{g(T)_s^{(\eq)} - g^0(T)}{\Rg T}\right) \\
+  & = \left(\frac{\pz}{\Rg T}\right)^{\sum_s\scoef[s]} \exp\left(\frac{\Delta_rG(T)^{(\eq)}}{\Rg T} - \frac{\Delta_rG^0(T)}{\Rg T}\right) \\
+\end{split}
+\end{equation}
+and, by definition, at equilibrium
+\begin{equation}
+\Delta_rG(T) = 0
+\end{equation}
+we obtain, noting $\gamma = \sum_s \scoef[s]$,
+\begin{equation}
+ K = \left(\frac{\pz}{\Rg T}\right)^\gamma \exp\left(-\frac{\Delta_rG^0(T)}{\Rg T}\right) \\
+\end{equation}
+
+\subsubsection{Kinetics}
+\label{demo-eqrate}
+
+By definition: $\frac{\dd \conc}{\dd t} = 0$ for any species concerned by the equilibrium.
+
+Thus, for any species \ce{S}: 
+$\frac{1}{\scoef[S]}\frac{\dd\conc[S]}{\dd t} =  0$, which can be rewritten as
+\begin{equation}
+\fwdrate \prodReac = \bkwdrate \prodProd
+\label{eq-conccond}
+\end{equation}
+Developping \ref{eq:Kdef}
+\begin{equation}
+\Eqconst = \prod_{s}\conc[S]^{\scoef[S]} 
+          = \frac{\displaystyle\prodProd}
+                 {\displaystyle\prodReac}
+\label{eq-defK}
+\end{equation}
+
+We deduce, from \ref{eq-conccond} and \ref{eq-defK}
+\begin{equation}
+\Eqconst = \frac{\fwdrate}{\bkwdrate}
+\end{equation}
+

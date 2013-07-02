@@ -1,0 +1,76 @@
+An equilibrium (more rigorously a steady state), is defined
+by
+\begin{equation}
+\forall\:s,\quad \doverdt{\conc[s]} = 0
+\label{equilibrium:def}
+\end{equation}
+Thus, as \antioch\ is all about masses, we will consider
+the equivalent:
+\begin{equation}
+\forall\:s,\quad \doverdt{\mass[s]} = \mdot[s] = 0
+\label{equilibrium:def_by_mass}
+\end{equation}
+To have the detailed equations of the kinetics, see
+section~\ref{derivations}.
+
+The system to be solved is of the form:
+\begin{equation}
+A\times x = b
+\end{equation}
+with $b$ the vector of \mdot, $A$ the matrixes of \doverdm[E]{\mdot[s]} for
+the species (rows are $s$ and columns are $E$) and $x$ the vector of the solution \mass.
+To close the system, we use the mass conservation equation and use a
+species to ensure it:
+\begin{equation}
+\sum_s \mass[s] = \mathrm{mass_{tot}}
+\label{mass_cons}
+\end{equation}
+with $\mathrm{mass_{tot}}$ being a constant, here the mass of the system
+per unit of volume (thus $\rho$).
+
+So, for $N$ chemical species, we have the system:
+\begin{equation}
+\left[\begin{array}{cccc}
+\doverdm[s_1]{\mdot[s_1]}     & \doverdm[s_2]{\mdot[s_1]}     & \cdots & \doverdm[s_N]{\mdot[s_1]} \\
+\doverdm[s_1]{\mdot[s_2]}     & \doverdm[s_2]{\mdot[s_2]}     & \cdots & \doverdm[s_N]{\mdot[s_2]} \\
+\vdots                        & \vdots                        & \vdots & \vdots                    \\
+\doverdm[s_1]{\mdot[s_{N-1}]} & \doverdm[s_2]{\mdot[s_{N-1}]} & \cdots & \doverdm[s_N]{\mdot[s_{N-1}]}\\
+1                             & 1                             & \cdots & 1\\
+\end{array}\right]
+\left[\begin{array}{c}
+\mass[s_1]\\
+\mass[s_2]\\
+\vdots\\
+\mass[s_N]\\
+\end{array}\right]
+=
+\left[\begin{array}{c}
+\mdot[s_1]\\
+\mdot[s_2]\\
+\mdot[s_1]\\
+\vdots\\
+\mdot[s_{N_1}]\\
+\sum_{s=1}^N\mass[s] - \mathrm{mass_{tot}}
+\end{array}\right]
+\label{eq:matrixes}
+\end{equation}
+The total fixed mass is calculated thanks to the ideal gas state equation
+(see section~\ref{relations})
+\begin{equation}
+\mathrm{mass_{tot}} = \Mm[\mathrm{mix}] \frac{P}{\Rg T}
+\label{tot_mass}
+\end{equation}
+with \Mm[\mathrm{mix}] calculated as seen in section~\ref{relations}.
+Thus an initial guess of \massfrac\ is necessary.
+Let's consider the situation
+\begin{equation}
+\ce{A + B ->[k_1] C + D ->[k_2] E + F}
+\end{equation}
+we have
+\begin{equation}
+\doverdt{\conc[C]} = k_1\conc[A]\conc[B] - k_2\conc[C]\conc[D]
+\end{equation}
+therefore, a first approximation can be
+\begin{equation}
+\conc[C] = \frac{k_1\conc[A]\conc[B]}{k_2\conc[D]} = \frac{\mathrm{prod}}{\mathrm{loss}}\conc[C]
+\end{equation}

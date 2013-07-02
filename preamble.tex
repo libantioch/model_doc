@@ -1,0 +1,60 @@
+%first thing first
+\newcommand{\antioch}{\texttt{antioch}}
+\renewcommand{\theequation}{Eq.~\arabic{section}-\arabic{equation}}
+\@addtoreset{equation}{section}
+%internal stuff
+\newcommand{\optional@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{{#2}_{#1}}}\fi}
+\newcommand{\d@d}[2]{\ensuremath{\frac{\dd#2}{\dd #1}}}
+%chem def
+\newcommand{\doverdt}[1]{\d@d{t}{#1}}
+\newcommand{\doverdT}[1]{\d@d{T}{#1}}
+\newcommand{\doverdm}[2][\relax]{\d@d{\mass[#1]}{#2}}
+\newcommand{\doverdc}[2][\relax]{\d@d{\conc[#1]}{#2}}
+\newcommand{\Rg}{\ensuremath{\mathrm{R}}}
+\newcommand{\pz}{\ensuremath{\mathrm{p^0}}}
+\newcommand{\Tz}{\ensuremath{\mathrm{T^0}}}
+\newcommand{\eq}{\ensuremath{\text{eq}}}
+\newcommand{\reac}{\ce{R}}
+\newcommand{\product}{\ce{P}}
+\newcommand{\tc}[1]{\ensuremath{a_{#1}}}
+\newcommand{\kinMod}{\ensuremath{\alpha(T)}}
+\newcommand{\rateCons}{\ensuremath{k(T,\ce{M})}}
+\newcommand{\rateConsf}[1][\relax]{\ensuremath{\fwdrate[#1](T,\ce{M})}}
+\newcommand{\rateConsb}[1][\relax]{\ensuremath{\bkwdrate[#1](T,\ce{M})}}
+\newcommand{\rate}{\ensuremath{r}}
+\newcommand{\ratef}{\ensuremath{r_\text{fwd}}}
+\newcommand{\rateb}{\ensuremath{r_\text{bkwd}}}
+\newcommand{\threeBody}{\ensuremath{\sum_s \epsilon_s\conc[S]}}
+%
+\newcommand{\conc}[1][\relax]{\ifx#1\relax\molar\else\ce{[#1]}\fi}
+\newcommand{\Mm}[1][\relax]{\optional@sub[#1]{\mathrm{M}}}
+\newcommand{\scoefabs}[1][\relax]{\optional@sub[#1]{\mathrm{n}}}
+\newcommand{\scoef}[1][\relax]{\optional@sub[#1]{\nu}}
+\newcommand{\massfrac}[1][\relax]{\optional@sub[#1]{y}}
+\newcommand{\mass}[1][\relax]{\optional@sub[#1]{m}}
+\newcommand{\mdot}[1][\relax]{\optional@sub[#1]{\dot{\omega}}}
+\newcommand{\molarfrac}[1][\relax]{\optional@sub[#1]{x}}
+\newcommand{\molar}[1][\relax]{\optional@sub[#1]{c}}
+\newcommand{\Eqconst}[1][\relax]{\optional@sub[#1]{K}}
+\newcommand{\fwdrate}[1][\relax]{\optional@sub[#1]{k^{(f)}}}
+\newcommand{\bkwdrate}[1][\relax]{\optional@sub[#1]{k^{(b)}}}
+\newcommand{\gibbs}[1][\relax]{\optional@sub[#1]{g}}
+\newcommand{\Dgibbs}[1][\relax]{\ensuremath{\optional@sub[#1]{\Delta} G}}
+\newcommand{\gibbsZ}[1][\relax]{\ensuremath{{\gibbs[#1]}^{0}}}
+\newcommand{\DgibbsZ}[1][\relax]{\ensuremath{{\Dgibbs[#1]}^{0}}}
+\newcommand{\enth}[1][\relax]{\optional@sub[#1]{h}}
+\newcommand{\Denth}[1][\relax]{\optional@sub[#1]{\Delta} \ensuremath{H}}
+\newcommand{\enthZ}[1][\relax]{\ensuremath{{\enth[#1]}^{0}}}
+\newcommand{\DenthZ}[1][\relax]{\ensuremath{{\Denth[#1]}^{0}}}
+\newcommand{\entr}[1][\relax]{\optional@sub[#1]{s}}
+\newcommand{\Dentr}[1][\relax]{\optional@sub[#1]{\Delta} \ensuremath{S}}
+\newcommand{\entrZ}[1][\relax]{\ensuremath{{\entr[#1]}^{0}}}
+\newcommand{\DentrZ}[1][\relax]{\ensuremath{{\Dentr[#1]}^{0}}}
+%misc
+\newcommand{\prodReac}{\ensuremath{\prod_{\text{reactants}} \conc[\reac]^{\scoefabs[\reac]}}}
+\newcommand{\prodReacMass}{\ensuremath{\prod_{\text{reactants}} \left(\frac{\mass[\reac]}{\Mm[\reac]}\right)^{\scoefabs[\reac]}}}
+\newcommand{\prodProd}{\ensuremath{\prod_\text{products}\conc[\product]^{\scoefabs[\product]}}}
+\newcommand{\Kooij}[4][1]{\ensuremath{{#2} \left(\frac{T}{#1}\right)^{#3}\exp\left(-\frac{#4}{\Rg T}\right)}}
+\newcommand{\KooijEq}{\Kooij[\mathrm{T_{ref}}]{A}{\beta}{E_a}}
+\newcommand{\dd}{\ensuremath{\mathrm{d}}}
+\newcommand{\unit}[1]{\texttt{#1}}

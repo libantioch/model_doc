@@ -1,0 +1,301 @@
+What we want is 
+$\mdot[S] = \doverdt{\mass[S]}$, and its derivatives:
+$\doverdT{\mdot[S]}$, $\doverdm[j]{\mdot[S]}$ with respect to species $j$.
+
+The kinetics model's value is noted \kinMod, the rate constant is noted \rateCons, the
+rate of the reaction is noted \rate.
+
+The kinetics model is Kooij 
+\begin{equation}
+\kinMod = \KooijEq,
+\label{KooijEq}
+\end{equation}
+the chemical process are elementary 
+\begin{equation}
+\rateCons = \kinMod
+\label{ChemProEl}
+\end{equation} 
+or three-body 
+\begin{equation}
+\rateCons = \kinMod \threeBody.
+\label{ChemProTB}
+\end{equation}
+
+We use the equations
+\begin{equation}
+\mass[S] = \Mm[S] \conc[S]
+\end{equation}
+\begin{equation}
+\dd\mass[S] = \Mm[S]\,\dd\conc[S]
+\end{equation}
+as everything in kinetics theory is expressed in concentrations and 
+not in terms of mass.
+
+We have thus:
+\begin{equation}
+\mdot[S] = \doverdt{\mass[S]} = \Mm[S] \doverdt{\conc[S]}
+\end{equation}
+\begin{equation}
+\doverdm[E]{\mdot[S]} = \frac{\Mm[S]}{\Mm[E]}\doverdc[E]{\conc[S]}
+\end{equation}
+\begin{equation}
+\doverdT{\mdot[S]} = \Mm[S]\doverdT{\conc[S]}
+\end{equation}
+but for Paul's sake, we will do the full derivation with mass.
+
+\subsection{Forward}
+
+The forward rate \ratef\ for a reaction is by definition for species \ce{S}:
+\begin{equation}
+\begin{split}
+\ratef &= \frac{1}{\scoef[S]}\frac{\dd\conc[S]}{\dd t}\\
+       &= \frac{1}{\scoef[S]} \rateConsf \prodReac
+\end{split}
+\label{ratefDef}
+\end{equation}
+
+\paragraph{To derive with respect to $T$.}
+For any species \ce{S} participating in the reaction\footnote{remember, 
+$\scoef = \left\{\begin{array}{l}-\scoefabs\text{ for reactants}\\\scoefabs\text{ for products}\end{array}\right.$}.
+thus,
+\begin{equation}
+\doverdT{\ratef} = \frac{1}{\scoef[S]}
+                   \doverdT{\rateConsf}
+                   \prodReac
+\end{equation}
+and, for the elementary process, following~\ref{ChemProEl} and \ref{KooijEq}:
+\begin{equation}
+\begin{split}
+\doverdT{\rateConsf} &= \doverdT{\kinMod} \\
+                     &= \frac{\kinMod}{T} \left(\frac{E_a}{\Rg T} + \beta\right)
+\end{split}
+\end{equation}
+For the three-body process, following~\ref{ChemProTB} and \ref{KooijEq}:
+\begin{equation}
+\begin{split}
+\doverdT{\rateConsf} &= \doverdT{\kinMod} \threeBody \\
+                     &= \frac{\kinMod}{T} \left(\frac{E_a}{\Rg T} + \beta\right) \threeBody
+\end{split}
+\end{equation}
+
+Finally,
+for the elementary processes
+\begin{equation}
+\doverdT{\ratef} = \frac{1}{\scoef[S]} \frac{\kinMod}{T} \left(\frac{E_a}{\Rg T} + \beta\right)
+                                                \prodReac
+\label{derivTEP}
+\end{equation}
+and the three-body processes
+\begin{equation}
+\doverdT{\ratef} = \frac{1}{\scoef[S]} \frac{\kinMod}{T} \left(\frac{E_a}{\Rg T} + \beta\right) \threeBody
+                                                \prodReac
+\label{derivTTB}
+\end{equation}
+
+\paragraph{To derive with respect to \mass.}
+Knowing that $\conc = \frac{\mass}{\Mm}$, we substitute in~\ref{ratefDef}
+\begin{equation}
+\ratef = \frac{1}{\scoef[S]} \rateConsf \prod_\text{reactants}  \left(\frac{\mass[\reac]}{\Mm[\reac]}\right)^{\scoefabs[\reac]}
+\end{equation}
+We obtain for a derivation with respect to \mass[E]\ of species \ce{E}:
+\begin{equation}
+\doverdm[E]{\ratef} = \ratef \left[
+                                \doverdm[E]{\rateConsf} \frac{1}{\rateConsf} +
+                                \underbrace{\frac{\scoefabs[E]}{\mass[E]}}_{\text{if \ce{E} is a reactant}}
+                              \right]
+\end{equation}
+
+For elementary process:
+\begin{equation}
+\doverdm[E]{\rateConsf} = 0
+\end{equation}
+For a three-body process:
+\begin{equation}
+\doverdm[E]{\rateConsf} = \kinMod \frac{\epsilon_{\ce{E}}}{\Mm[E]}
+\end{equation}
+
+Finally, for an elementary process:
+\begin{equation}
+\doverdm[E]{\ratef} = \left\{\begin{array}{ll}
+                        \ratef \frac{\scoefabs[E]}{\mass[E]} & \text{if \ce{E} is a reactant} \\
+                        0                                    & \text{if \ce{E} is not a reactant} \\
+                      \end{array}\right.
+\end{equation}
+and for a three-body process:
+\begin{equation}
+\renewcommand{\arraystretch}{1.5}
+\doverdm[E]{\ratef} = \left\{\begin{array}{ll}
+                        \ratef \left[\frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody} + \frac{\scoefabs[E]}{\mass[E]} \right] 
+                                                & \text{if \ce{E} is a reactant} \\
+                        \ratef \frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody} 
+                                                & \text{if \ce{E} is not a reactant} \\
+                      \end{array}\right.
+\end{equation}
+
+\subsection{Backward}
+
+The backward rate is
+\begin{equation}
+\rateb = \frac{1}{\scoef[S]}\rateConsb\prodProd
+\end{equation}
+
+The backward rate constant is given by
+\begin{equation}
+\rateConsb = \frac{\rateConsf}{\Eqconst}
+\end{equation}
+
+\paragraph{Derive with respect to $T$.}
+It makes:
+\begin{equation}
+\doverdT{\rateb} = \frac{1}{\scoef[S]}\prodProd\doverdT{\rateConsb}
+\end{equation}
+Decomposition gives
+\begin{equation}
+\doverdT{\rateConsb} = \doverdT{\rateConsf}\Eqconst^{-1} - \doverdT{\Eqconst}\frac{\rateConsb}{\Eqconst^{2}}
+\label{rateb-decomp}
+\end{equation}
+For \Eqconst, we have
+\begin{equation}
+\begin{split}
+\doverdT{\Eqconst} &= \doverdT{\left[\left(\frac{\pz}{\Rg T}\right)^{\sum_s \scoef[s]} \exp\left(-\frac{\DgibbsZ(T)}{\Rg T}\right)\right]} \\
+                   &= \Eqconst\left[\frac{\sum_s\scoef[s]}{T} - \doverdT{\left[\frac{\DgibbsZ(T)}{\Rg T}\right]}\right]
+\end{split}
+\end{equation}
+The derived value of \DgibbsZ(T) is easily given, see~\ref{data-thermo}
+\begin{equation}
+\begin{split}
+\doverdT{\left[\frac{\DgibbsZ(T)}{\Rg T}\right]} 
+        &= \doverdT{\left[\frac{\DenthZ(T)}{\Rg T}\right]} - \doverdT{\left[\frac{\DenthZ(T)}{\Rg T}\right]} \\
+        &= 2\tc{0}T^{-3} + \tc{1}T^{-2}\left(1+\ln(T)\right) + \frac{\tc{3}}{2} + \frac{2}{3}\tc{4}T + \frac{3}{4}\tc{5}T^{2} + \frac{4}{5}\tc{6}T^3 - \tc{8}T^{-2}\\
+        &+ \tc{0}T^{-3} + \tc{1}T^{-2} + \tc{2}T^{-1} + \tc{3} + \tc{4}T + \tc{5} T^{2} + \tc{6} T^{3}
+\end{split}
+\end{equation}
+Finally,
+\begin{equation}
+\doverdT{\left[\frac{\DgibbsZ(T)}{\Rg T}\right]} =
+        3\tc{0}T^{-3} + \tc{1} T^{-2} \left(2 + \ln(T)\right) + \frac{3}{2} \tc{3} + \frac{5}{3} \tc{4} T
+        + \frac{7}{4}\tc{5} T^2 + \frac{9}{5}\tc{6} T^3 - \tc{8} T^{-2}
+\end{equation}
+\emph{Note:} $\ln(T)$ should be understood as $\ln\left(\frac{T}{\mathrm{T_{ref}}}\right)$ with $\mathrm{T_{ref}} = 1$~K.
+
+Thus, for elementary processes
+\begin{equation}
+\begin{split}
+\doverdT{\rateb} =& \frac{1}{\scoef[S]} \prodProd \\
+&\bigg[
+        \frac{\kinMod}{T} \left(\frac{E_a}{\Rg T} + \beta\right)\prodReac \Eqconst^{-1}
+                  - 3\tc{0}T^{-3} - \tc{1} T^{-2} \left(2 + \ln(T)\right) - \frac{3}{2} \tc{3} \\
+&                 - \frac{5}{3} \tc{4} T - \frac{7}{4}\tc{5} T^2 - \frac{9}{5}\tc{6} T^3 + \tc{8} T^{-2} \bigg]
+\end{split}
+\end{equation}
+and for third-body processes
+\begin{equation}
+\begin{split}
+\doverdT{\rateb} =& \frac{1}{\scoef[S]} \prodProd \\
+&\bigg[
+        \frac{\kinMod}{T} \left(\frac{E_a}{\Rg T} + \beta\right) \threeBody \Eqconst^{-1} 
+                  - 3\tc{0}T^{-3} - \tc{1} T^{-2} \left(2 + \ln(T)\right) - \frac{3}{2} \tc{3} \\
+&                 - \frac{5}{3} \tc{4} T - \frac{7}{4}\tc{5} T^2 - \frac{9}{5}\tc{6} T^3 + \tc{8} T^{-2} \bigg]
+\end{split}
+\end{equation}
+
+
+\paragraph{Derivation with respect to mass.}
+Using~\ref{rateb-decomp}
+\begin{equation}
+\begin{split}
+\doverdm[E]{\rateConsb} &= \doverdm[E]{\rateConsf}\Eqconst^{-1} - \doverdm[E]{\Eqconst}\frac{\rateConsb}{\Eqconst^{2}} \\
+                        &= \doverdm[E]{\rateConsf}\Eqconst^{-1}
+\end{split}
+\label{rateb-decomp-m}
+\end{equation}
+thus, for elementary processes
+\begin{equation}
+\doverdm[E]{\rate} = \left\{\begin{array}{ll}
+                        \ratef \frac{\scoefabs[E]}{\mass[E]} \Eqconst^{-1} & \text{if \ce{E} is a reactant} \\
+                        0                                                  & \text{if \ce{E} is not a reactant} \\
+                      \end{array}\right.
+\end{equation}
+and for three-body processes
+\begin{equation}
+\renewcommand{\arraystretch}{1.5}
+\doverdm[E]{\ratef} = \left\{\begin{array}{ll}
+                        \ratef \left[\frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody} + \frac{\scoefabs[E]}{\mass[E]} \right] \Eqconst^{-1}
+                                                & \text{if \ce{E} is a reactant} \\
+                        \ratef \frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody} \Eqconst^{-1}
+                                                & \text{if \ce{E} is not a reactant} \\
+                      \end{array}\right.
+\end{equation}
+
+\subsection{Net rate}
+
+The net rate is
+\begin{equation}
+\rate = \ratef - \rateb
+\end{equation}
+thus,
+\begin{equation}
+\doverdT{\rate} = \doverdT{\ratef} - \doverdT{\rateb}
+\end{equation}
+and
+\begin{equation}
+\doverdm{\rate} = \doverdm{\ratef} - \doverdm{\rateb}
+\end{equation}
+thus, for elementary processes
+\begin{equation}
+\begin{split}
+\doverdT{r_{\text{net}}} &= \frac{1}{\scoef[S]} \frac{\kinMod}{T} \left(\frac{E_a}{\Rg T} + \beta\right) \prodReac\\
+& -
+\frac{1}{\scoef[S]} \prodProd 
+\bigg[
+        \frac{\kinMod}{T} \left(\frac{E_a}{\Rg T} + \beta\right)\prodReac \Eqconst^{-1} \\
+                  &\hspace{3cm} - 3\tc{0}T^{-3} - \tc{1} T^{-2} \left(2 + \ln(T)\right) - \frac{3}{2} \tc{3} \\
+                  &\hspace{3cm} - \frac{5}{3} \tc{4} T - \frac{7}{4}\tc{5} T^2 - \frac{9}{5}\tc{6} T^3 + \tc{8} T^{-2} \bigg]
+\end{split}
+\end{equation}
+and for three-body processes
+\begin{equation}
+\begin{split}
+\doverdT{r_{\text{net}}} &= \frac{1}{\scoef[S]} \frac{\kinMod}{T} \left(\frac{E_a}{\Rg T} + \beta\right) \threeBody\prodReac\\
+& -
+\frac{1}{\scoef[S]} \prodProd 
+\bigg[
+        \frac{\kinMod}{T} \left(\frac{E_a}{\Rg T} + \beta\right)\threeBody\prodReac \Eqconst^{-1} \\
+                  &\hspace{3cm} - 3\tc{0}T^{-3} - \tc{1} T^{-2} \left(2 + \ln(T)\right) - \frac{3}{2} \tc{3} \\
+                  &\hspace{3cm} - \frac{5}{3} \tc{4} T - \frac{7}{4}\tc{5} T^2 - \frac{9}{5}\tc{6} T^3 + \tc{8} T^{-2} \bigg]
+\end{split}
+\end{equation}
+and for the mass, elementary processes
+\begin{equation}
+\doverdm[E]{\rate} = \left\{\begin{array}{ll}
+                        \ratef \frac{\scoefabs[E]}{\mass[E]}\left(1-\Eqconst^{-1}\right) & \text{if \ce{E} is a reactant} \\
+                        0                                                                & \text{if \ce{E} is not a reactant} \\
+                      \end{array}\right.
+\end{equation}
+and for the three-body processes
+\begin{equation}
+\renewcommand{\arraystretch}{1.5}
+\doverdm[E]{\rate} = \left\{\begin{array}{ll}
+                        \ratef \left[\frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody} + \frac{\scoefabs[E]}{\mass[E]} \right] \left(1 - \Eqconst^{-1}\right)
+                                                & \text{if \ce{E} is a reactant} \\
+                        \ratef \frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody}  \left(1 - \Eqconst^{-1}\right)
+                                                & \text{if \ce{E} is not a reactant} \\
+                      \end{array}\right.
+\end{equation}
+
+Back to \mdot:
+\begin{equation}
+\begin{split}
+\mdot[S] &= \Mm[S] \doverdt{\ce{S}} \\
+         &= \Mm[S] \scoef[S]\rate
+\end{split}
+\end{equation}
+
+\begin{equation}
+\renewcommand{\arraystretch}{1.5}
+\left\{\begin{array}{l}
+\doverdT{\mdot[S]} = \Mm[S] \scoef[S]\doverdT{\rate}\\
+\doverdm[E]{\mdot[S]} = \Mm[S] \scoef[S]\doverdm[E]{\rate}
+\end{array}\right.
+\end{equation}
+
