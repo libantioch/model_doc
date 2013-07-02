@@ -38,10 +38,10 @@ So, for $N$ chemical species, we have the system:
 1                             & 1                             & \cdots & 1\\
 \end{array}\right]
 \left[\begin{array}{c}
-\mass[s_1]\\
-\mass[s_2]\\
+\Delta\mass[s_1]\\
+\Delta\mass[s_2]\\
 \vdots\\
-\mass[s_N]\\
+\Delta\mass[s_N]\\
 \end{array}\right]
 =
 \left[\begin{array}{c}
@@ -72,5 +72,6 @@ we have
 \end{equation}
 therefore, a first approximation can be
 \begin{equation}
-\conc[C] = \frac{k_1\conc[A]\conc[B]}{k_2\conc[D]} = \frac{\mathrm{prod}}{\mathrm{loss}}\conc[C]
+\conc[C^{(\text{approx})}] = \frac{k_1\conc[A]\conc[B]}{k_2\conc[D]} = \frac{\mathrm{prod}}{\mathrm{loss}}\conc[C^{(0)}]
 \end{equation}
+For a starting point $(0)$.
