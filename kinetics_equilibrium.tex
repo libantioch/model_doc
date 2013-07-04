@@ -1,3 +1,4 @@
+\subsection{With kinetics}
 An equilibrium (more rigorously a steady state), is defined
 by
 \begin{equation}
@@ -25,8 +26,7 @@ species to ensure it:
 \sum_s \mass[s] = \mathrm{mass_{tot}}
 \label{mass_cons}
 \end{equation}
-with $\mathrm{mass_{tot}}$ being a constant, here the mass of the system
-per unit of volume (thus $\rho$).
+with $\mathrm{mass_{tot}}$ being a constant, here the density of mass of the system.
 
 So, for $N$ chemical species, we have the system:
 \begin{equation}
@@ -62,16 +62,56 @@ The total fixed mass is calculated thanks to the ideal gas state equation
 \end{equation}
 with \Mm[\mathrm{mix}] calculated as seen in section~\ref{relations}.
 Thus an initial guess of \massfrac\ is necessary.
-Let's consider the situation
-\begin{equation}
+If you don't have any idea, let's consider the situation
+\begin{chemicalEquation}
 \ce{A + B ->[k_1] C + D ->[k_2] E + F}
-\end{equation}
+\label{youpi}
+\end{chemicalEquation}
 we have
 \begin{equation}
 \doverdt{\conc[C]} = k_1\conc[A]\conc[B] - k_2\conc[C]\conc[D]
 \end{equation}
 therefore, a first approximation can be
 \begin{equation}
-\conc[C^{(\text{approx})}] = \frac{k_1\conc[A]\conc[B]}{k_2\conc[D]} = \frac{\mathrm{prod}}{\mathrm{loss}}\conc[C^{(0)}]
+\conc[C^{(\text{approx})}] = \frac{k_1\conc[A]\conc[B]}{k_2\conc[D]} = \frac{\mathrm{prod}}{\mathrm{loss}}
 \end{equation}
-For a starting point $(0)$.
+
+This will be efficient in somewhat easy situations, meaning you're looking for the
+steady state of minor species for instance.
+
+\subsection{With thermodynamics}
+A thermodynamic phase is at equilibrium for a minimized Gibbs energy, with
+the relation
+\begin{equation}
+\dd\Gibbs = \Vol\dd\Press - \Entr\dd\Temp + \sum_s\chempot[s]\dd\Mol[s]
+\end{equation}
+and we have Euler's identity
+\begin{equation}
+\Gibbs = \sum_s \Mol[s]\chempot[s]
+\end{equation}
+
+So, for $R$ chemical reactions, we have the system:
+\begin{equation}
+\left[\begin{array}{cccc}
+\ddoverddext{\Gibbs}{1}{1}   & \ddoverddext{\Gibbs}{1}{2}   & \cdots & \ddoverddext{\Gibbs}{1}{R} \\
+\ddoverddext{\Gibbs}{2}{1}   & \ddoverddext{\Gibbs}{2}{2}   & \cdots & \ddoverddext{\Gibbs}{2}{R} \\
+\vdots                       & \vdots                       & \vdots & \vdots                    \\
+\ddoverddext{\Gibbs}{R-1}{1} & \ddoverddext{\Gibbs}{R-1}{2} & \cdots & \ddoverddext{\Gibbs}{R-1}{R} \\
+1                            & 1                            & \cdots & 1\\
+\end{array}\right]
+\left[\begin{array}{c}
+\Delta\ext[1]\\
+\Delta\ext[2]\\
+\vdots\\
+\Delta\ext[R]\\
+\end{array}\right]
+=
+\left[\begin{array}{c}
+\doverdext[1]{\Gibbs}\\
+\doverdext[2]{\Gibbs}\\
+\vdots\\
+\doverdext[R-1]{\Gibbs}\\
+0
+\end{array}\right]
+\label{eq:matrixes_xi}
+\end{equation}
