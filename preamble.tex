@@ -5,14 +5,14 @@
 %internal stuff
 \newcommand{\optional@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{{#2}_{#1}}}\fi}
 \newcommand{\optional@@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{#2}_{#1}}\fi}
-\newcommand{\d@d}[2]{\ensuremath{\frac{\dd#2}{\dd #1}}}
+\newcommand{\d@d}[2]{\ensuremath{\frac{\partial#2}{\partial #1}}}
 %chem def
 \newcommand{\doverdt}[1]{\d@d{t}{#1}}
 \newcommand{\doverdT}[1]{\d@d{T}{#1}}
 \newcommand{\doverdm}[2][\relax]{\d@d{\mass[#1]}{#2}}
 \newcommand{\doverdc}[2][\relax]{\d@d{\conc[#1]}{#2}}
 \newcommand{\doverdext}[2][\relax]{\d@d{\ext[#1]}{#2}}
-\newcommand{\ddoverddext}[3]{\ensuremath{\frac{\dd^2#1}{\dd\ext[#2]\dd\ext[#3]}}}
+\newcommand{\ddoverddext}[3]{\ensuremath{\frac{\partial^2#1}{\partial\ext[#2]\partial\ext[#3]}}}
 \newcommand{\Rg}{\ensuremath{\mathrm{R}}}
 \newcommand{\pz}{\ensuremath{\mathrm{p^0}}}
 \newcommand{\Tz}{\ensuremath{\mathrm{T^0}}}
@@ -50,6 +50,7 @@
 \newcommand{\fwdrate}[1][\relax]{\ensuremath{\rate[#1]^{(f)}}}
 \newcommand{\bkwdrate}[1][\relax]{\ensuremath{\rate[#1]^{(b)}}}
 \newcommand{\ext}[1][\relax]{\optional@sub[#1]{\xi}}
+\newcommand{\nspecies}{\ensuremath{\mathrm{n_{species}}}}
 %%thermo
 %%%% phase
 \newcommand{\Vol}[1][\relax]{\optional@sub[#1]{V}}
@@ -89,7 +90,7 @@
 \setcounter{chemeq}{0}
 \renewcommand{\thechemeq}{$\chi$~\thesection-\arabic{chemeq}}
 \newenvironment{chemicalEquation}
-{\[}
+{\begin{displaymath}}
 {\refstepcounter{chemeq}\tag{\thechemeq}%
-\]}
+\end{displaymath}}
 \@addtoreset{chemeq}{section}
