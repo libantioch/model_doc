@@ -1,16 +1,16 @@
-\subsection{\texorpdfstring{$\frac{1}{\Mm_\text{mix}} = \sum_s \frac{y_s}{\Mm_s}$}{Mixture molar mass}}
+\subsection{\texorpdfstring{$\frac{1}{\Mm[\text{mix}]} = \sum_s \frac{\massfrac[s]}{\Mm[s]}$}{Mixture molar mass}}
 \label{demo-Mm}
 \[
 \begin{split}
-\Mm_\text{mix} & = \frac{m_\text{mix}}{c_\text{mix}}
-                 = \frac{m_\text{mix}}{\sum_s c_s}
-                 = \frac{m_\text{mix}}{\sum_s \frac{m_s}{\Mm_s}}\\
+\Mm[\text{mix}] & = \frac{\mass[\text{mix}]}{\conc_\text{mix}}
+                  = \frac{\mass[\text{mix}]}{\sum_s \conc_s}
+                  = \frac{\mass[\text{mix}]}{\sum_s \frac{\mass[s]}{\Mm[s]}}\\
 \Rightarrow
-\frac{1}{\Mm_\text{mix}}
-               & = \frac{\sum_s\frac{m_s}{\Mm_s}}{m_\text{mix}}
-                 = \sum_s\frac{\frac{m_s}{\Mm_s}}{m_\text{mix}}
-                 = \sum_s\frac{\frac{m_s}{m_\text{mix}}}{\Mm_s}
-                 = \sum_s\frac{y_s}{\Mm_s}
+\frac{1}{\Mm[\text{mix}]}
+               & = \frac{\sum_s\frac{\mass[s]}{\Mm[s]}}{\mass[\text{mix}]}
+                 = \sum_s\frac{\frac{\mass[s]}{\Mm[s]}}{\mass[\text{mix}]}
+                 = \sum_s\frac{\frac{\mass[s]}{\mass[\text{mix}]}}{\Mm[s]}
+                 = \sum_s\frac{\massfrac[s]}{\Mm[s]}
 \end{split}
 \]
 
@@ -23,9 +23,8 @@ for the reaction:
 \end{chemicalEquation}
 
 We consider this equilibrium being composed of elemental steps
-(%
-\ce{\scoefabs[A] A + \scoefabs[B] B -> \scoefabs[C] C + \scoefabs[D] D} and
-(\ce{\scoefabs[C] C + \scoefabs[D] D -> \scoefabs[A] A + \scoefabs[B] B}
+(\ce{\scoefabs[A] A + \scoefabs[B] B -> \scoefabs[C] C + \scoefabs[D] D} and
+ \ce{\scoefabs[C] C + \scoefabs[D] D -> \scoefabs[A] A + \scoefabs[B] B}
 are elementary processes). 
 
 \subsubsection{Thermo}
@@ -33,41 +32,47 @@ are elementary processes).
 
 By definition, the equilibrium constant will be
 \begin{equation}
-K = \prod_s \conc[S]_{\eq}^{\scoef[s]}
+\Eqconst = \prod_s \conc[S]_{\eq}^{\scoef[s]}
 \label{eq:Kdef}
 \end{equation}
 $\conc[S]_{\eq}$ being the concentration of species \ce{S} at equilibrium.
-For ideal gas: $p = \conc\Rg T \Rightarrow \conc = \frac{p}{\Rg T}$, with \Rg\ the ideal
-gas constant and \conc\ the concentration. Thus
+For ideal gas:
+$\press = \conc\Rg \Temp \Rightarrow \conc = \frac{\press}{\Rg \Temp}$, 
+with \Rg\ the ideal gas constant and \conc\ the concentration. Thus
 \begin{equation}
 \begin{split}
-K & = \prod_s \left(\frac{p^{(\eq)}_s}{\Rg T}\right)^{\scoef[s]} \\
-  & = \prod_s \left(\frac{p^{(\eq)}_s}{\pz}\frac{\pz}{\Rg T}\right)^{\scoef[s]} \\
-  & = \left(\frac{\pz}{\Rg T}\right)^{\sum_s\scoef[s]} \prod_s \left(\frac{p^{(\eq)}_s}{\pz}\right)^{\scoef[s]} \label{eq:K}
+\Eqconst 
+  & = \prod_s \left(\frac{\press[s]^{(\eq)}}{\Rg \Temp}\right)^{\scoef[s]} \\
+  & = \prod_s \left(\frac{\press[s]^{(\eq)}}{\pz}\frac{\pz}{\Rg \Temp}\right)^{\scoef[s]} \\
+  & = \left(\frac{\pz}{\Rg \Temp}\right)^{\sum_s\scoef[s]} \prod_s \left(\frac{\press[s]^{(\eq)}}{\pz}\right)^{\scoef[s]}
+\label{eq:K}
 \end{split}
 \end{equation}
 Also, for ideal gas:
 \begin{equation}
-g(T) = g^0(T) + \Rg T \ln\left(\frac{p}{\pz}\right)
+\gibbs(\Temp) = \gibbsZ(\Temp) + \Rg \Temp \ln\left(\frac{\press}{\pz}\right)
 \end{equation}
 wich gives
 \begin{equation}
-\frac{p}{\pz} = \exp\left(\frac{g(T) - g^0(T)}{\Rg T}\right)
+\frac{\press}{\pz} = \exp\left(\frac{\gibbs(\Temp) - \gibbsZ(\Temp)}{\Rg \Temp}\right)
 \end{equation}
 replacing in \ref{eq:K}
 \begin{equation}
 \begin{split}
-K & = \left(\frac{\pz}{\Rg T}\right)^{\sum_s\scoef[s]} \prod_s \exp\left(\scoef[s] \frac{g(T)_s^{(\eq)} - g^0(T)}{\Rg T}\right) \\
-  & = \left(\frac{\pz}{\Rg T}\right)^{\sum_s\scoef[s]} \exp\left(\frac{\Delta_rG(T)^{(\eq)}}{\Rg T} - \frac{\Delta_rG^0(T)}{\Rg T}\right) \\
+\Eqconst
+  & = \left(\frac{\pz}{\Rg \Temp}\right)^{\sum_s\scoef[s]}
+           \prod_s \exp\left(\scoef[s] \frac{\gibbs[r]^{(\eq)}(\Temp) - \gibbsZ(\Temp)}{\Rg \Temp}\right) \\
+  & = \left(\frac{\pz}{\Rg \Temp}\right)^{\sum_s\scoef[s]} 
+           \exp\left(\frac{\DGibbs[r]^{(eq)}(\Temp)}{\Rg \Temp} - \frac{\DGibbsZ[r](\Temp)}{\Rg \Temp}\right) \\
 \end{split}
 \end{equation}
 and, by definition, at equilibrium
 \begin{equation}
-\Delta_rG(T) = 0
+\DGibbs[r]^{(eq)}(\Temp) = 0
 \end{equation}
 we obtain, noting $\gamma = \sum_s \scoef[s]$,
 \begin{equation}
- K = \left(\frac{\pz}{\Rg T}\right)^\gamma \exp\left(-\frac{\Delta_rG^0(T)}{\Rg T}\right) \\
+\Eqconst = \left(\frac{\pz}{\Rg \Temp}\right)^\gamma \exp\left(-\frac{\DGibbsZ[r](\Temp)}{\Rg \Temp}\right)
 \end{equation}
 
 \subsubsection{Kinetics}

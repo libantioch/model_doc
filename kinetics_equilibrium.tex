@@ -89,7 +89,6 @@ and we have Euler's identity
 \begin{equation}
 \Gibbs = \sum_s \Mol[s]\chempot[s]
 \end{equation}
-
 So, for $R$ chemical reactions, we have the system:
 \begin{equation}
 \left[\begin{array}{cccc}
@@ -115,10 +114,9 @@ So, for $R$ chemical reactions, we have the system:
 \end{array}\right]
 \label{eq:matrixes_xi}
 \end{equation}
-
 Basically:
 \begin{equation}
-\Dgibbs = \DgibbsZ + \sum_s\Rg \Temp \ln\left(\frac{p_s}{\pz}\right)
+\DGibbs = \DGibbsZ + \sum_s\Rg \Temp \ln\left(\frac{p_s}{\pz}\right)
 \end{equation}
 The story behind chemical extent is:
 \begin{equation}
@@ -129,7 +127,7 @@ using ideal gas equation:
 \Press \Vol = \Mol \Rg \Temp
 \end{equation}
 \begin{equation}
-\Dgibbs = \DgibbsZ + \sum_s\Rg \Temp \ln\left(\frac{\Rg \Temp}{\pz}
+\DGibbs = \DGibbsZ + \sum_s\Rg \Temp \ln\left(\frac{\Rg \Temp}{\pz}
                                                 \left[\conc_s(t=0) +
                                                            \sum_r\scoef[s,r]\frac{\ext[r]}{\Vol}
                                                 \right]
@@ -137,19 +135,19 @@ using ideal gas equation:
 \end{equation}
 so
 \begin{equation}
-\doverdext[r]{\Dgibbs} = \Rg\Temp \sum_s\frac{\frac{\scoef[s,r]}{\Vol}}
+\doverdext[r]{\DGibbs} = \Rg\Temp \sum_s\frac{\frac{\scoef[s,r]}{\Vol}}
                                              {\conc_s(t=0) + \sum_{r'} \scoef[s,r']\frac{\ext[r']}{\Vol}}
 \end{equation}
 and
 \begin{equation}
-\ddoverddext{\Dgibbs}{r}{l} = -\Rg\Temp \sum_s\frac{\scoef[s,r]}{\Vol}\frac{\scoef[s,l]}{\Vol}
+\ddoverddext{\DGibbs}{r}{l} = -\Rg\Temp \sum_s\frac{\scoef[s,r]}{\Vol}\frac{\scoef[s,l]}{\Vol}
                                         \left[\conc_s(t=0) + \sum_{r'}\scoef[s,r']\frac{\ext[r']}{\Vol}\right]^{-2}
 \end{equation}
-now to simplify we will consider the extent by unit of volume:
+now to simplify we will consider the extent by unit of volume ($\frac{\ext}{\Vol}$):
 \begin{equation}
 \begin{split}
-\Dgibbs & =  \DgibbsZ + \Rg\Temp \sum_s \ln\left(\frac{\Rg\Temp}{\pz}\left[\conc_s(t=0) + \sum_r\scoef[s,r]\ext[r]\right]\right) \\
-\doverdext[r]{\Dgibbs} & = \Rg\Temp \sum_s\frac{\scoef[s,r]}{\conc_s(t=0) + \sum_{r'} \scoef[s,r']\ext[r']} \\
-\ddoverddext{\Dgibbs}{r}{l} & =  -\Rg\Temp \sum_s\scoef[s,r]\scoef[s,l]\left[\conc_s(t=0) + \sum_{r'}\scoef[s,r']\ext[r']\right]^{-2}
+\DGibbs & =  \DGibbsZ + \Rg\Temp \sum_s \ln\left(\frac{\Rg\Temp}{\pz}\left[\conc_s(t=0) + \sum_r\scoef[s,r]\ext[r]\right]\right) \\
+\doverdext[r]{\DGibbs} & = \Rg\Temp \sum_s\frac{\scoef[s,r]}{\conc_s(t=0) + \sum_{r'} \scoef[s,r']\ext[r']} \\
+\ddoverddext{\DGibbs}{r}{l} & =  -\Rg\Temp \sum_s\scoef[s,r]\scoef[s,l]\left[\conc_s(t=0) + \sum_{r'}\scoef[s,r']\ext[r']\right]^{-2}
 \end{split}
 \end{equation}
