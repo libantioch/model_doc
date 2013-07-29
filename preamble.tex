@@ -1,4 +1,5 @@
 %first thing first
+\graphicspath{{./figs/}}
 \newcommand{\antioch}{\texttt{antioch}}
 \renewcommand{\theequation}{Eq.~\thesection-\arabic{equation}}
 \@addtoreset{equation}{section}
@@ -62,6 +63,7 @@
 \newcommand{\Entr}[1][\relax]{\optional@sub[#1]{S}}
 \newcommand{\IntEn}[1][\relax]{\optional@sub[#1]{U}}
 \newcommand{\Mass}[1][\relax]{\optional@sub[#1]{m}}
+\newcommand{\press}[1][\relax]{\optional@sub[#1]{p}}
 %%%% species and Delta
 \newcommand{\chempot}[1][\relax]{\optional@sub[#1]{\mu}}
 \newcommand{\gibbs}[1][\relax]{\optional@sub[#1]{g}}
@@ -70,8 +72,8 @@
 \newcommand{\gibbsZ}[1][\relax]{\ensuremath{{\gibbs[#1]}^{0}}}
 \newcommand{\enthZ}[1][\relax]{\ensuremath{{\enth[#1]}^{0}}}
 \newcommand{\entrZ}[1][\relax]{\ensuremath{{\entr[#1]}^{0}}}
-\newcommand{\Dgibbs}[1][\relax]{\ensuremath{\optional@sub[#1]{\Delta}G}}
-\newcommand{\DgibbsZ}[1][\relax]{\ensuremath{{\Dgibbs[#1]}^{0}}}
+\newcommand{\DGibbs}[1][\relax]{\ensuremath{\optional@sub[#1]{\Delta}G}}
+\newcommand{\DGibbsZ}[1][\relax]{\ensuremath{{\DGibbs[#1]}^{0}}}
 \newcommand{\Denth}[1][\relax]{\optional@sub[#1]{\Delta}\ensuremath{H}}
 \newcommand{\DenthZ}[1][\relax]{\ensuremath{{\Denth[#1]}^{0}}}
 \newcommand{\Dentr}[1][\relax]{\optional@sub[#1]{\Delta}\ensuremath{S}}

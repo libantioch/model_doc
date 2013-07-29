@@ -1,0 +1,38 @@
+Exemple with \Rg. If you go to the
+\href{http://physics.nist.gov/cgi-bin/cuu/Value?r}{NIST definition}
+of \Rg, you obtain the advised value of \Rg:
+$\Rg = \numprint{8.3144621} \pm \numprint{0.0000075}$~\unit{J\,mol$^{-1}$K$^{-1}$}.
+Thanks to \href{https://en.wikipedia.org/wiki/Gas_constant}{wikipedia}
+(right-side table), we have also the value in \unit{calorie}:
+$\Rg = \numprint{1.9858775} \pm \numprint{0.0000034}$~\unit{cal\,mol$^{-1}$K$^{-1}$}.
+We look now at the definition of the \unit{calorie} unit, again,
+we go to the \href{http://physics.nist.gov/Pubs/SP811/appenB9.html#ENERGY}{NIST website}.
+We have then several definitions:
+\begin{enumerate}
+\item International Table, \unit{calorie$_\text{IT}$},   defined as \numprint{4.1868}  \unit{Joule};
+\item thermodynamic, \unit{calorie$_\text{th}$},   defined as \numprint{4.184}   \unit{Joule};
+\item mean (?), \unit{calorie$_\text{mean}$}, defined as \numprint{4.19002} \unit{Joule}.
+\end{enumerate}
+Comparing everyone leads to table~\ref{Rwtf}.
+\begin{table}
+\centering
+\begin{tabular}{lcc}\toprule
+\null\hfill Unit \hfill\null                      & \Rg\ value                          & factor to SI \\\midrule
+\unit{J\,mol$^{-1}$K$^{-1}$}                      & \numprint{8.3144621}(75)            & \numprint{1.00000} \\
+\unit{cal$_\text{IT}$\,mol$^{-1}$K$^{-1}$}        & \color{red}\numprint{1.9858752}(18) & \numprint{4.18680} \\
+\unit{cal$_\text{th}$\,mol$^{-1}$K$^{-1}$}        & \color{red}\numprint{1.9872041}(18) & \numprint{4.18400} \\
+\unit{cal$_\text{mean}$\,mol$^{-1}$K$^{-1}$}      & \color{red}\numprint{1.9843490}(18) & \numprint{4.19002} \\
+\unit{cal$_\text{wikipedia}$\,mol$^{-1}$K$^{-1}$} & \numprint{1.9858775}(34)            & \color{red}\numprint{4.18680}\\
+\bottomrule
+\end{tabular}
+\caption{\label{Rwtf}Discrepancies in \Rg. Red are calculated values from data.}
+\end{table}
+It seems obvious then that wikipedia gives the International Table (IT) calorie, with a
+relative difference in the factor with the given one of $\numprint{1.1806}\,10^{-6}$. 
+This relative error is bigger than machine tolerance (from the \textcolor{green!60!black}{\bf double}
+to more precise).
+
+We use thus the advised value in \unit{J\,mol$^{-1}$K$^{-1}$} and the factor
+\numprint{4.1868} given by the NIST to make the conversion in \unit{calorie}.
+Be aware than in this case, you have a discrepancy of $\numprint{1.2}\,10^{-6}$
+with the wikipedia value.
