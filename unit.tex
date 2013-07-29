@@ -1,3 +1,22 @@
+The units in \antioch\ are managed at the reading
+steps. The SI system is the internal system, thus
+for kinetics parameters input file, we
+
+
+The parameters we need to be aware of:
+\begin{itemize}
+\item in the file \file{species\_ascii\_parsing.h}
+        \begin{itemize}
+        \item molecular weight: mass per quantity of matter (SI is \unit{kg\,mol$^{-1}$}),
+        \item heat of formation at 0~\unit{K}: energy per mass (SI is \unit{J\,kg$^{-1}$})
+        \end{itemize}
+\item in the file \file{physical\_constants.h}
+        \begin{itemize}
+        \item \Rg: energy per quantity of matter per unit of temperature (SI is \unit{J\,mol$^{-1}$K$^{-1}$}),
+        \item Avogadro number: one over quantity of matter (SI is \unit{mol$^{-1}$})
+        \end{itemize}
+\end{itemize}
+
 Exemple with \Rg. If you go to the
 \href{http://physics.nist.gov/cgi-bin/cuu/Value?r}{NIST definition}
 of \Rg, you obtain the advised value of \Rg:
