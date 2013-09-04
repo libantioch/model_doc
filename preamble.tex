@@ -12,6 +12,7 @@
 \newcommand{\doverdT}[1]{\d@d{T}{#1}}
 \newcommand{\doverdm}[2][\relax]{\d@d{\mass[#1]}{#2}}
 \newcommand{\doverdc}[2][\relax]{\d@d{\conc[#1]}{#2}}
+\newcommand{\doverdn}[2][\relax]{\d@d{\Mol[#1]}{#2}}
 \newcommand{\doverdext}[2][\relax]{\d@d{\ext[#1]}{#2}}
 \newcommand{\ddoverddext}[3]{\ensuremath{\frac{\partial^2#1}{\partial\ext[#2]\partial\ext[#3]}}}
 \newcommand{\Rg}{\ensuremath{\mathrm{R}}}
@@ -59,13 +60,15 @@
 \newcommand{\Temp}[1][\relax]{\optional@sub[#1]{T}}
 \newcommand{\Mol}[1][\relax]{\optional@sub[#1]{N}}
 \newcommand{\Gibbs}[1][\relax]{\optional@sub[#1]{G}}
+\newcommand{\GibbsZ}[1][\relax]{\ensuremath{{\Gibbs[#1]}^{0}}}
 \newcommand{\Enth}[1][\relax]{\optional@sub[#1]{H}}
 \newcommand{\Entr}[1][\relax]{\optional@sub[#1]{S}}
 \newcommand{\IntEn}[1][\relax]{\optional@sub[#1]{U}}
 \newcommand{\Mass}[1][\relax]{\optional@sub[#1]{m}}
-\newcommand{\press}[1][\relax]{\optional@sub[#1]{p}}
 %%%% species and Delta
+\newcommand{\press}[1][\relax]{\optional@sub[#1]{p}}
 \newcommand{\chempot}[1][\relax]{\optional@sub[#1]{\mu}}
+\newcommand{\chempotZ}[1][\relax]{\ensuremath{\chempot[#1]^{0}}}
 \newcommand{\gibbs}[1][\relax]{\optional@sub[#1]{g}}
 \newcommand{\enth}[1][\relax]{\optional@sub[#1]{h}}
 \newcommand{\entr}[1][\relax]{\optional@sub[#1]{s}}

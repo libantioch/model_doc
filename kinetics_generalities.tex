@@ -1,7 +1,7 @@
 Let's consider a chemical reaction:
 \begin{chemicalEquation}
 \ce{\scoefabs[A] A + \scoefabs[b] B ->[\rcons] \scoefabs[C] C + \scoefabs[D] D}
-\label{youpa}
+\label{genericX}
 \end{chemicalEquation}
 with \rcons\ the rate constant.
 We want to model the evolution of the system, that is we want to
@@ -18,11 +18,11 @@ Using the kinetics theory, we have:
 \frac{1}{\scoef[D]}\doverdt{[D]} = 
 \rcons\conc[A]^{\scoefabs[A]}\conc[B]^{\scoefabs[B]}
 \end{equation}
-with \scoef[A]\ being the stoichiometric coefficient, which is defined by:\\
+with \scoef[A]\ being the stoichiometric coefficient, which is defined by:\\[5pt]
 $\left\{\begin{array}{ll}
 \scoef[S] = \scoefabs[S] & \text{if \ce{S} is a product} \\
 \scoef[S] = -\scoefabs[S] & \text{if \ce{S} is a reactant} \\
-\end{array}\right.$\\
+\end{array}\right.$\\[5pt]
 So the game is to define the rate constant. 
 
 A rate constant is characterized by two things:
