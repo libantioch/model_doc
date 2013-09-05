@@ -80,7 +80,7 @@ This will be efficient in somewhat easy situations, meaning you're looking for t
 steady state of minor species for instance.
 
 \subsection{With thermodynamics}
-A thermodynamic phase is at equilibrium for a minimized Gibbs energy, with
+A thermodynamic phase is at equilibrium for a minimized Gibbs energy (at \Temp, \Press\ constant), with
 the relation
 \begin{equation}
 \dd\Gibbs = \Vol\dd\Press - \Entr\dd\Temp + \sum_s\chempot[s]\dd\Mol[s]
@@ -88,66 +88,104 @@ the relation
 and we have Euler's identity
 \begin{equation}
 \Gibbs = \sum_s \Mol[s]\chempot[s]
+\label{Euler_id}
 \end{equation}
-So, for $R$ chemical reactions, we have the system:
+with also,
 \begin{equation}
-\left[\begin{array}{cccc}
-\ddoverddext{\Gibbs}{1}{1}   & \ddoverddext{\Gibbs}{1}{2}   & \cdots & \ddoverddext{\Gibbs}{1}{R} \\
-\ddoverddext{\Gibbs}{2}{1}   & \ddoverddext{\Gibbs}{2}{2}   & \cdots & \ddoverddext{\Gibbs}{2}{R} \\
-\vdots                       & \vdots                       & \vdots & \vdots                    \\
-\ddoverddext{\Gibbs}{R-1}{1} & \ddoverddext{\Gibbs}{R-1}{2} & \cdots & \ddoverddext{\Gibbs}{R-1}{R} \\
-1                            & 1                            & \cdots & 1\\
-\end{array}\right]
-\left[\begin{array}{c}
-\Delta\ext[1]\\
-\Delta\ext[2]\\
-\vdots\\
-\Delta\ext[R]\\
-\end{array}\right]
-=
-\left[\begin{array}{c}
-\doverdext[1]{\Gibbs}\\
-\doverdext[2]{\Gibbs}\\
-\vdots\\
-\doverdext[R-1]{\Gibbs}\\
-0
-\end{array}\right]
-\label{eq:matrixes_xi}
+\left(\doverdext[r]{\Gibbs[s]}\right)_{\Temp,\Press} = \scoef[s,r]\chempot[s]
 \end{equation}
-Basically:
+We note
 \begin{equation}
-\DGibbs = \DGibbsZ + \sum_s\Rg \Temp \ln\left(\frac{p_s}{\pz}\right)
+\DGibbs_r = \sum_s \scoef[s,r]\chempot[s] \left[= \sum_s \left(\doverdext[r]{\Gibbs[s]}\right)_{\Temp,\Press}\right]
+\end{equation}
+Considering
+\begin{equation}
+\chempot_s = \doverdn[s]{\Gibbs[s]}
+\end{equation}
+We have, deduced from~\ref{Euler_id}
+\begin{equation}
+\chempot[s] = \gibbs[s]
+\end{equation}
+Thus,
+\begin{equation}
+\chempot[s] = \chempotZ[s] + \Rg\Temp\ln\left(\frac{\press[s]}{\pz}\right)
+     \left[ = \chempotZ[s] + \Rg\Temp\ln\left(\frac{\Press}{\pz}\right) + \Rg\Temp\ln\left(\molarfrac[s]\right) \right]
 \end{equation}
 The story behind chemical extent is:
 \begin{equation}
 \Mol[s] = \Mol[s](t=0) + \sum_r \scoef[s,r] \ext[r]
 \end{equation}
-using ideal gas equation:
+Using the ideal gas equation:
 \begin{equation}
-\Press \Vol = \Mol \Rg \Temp
+\Press = \conc \Rg \Temp
 \end{equation}
-\begin{equation}
-\DGibbs = \DGibbsZ + \sum_s\Rg \Temp \ln\left(\frac{\Rg \Temp}{\pz}
-                                                \left[\conc_s(t=0) +
-                                                           \sum_r\scoef[s,r]\frac{\ext[r]}{\Vol}
-                                                \right]
-                                        \right)
-\end{equation}
-so
-\begin{equation}
-\doverdext[r]{\DGibbs} = \Rg\Temp \sum_s\frac{\frac{\scoef[s,r]}{\Vol}}
-                                             {\conc_s(t=0) + \sum_{r'} \scoef[s,r']\frac{\ext[r']}{\Vol}}
-\end{equation}
-and
-\begin{equation}
-\ddoverddext{\DGibbs}{r}{l} = -\Rg\Temp \sum_s\frac{\scoef[s,r]}{\Vol}\frac{\scoef[s,l]}{\Vol}
-                                        \left[\conc_s(t=0) + \sum_{r'}\scoef[s,r']\frac{\ext[r']}{\Vol}\right]^{-2}
-\end{equation}
-now to simplify we will consider the extent by unit of volume ($\frac{\ext}{\Vol}$):
+thus
 \begin{equation}
 \begin{split}
-\DGibbs & =  \DGibbsZ + \Rg\Temp \sum_s \ln\left(\frac{\Rg\Temp}{\pz}\left[\conc_s(t=0) + \sum_r\scoef[s,r]\ext[r]\right]\right) \\
-\doverdext[r]{\DGibbs} & = \Rg\Temp \sum_s\frac{\scoef[s,r]}{\conc_s(t=0) + \sum_{r'} \scoef[s,r']\ext[r']} \\
-\ddoverddext{\DGibbs}{r}{l} & =  -\Rg\Temp \sum_s\scoef[s,r]\scoef[s,l]\left[\conc_s(t=0) + \sum_{r'}\scoef[s,r']\ext[r']\right]^{-2}
+\chempot[s] & = \chempotZ[s] + \Rg\Temp\ln\left(\frac{\Rg \Temp \molar[s]}{\pz}\right) \\
+            & = \chempotZ[s] + \Rg\Temp\ln\left(\frac{\Rg \Temp}{\pz}\left(\molar[s](t=0) + \sum_r \scoef[s,r]\frac{\ext[r]}{\Vol}\right)\right) \\
 \end{split}
 \end{equation}
+and therefore
+\begin{equation}
+\begin{split}
+\doverdext[r]{\chempot[s]}      & = \frac{\pz}{\Vol}\frac{\scoef[s,r]}{\molar[s](t=0) + \sum_{r'} \scoef[s,r']\frac{\ext[r']}{\Vol}}\\
+\ddoverddext{\chempot[s]}{r}{l} & = -\frac{\pz}{\Vol^2}\frac{\scoef[s,l]\scoef[s,r]}{\left(\molar[s](t=0) + \sum_{r'} \scoef[s,r']\frac{\ext[r']}{\Vol}\right)^2}\\
+\end{split}
+\end{equation}
+Usually, it's better to consider the system per unit of volume, 
+using an extent of reaction per volume, thus the equations
+become:
+\begin{equation}
+\begin{split}
+\chempot[s]                     & = \chempotZ[s] + \Rg\Temp\ln\left(\frac{\Rg \Temp}{\pz}\left(\molar[s](t=0) + \sum_r \scoef[s,r]\ext[r]\right)\right) \\
+\doverdext[r]{\chempot[s]}      & = \pz\frac{\scoef[s,r]}{\molar[s](t=0) + \sum_{r'} \scoef[s,r']\ext[r']}\\
+\ddoverddext{\chempot[s]}{r}{l} & = -\pz\frac{\scoef[s,l]\scoef[s,r]}{\left(\molar[s](t=0) + \sum_{r'} \scoef[s,r']\ext[r']\right)^2}\\
+\end{split}
+\end{equation}
+
+
+Equilibrium is defined by 
+\begin{equation}
+\forall\; r,\; \DGibbs_r = 0
+\end{equation} 
+or 
+\begin{equation}
+\min \Gibbs(\{\chempot[s]\}_s)
+\end{equation}
+
+\subsubsection{\texorpdfstring{$\forall\;r,\;\DGibbs_r = 0$}{Reaction enthalpy}}
+
+\begin{equation}
+\begin{split}
+\DGibbs_r & = \sum_s \scoef[s,r] \chempot[s]\\
+\doverdext[i]{\DGibbs_r}   & = \sum_s\scoef[s,r]\doverdext[i]{\chempot[s]} \\
+\ddoverddext{\DGibbs_r}{i}{j} & = \sum_s\scoef[s,r]\ddoverddext{\chempot[s]}{i}{j} \\
+\end{split}
+\end{equation}
+
+\subsubsection{\texorpdfstring{$\min\Gibbs(\{\chempot[s]\}_s)$}{Phase enthalpy minimization}}
+
+\begin{equation}
+\begin{split}
+\Gibbs & = \sum_s\Mol[s]\chempot[s]
+         = \sum_s\left(\Mol[s]^0 + \sum_r\scoef[s,r]\ext[r]\right)\chempot[s] \\
+\doverdext[r]{\Gibbs} & = \sum_s \left[\left(\Mol[s]^0 + \sum_{r'}\scoef[s,r']\ext[r']\right)\doverdext[r]{\chempot[s]}
+                                + \scoef[s,r]\chempot[s]\right] \\
+\ddoverddext{\Gibbs}{r}{l} & = \sum_s \left[\left(\Mol[s]^0 + \sum_{r'}\scoef[s,r']\ext[r']\right)\ddoverddext{\chempot[s]}{r}{l}
+                                        + \scoef[s,l]\doverdext[r]{\chempot[s]}
+                                        + \scoef[s,r]\doverdext[l]{\chempot[s]}\right] \\
+\end{split}
+\end{equation}
+Considering these equations per unit of volume, one obtains:
+\begin{equation}
+\begin{split}
+\Gibbs & = \sum_s\left(\molar[s]^0 + \sum_r\scoef[s,r]\ext[r]\right)\chempot[s] \\
+\doverdext[r]{\Gibbs} & = \sum_s \left[\left(\molar[s]^0 + \sum_{r'}\scoef[s,r']\ext[r']\right)\doverdext[r]{\chempot[s]}
+                                + \scoef[s,r]\chempot[s]\right] \\
+\ddoverddext{\Gibbs}{r}{l} & = \sum_s \left[\left(\molar[s]^0 + \sum_{r'}\scoef[s,r']\ext[r']\right)\ddoverddext{\chempot[s]}{r}{l}
+                                        + \scoef[s,l]\doverdext[r]{\chempot[s]}
+                                        + \scoef[s,r]\doverdext[l]{\chempot[s]}\right] \\
+\end{split}
+\end{equation}
+
