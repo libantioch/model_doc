@@ -144,7 +144,6 @@ become:
 \end{split}
 \end{equation}
 
-
 Equilibrium is defined by 
 \begin{equation}
 \forall\; r,\; \DGibbs_r = 0
@@ -162,6 +161,30 @@ or
 \doverdext[i]{\DGibbs_r}   & = \sum_s\scoef[s,r]\doverdext[i]{\chempot[s]} \\
 \ddoverddext{\DGibbs_r}{i}{j} & = \sum_s\scoef[s,r]\ddoverddext{\chempot[s]}{i}{j} \\
 \end{split}
+\end{equation}
+
+For $R$ reactions:
+\begin{equation}
+\left[\begin{array}{cccc}
+\sum_s\scoef[s,1]\doverdext[1]{\chempot[s]} & \sum_s\scoef[s,1]\doverdext[2]{\chempot[s]} & \cdots & \sum_s\scoef[s,1]\doverdext[R]{\chempot[s]}\\
+\sum_s\scoef[s,2]\doverdext[1]{\chempot[s]} & \sum_s\scoef[s,2]\doverdext[2]{\chempot[s]} & \cdots & \sum_s\scoef[s,2]\doverdext[R]{\chempot[s]}\\
+\vdots &\vdots &\vdots &\vdots \\
+\sum_s\scoef[s,R]\doverdext[1]{\chempot[s]} & \sum_s\scoef[s,R]\doverdext[2]{\chempot[s]} & \cdots & \sum_s\scoef[s,R]\doverdext[R]{\chempot[s]}\\
+\end{array}\right]
+\times
+\left[\begin{array}{c}
+\Delta\ext[1] \\
+\Delta\ext[2] \\
+\vdots \\ 
+\Delta\ext[R]
+\end{array}\right]
+=
+\left[\begin{array}{c}
+\sum_s \scoef[s,1] \chempot[s] \\ 
+\sum_s \scoef[s,2] \chempot[s] \\ 
+\vdots \\ 
+\sum_s \scoef[s,R] \chempot[s]
+\end{array}\right]
 \end{equation}
 
 \subsubsection{\texorpdfstring{$\min\Gibbs(\{\chempot[s]\}_s)$}{Phase enthalpy minimization}}
