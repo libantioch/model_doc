@@ -1,0 +1,91 @@
+\subsubsection{Kinetics models}
+The kinetics models are all given in Tab.~\ref{antioch::kinMod}.
+The kinetics model will render the temperature evolution of
+the rate constant, thus the only differential that is needed
+at that level is the temperature differentiation.
+\begin{table}
+\centering\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{clr}\toprule
+\multirow{2}{*}{Kinetics model}
+                & Expression                     & Parameters \\
+                & $\frac{\dd}{\dd T}$ Expression &\\\midrule
+\multirow{2}{*}{Hercourt-Hessen} 
+                & $\kinMod = \PreExp \left(\frac{\Temp}{\Tref}\right)^\Power$ 
+                        & \PreExp, \Power\\
+                & $\ddoverdT{\kinMod} = \kinMod \frac{\Power}{\Temp}$ \\[10pt]
+\multirow{2}{*}{Berthelot}
+                & $\kinMod = \PreExp \exp\left(\BerthExp\Temp\right)$ 
+                        & \PreExp, \BerthExp\\
+                & $\ddoverdT{\kinMod} = \kinMod \BerthExp$ \\[10pt]
+\multirow{2}{*}{Arrhenius}
+                & $\kinMod = \PreExp \exp\left(-\frac{\AcEn}{\Rg\Temp}\right)$ 
+                        & \PreExp, \AcEn\\
+                & $\ddoverdT{\kinMod} = \kinMod \frac{\AcEn}{\Rg\Temp^2}$ \\[10pt]
+\multirow{2}{*}{Kooij}
+                & $\kinMod = \PreExp \left(\frac{\Temp}{\Tref}\right)^\Power\exp\left(-\frac{\AcEn}{\Rg\Temp}\right)$
+                        & \PreExp, \Power, \AcEn\\
+                & $\ddoverdT{\kinMod} = \kinMod \left(\frac{\Power}{\Temp} + \frac{\AcEn}{\Rg\Temp^2}\right)$ \\[10pt]
+\multirow{2}{*}{Berthelot Hercourt-Essen}
+                & $\kinMod = \PreExp \left(\frac{\Temp}{\Tref}\right)^\Power\exp\left(\BerthExp\Temp\right)$
+                        & \PreExp, \Power, \BerthExp\\
+                & $\ddoverdT{\kinMod} = \kinMod \left(\frac{\Power}{\Temp} + \BerthExp\right)$ \\[10pt]
+\multirow{2}{*}{Van't Hoff}
+                & $\kinMod = \PreExp \left(\frac{\Temp}{\Tref}\right)^\Power\exp\left(\BerthExp\Temp-\frac{\AcEn}{\Rg\Temp}\right)$
+                        & \PreExp, \Power, \BerthExp, \AcEn\\
+                & $\ddoverdT{\kinMod} = \kinMod \left(\frac{\Power}{\Temp} + \BerthExp +  \frac{\AcEn}{\Rg\Temp^2}\right)$ \\
+\bottomrule
+\end{tabular}
+\caption{\label{antioch::kinMod}Kinetics models available in \antioch.}
+\end{table}
+
+\subsubsection{Chemical processes}
+\label{subsec:chem_proc}
+The chemical processes is how this kinetics model behave with respect to
+the densities of the molecules in the medium. Either they're all equivalent,
+and only the total density matters (falloff type), or each species can 
+influence the rate constant in a specific manner (three-body type).
+The chemical processes are given in Tab.~\ref{antioch::chemProc}.
+\begin{table}
+\centering\renewcommand{\arraystretch}{2}
+\begin{tabular}{cll}\toprule
+\multirow{2}{*}{Chemical process}
+                  & Expression             & $\doverdT{\text{Expression}}$ \\
+                  &                        & $\doverdc{\text{Expression}}$ \\\midrule
+\multirow{2}{*}{Elementary}
+                  & $\chemProc = \kinMod$  & $\doverdT{\chemProc} = \ddoverdT{\kinMod}$ \\
+                  &                        & $\doverdc{\chemProc} = 0$ \\[10pt]
+\multirow{2}{*}{Duplicate \dag}
+                  & $\chemProc = \displaystyle\sum_i^{\mathrm{N_{proc}}}\kinMod_i$
+                                           & $\doverdT{\chemProc} = \displaystyle\sum_i^\mathrm{N_{proc}}\ddoverdT{\kinMod_i}$ \\
+                  &                        & $\doverdc{\chemProc} = 0$ \\[10pt]
+\multirow{2}{*}{Three-Body}
+                  & $\chemProc = \kinMod \threeBody$
+                                           & $\doverdT{\chemProc} = \ddoverdT{\kinMod}\threeBody$ \\
+                  &                        & $\doverdc[I]{\chemProc} = \kinMod\epsilon_i\sum_{s\neq i}\epsilon_s\conc[S] $ \\[10pt]
+\multirow{3}{*}{Lindemann falloff}
+                  & $\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}F_{\text{Lind}}$
+                                          & $\doverdT{\chemProc} = $\\
+                  &                       & $\doverdc[I]{\chemProc} = \chemProc$\\
+                  &                       & $\left(\frac{1}{\conc[M]} 
+                                                                                   + \frac{\kinModZ}{\kinModI}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}} 
+                                                                                   + \doverdT{F_\text{Lind}}\frac{1}{F_\text{Lind}}   
+                                                                               \right)$\\[10pt]
+\multirow{3}{*}{Troe falloff}
+                  & $\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}F_{\text{Troe}}$
+                                          & $\doverdT{\chemProc} = $\\
+                  &                       & $\doverdc[I]{\chemProc} = \chemProc$\\
+                  &                       & $\left(\frac{1}{\conc[M]} 
+                                                                                   + \frac{\kinModZ}{\kinModI}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}} 
+                                                                                   + \doverdT{F_\text{Troe}}\frac{1}{F_\text{Troe}}   
+                                                                               \right)$\\[10pt]
+\bottomrule
+\end{tabular}
+\caption{\label{antioch::chemProc}Chemical processes available in \antioch.
+\dag: the duplicate chemical process do not permit several kinetics
+models to be mixed. The functions $F$ for the falloff are described in section~\ref{subsub:falloff}}
+\end{table}
+
+\subsubsection{Falloffs}
+\label{subsub:falloff}
+\paragraph{Lindemann}
+\paragraph{Troe}

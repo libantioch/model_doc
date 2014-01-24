@@ -7,9 +7,11 @@
 \newcommand{\optional@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{{#2}_{#1}}}\fi}
 \newcommand{\optional@@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{#2}_{#1}}\fi}
 \newcommand{\d@d}[2]{\ensuremath{\frac{\partial#2}{\partial #1}}}
+\newcommand{\dd@d}[2]{\ensuremath{\frac{\dd #2}{\dd #1}}}
 %chem def
 \newcommand{\doverdt}[1]{\d@d{t}{#1}}
 \newcommand{\doverdT}[1]{\d@d{\Temp}{#1}}
+\newcommand{\ddoverdT}[1]{\dd@d{\Temp}{#1}}
 \newcommand{\doverdm}[2][\relax]{\d@d{\mass[#1]}{#2}}
 \newcommand{\doverdc}[2][\relax]{\d@d{\conc[#1]}{#2}}
 \newcommand{\doverdn}[2][\relax]{\d@d{\Mol[#1]}{#2}}
@@ -24,7 +26,9 @@
 \newcommand{\tc}[1]{\ensuremath{a_{#1}}}
 %%stuff for kinetics
 \newcommand{\rcons}[1][\relax]{\optional@@sub[#1]{k}}
-\newcommand{\kinMod}{\ensuremath{\alpha(T)}}
+\newcommand{\kinMod}{\ensuremath{\alpha(\Temp)}}
+\newcommand{\kinModZ}{\ensuremath{\alpha_0(\Temp)}}
+\newcommand{\kinModI}{\ensuremath{\alpha_\infty(\Temp)}}
 \newcommand{\chemProc}{\ensuremath{\chi(\kinMod,\conc[M])}}
 \newcommand{\rateCons}{\ensuremath{\rcons(T,\conc[M])}}
 \newcommand{\rate}[1][\relax]{\optional@@sub[#1]{r}}
