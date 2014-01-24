@@ -25,7 +25,7 @@ all: $(texfinal)
 texfigs: $(texfigs) cleantexfigs
 
 cleantexfigs:
-	@rm -f ./figs/*.{aux,bbl,blg,log,dvi,nav,out,snm,toc,vrb,lof,lot,gnuplot,table}
+	@rm -rf ./figs
 
 figures: $(figures) 
 
@@ -38,7 +38,7 @@ clean: cleanlatex cleanfigs
 
 cleanlatex:
 	rm -f $(patsubst %.tex, %.aux, $(wildcard *.tex)) 
-	rm -f $(shell find ./ -name '*.aux' -o -name '*.log' -o -name '*.bbl' -o -name '*.blg' -o -name '*.dvi' -o -name '*.nav' -o -name '*.out' -o -type f -name '*.pdf' -o -name '*.snm' -o -name '*.toc' -o -name '*.vrb' -o -name '*.lof' -o -name '*.lot')
+	@rm -f *.{aux,log,toc,bbl,blg,nav,out,snm,pdf,dvi,vrb,lof,lot}
 
 cleanfigs:
 	rm -f $(figures)
