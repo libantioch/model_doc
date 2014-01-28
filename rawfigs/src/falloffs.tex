@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage{tikz,pgfplots,geometry}
+\usetikzlibrary{positioning}
+\pgfplotsset{compat=newest}
+\usepackage[version=3]{mhchem}
+\pagestyle{empty}
+\geometry{paperwidth=9cm,paperheight=7cm,left=0pt,right=0pt,top=0pt,bottom=0pt}
+\begin{document}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{axis}[at={(current page.center)},anchor=outer center,name=graph,
+                axis lines=left,
+                xlabel=Concentration (mol\,cm$^{-3}$),
+                ylabel={$k(T,[\ce{M}])$},
+                xmode=log,
+                ymode=log,
+                ymax = 1e14,
+                legend style={at={(1,0.05)},anchor=south east}
+                ]
+\addplot[dashed,mark=none] table[x=M,y=low_limit]{./rawfigs/src/data/falloff_2D.dat};
+\addplot[dashed,mark=none] table[x=M,y=high_limit]{./rawfigs/src/data/falloff_2D.dat};
+\addplot[blue,mark=none]   table[x=M,y=Lindemann]{./rawfigs/src/data/falloff_2D.dat};
+\addplot[red,mark=none]    table[x=M,y=Troe]{./rawfigs/src/data/falloff_2D.dat};
+\legend{,,Lindemann falloff,Troe falloff}
+\end{axis}
+\node[below right,font=\small] at (graph.north) {Low-pressure limit};
+\node[below left = 5mm and 1cm,font=\small, align=center] at (graph.north) {High-pressure\\limit};
+\end{tikzpicture}
+\end{document}
