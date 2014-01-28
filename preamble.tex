@@ -26,19 +26,21 @@
 \newcommand{\tc}[1]{\ensuremath{a_{#1}}}
 %%stuff for kinetics
 \newcommand{\rcons}[1][\relax]{\optional@@sub[#1]{k}}
-\newcommand{\kinMod}{\ensuremath{\alpha(\Temp)}}
-\newcommand{\kinModZ}{\ensuremath{\alpha_0(\Temp)}}
-\newcommand{\kinModI}{\ensuremath{\alpha_\infty(\Temp)}}
-\newcommand{\chemProc}{\ensuremath{\chi(\kinMod,\conc[M])}}
-\newcommand{\rateCons}{\ensuremath{\rcons(T,\conc[M])}}
-\newcommand{\rate}[1][\relax]{\optional@@sub[#1]{r}}
-\newcommand{\threeBody}{\ensuremath{\sum_s \epsilon_s\conc[S]}}
+\newcommand{\kinMod}          {\ensuremath{\alpha(\Temp)}}
+\newcommand{\kinModZ}         {\ensuremath{\alpha_0(\Temp)}}
+\newcommand{\kinModI}         {\ensuremath{\alpha_\infty(\Temp)}}
+\newcommand{\chemProc}        {\ensuremath{\chi(\kinMod,\conc[M])}}
+\newcommand{\rateCons}        {\ensuremath{\rcons(T,\conc[M])}}
+\newcommand{\rate} [1][\relax]{\optional@@sub[#1]{r}}
+\newcommand{\threeBody}       {\ensuremath{\sum_s \epsilon_s\conc[S]}}
+\newcommand{\FLind}           {\ensuremath{F_\text{Lind}}}
+\newcommand{\FTroe}           {\ensuremath{F_\text{Troe}}}
 %%%% kinetics model parameter
 \newcommand{\Tref}{\ensuremath{\mathrm{T_{ref}}}}
 \newcommand{\PreExp}{\ensuremath{A}}
 \newcommand{\Power}{\ensuremath{\beta}}
 \newcommand{\BerthExp}{\ensuremath{D}}
-\newcommand{\AcEn}{\ensuremath{E_a}}
+\newcommand{\AcEn}{\ensuremath{{E_a}}}
 %
 \newcommand{\conc}[1][\relax]{\ifx#1\relax\molar\else\ce{[#1]}\fi}
 \newcommand{\Mm}[1][\relax]{\optional@sub[#1]{\mathrm{M}}}
@@ -92,8 +94,8 @@
 \newcommand{\Kooij}[4][1]{\ensuremath{{#2} \left(\frac{T}{#1}\right)^{#3}\exp\left(-\frac{#4}{\Rg T}\right)}}
 \newcommand{\KooijEq}{\Kooij[\mathrm{T_{ref}}]{A}{\beta}{E_a}}
 \newcommand{\dd}{\ensuremath{\mathrm{d}}}
-\newcommand{\unit}[1]{\texttt{#1}}
-\newcommand{\nounit}{\unit{no unit}}
+\newcommand{\unit}[1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\nounit}{\unit{no~unit}}
 \newcommand{\file}[1]{\textsf{#1}}
 \newcommand{\prog}[1]{\texttt{#1}}
 %% chemistry equation 
