@@ -18,8 +18,8 @@
                 ]
 \addplot[dashed,mark=none] table[x=M,y=low_limit]{./rawfigs/src/data/falloff_2D.dat};
 \addplot[dashed,mark=none] table[x=M,y=high_limit]{./rawfigs/src/data/falloff_2D.dat};
-\addplot[blue,mark=none]   table[x=M,y=Lindemann]{./rawfigs/src/data/falloff_2D.dat};
-\addplot[red,mark=none]    table[x=M,y=Troe]{./rawfigs/src/data/falloff_2D.dat};
+\addplot[smooth,blue,mark=none]   table[x=M,y=Lindemann]{./rawfigs/src/data/falloff_2D.dat};
+\addplot[smooth,red,mark=none]    table[x=M,y=Troe]{./rawfigs/src/data/falloff_2D.dat};
 \legend{,,Lindemann falloff,Troe falloff}
 \end{axis}
 \node[below right,font=\small] at (graph.north) {Low-pressure limit};
