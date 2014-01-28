@@ -44,7 +44,14 @@ The chemical processes is how this kinetics model behave with respect to
 the densities of the molecules in the medium. Either they're all equivalent,
 and only the total density matters (falloff type), or each species can 
 influence the rate constant in a specific manner (three-body type).
-The chemical processes are given in Tab.~\ref{antioch::chemProc}.
+The chemical processes are given in Tab.~\ref{antioch::chemProc}. This is where
+chemical modeling begins to be stretched a little: as seen on section~\ref{kinetics_gen},
+we assume that every reaction modeled is an elementary step, even in the case of
+non-elementary reactions. Therefore some corrections need to be made. This is where
+the chemical process happen adds, if needed, more suppleness to the rate constant
+function, from adding degrees of freedom to the temperature dependency (duplicate
+chemical process) to adding a pressure dependance over the temperature dependance
+(falloff).
 \begin{table}
 \centering\renewcommand{\arraystretch}{2}
 \begin{tabular}{cll}\toprule
@@ -63,21 +70,13 @@ The chemical processes are given in Tab.~\ref{antioch::chemProc}.
                                            & $\doverdT{\chemProc} = \ddoverdT{\kinMod}\threeBody$ \\
                   &                        & $\doverdc[I]{\chemProc} = \kinMod\epsilon_i\sum_{s\neq i}\epsilon_s\conc[S] $ \\[10pt]
 \multirow{3}{*}{Lindemann falloff}
-                  & $\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}F_{\text{Lind}}$
-                                          & $\doverdT{\chemProc} = $\\
-                  &                       & $\doverdc[I]{\chemProc} = \chemProc$\\
-                  &                       & $\left(\frac{1}{\conc[M]} 
-                                                                                   + \frac{\kinModZ}{\kinModI}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}} 
-                                                                                   + \doverdT{F_\text{Lind}}\frac{1}{F_\text{Lind}}   
-                                                                               \right)$\\[10pt]
+                  & $\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\FLind$ 
+                                          & \ref{Falloff:doverdT} with $F = \FLind$\\
+                  &                       & \ref{Falloff:doverdc} with $F = \FLind$\\[10pt]
 \multirow{3}{*}{Troe falloff}
-                  & $\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}F_{\text{Troe}}$
-                                          & $\doverdT{\chemProc} = $\\
-                  &                       & $\doverdc[I]{\chemProc} = \chemProc$\\
-                  &                       & $\left(\frac{1}{\conc[M]} 
-                                                                                   + \frac{\kinModZ}{\kinModI}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}} 
-                                                                                   + \doverdT{F_\text{Troe}}\frac{1}{F_\text{Troe}}   
-                                                                               \right)$\\[10pt]
+                  & $\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\FTroe$
+                                          & \ref{Falloff:doverdT} with $F = \FTroe$\\
+                  &                       & \ref{Falloff:doverdc} with $F = \FTroe$\\[10pt]
 \bottomrule
 \end{tabular}
 \caption{\label{antioch::chemProc}Chemical processes available in \antioch.
@@ -87,5 +86,81 @@ models to be mixed. The functions $F$ for the falloff are described in section~\
 
 \subsubsection{Falloffs}
 \label{subsub:falloff}
+The falloffs are reaction having two different regimes: a low-pressure (\kinModZ) and
+a high-pressure (\kinModI) regime. Any pressure's rate constant can be expressed in
+terms if those two regimes:
+\begin{equation}
+\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}} F
+\label{falloff:k}
+\end{equation}
+with \conc[M] being the total molar density and $F$ the falloff model.
+
+The differentiations are:
+\begin{equation}
+\begin{split}
+\doverdT{\chemProc} & = \chemProc 
+                        \Bigg[\frac{1}{F}\doverdT{F} \\
+                    &      + \left(\frac{1}{\kinModZ} - \frac{\conc[M]}{\kinModI}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\right)\doverdT{\kinModZ} \\
+                    &      - \conc[M]\frac{\kinModZ}{\kinModI^2}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\doverdT{\kinModI}
+                        \Bigg]
+\end{split}
+\label{Falloff:doverdT}
+\end{equation}
+and
+\begin{equation}
+\doverdc[I]{\chemProc} = \chemProc
+                          \left(\frac{1}{\conc[M]} 
+                               + \frac{\kinModZ}{\kinModI}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}} 
+                               + \doverdT{F}\frac{1}{F}
+                          \right)
+\label{Falloff:doverdc}
+\end{equation}
 \paragraph{Lindemann}
+The Lindemann falloff is the simplest falloff, it is given by:
+\begin{equation}
+\FLind = 1,
+\label{Falloff:Lindeman}
+\end{equation}
+which gives:
+\begin{equation}
+\begin{split}
+\doverdT{\FLind} & = 0 \\
+\doverdc{\FLind} & = 0 \\
+\end{split}
+\label{Falloff:Lindemann:diff}
+\end{equation}
+
 \paragraph{Troe}
+The Troe model is more elaborate and rely on the definition of three or
+four parameters:
+\begin{itemize}
+\item \Troealpha, with \nounit,
+\item \TroeTone\ in \unit{K},
+\item \TroeTtwo\ in \unit{K},
+\item \TroeTthree\ in \unit{K}.
+\end{itemize}
+Sometimes, the parameter \TroeTtwo\ is not provided, as its contribution
+may be negligible.
+The falloff calculations need the definition of several parameters:
+\begin{equation}
+\TroeFcent = some\ function
+\label{Troe:Fcent}
+\end{equation}
+
+\begin{figure}
+\centering
+\includegraphics{falloffs}
+\caption{\label{kinetics::falloffs}%
+Example of falloff for the reaction \ce{CH3 + CH3 (+M) -> C2H6 (+M)}.
+The rate constants are calculated for a temperature of $T = 1000~\unit{K}$. The kinetics model
+used is a Kooij model. Parameters are:
+$\PreExp_0      = \numprint{1.135}\,10^{36}~\unit{mol^{-2}\,cm^6\,s^{-1}}$,
+$\Power_0       = \numprint{-5.245}$,
+$\AcEn_0        = \numprint{1704.8}~\unit{cal\,mol^{-1}}$,
+$\PreExp_\infty = \numprint{6.22}\,10^{16}~\unit{mol^-2\,cm^6\,s^{-1}}$,
+$\Power_\infty  = \numprint{-1.174}$,
+$\AcEn_\infty   = \numprint{653.8}~\unit{cal\,mol^{-1}}$,
+$\Troealpha     = \numprint{0.405}$,
+$\TroeTone      = \numprint{69.6}~\unit{K}$ and
+$\TroeTthree    = \numprint{1120.0}~\unit{K}$.}
+\end{figure}
