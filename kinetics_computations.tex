@@ -143,10 +143,50 @@ Sometimes, the parameter \TroeTtwo\ is not provided, as its contribution
 may be negligible.
 The falloff calculations need the definition of several parameters:
 \begin{equation}
-\TroeFcent = some\ function
-\label{Troe:Fcent}
+\begin{split}
+\TroeFcent & = \left(1 - \Troealpha\right)\exp\left(-\frac{\Temp}{\TroeTthree}\right)
+              +          \Troealpha       \exp\left(-\frac{\Temp}{\TroeTone}\right)
+              +                           \exp\left(-\frac{\TroeTtwo}{\Temp}\right) \\[5pt]
+\Troen     & =   \numprint{0.75} - \numprint{1.27}\log_{10}\left(\TroeFcent\right)  \\[5pt]
+\Troec     & = - \numprint{0.4}  - \numprint{0.64}\log_{10}\left(\TroeFcent\right)  \\[5pt]
+\Troed     & =   \numprint{0.14}
+\end{split}
+\label{Troe:parameter}
 \end{equation}
-
+to finally have
+\newcommand{\pr}{\ensuremath{\log_{10}\left(\frac{\conc[M]\kinMod_0}{\kinMod_\infty}\right)}}
+\begin{equation}
+\FTroe = \frac{\log_{10}\left(\TroeFcent\right)}
+              {1 + \left[
+                        \log_{10}\left(
+                                        \frac{\pr + \Troec}
+                                             {\Troen - \Troed\left(
+                                                                \pr + \Troec
+                                                            \right)}
+                                 \right) 
+                   \right]^2}
+\label{Troe:F}
+\end{equation}
+Thus the differentials will be:
+\begin{equation}
+\begin{split}
+\doverdT{\TroeFcent} & = - \frac{1 - \Troealpha}{\TroeTthree}\exp\left(-\frac{\Temp}{\TroeTthree}\right)
+                         - \frac{\Troealpha}{\TroeTone}\exp\left(-\frac{\Temp}{\TroeTone}\right)
+                         + \frac{\TroeTtwo}{\Temp^2}\exp\left(-\frac{\TroeTtwo}{\Temp}\right)\\[5pt]
+\doverdT{\Troen}     & = - \frac{\numprint{1.27}}{\ln(10)\TroeFcent}\doverdT{\TroeFcent} \\[5pt]
+\doverdT{\Troec}     & = - \frac{\numprint{0.64}}{\ln(10)\TroeFcent}\doverdT{\TroeFcent} \\[5pt]
+\doverdT{\Troed}     & = 0
+\end{split}
+\label{Troe:dparameterdT}
+\end{equation}
+and of course
+\begin{equation}
+\doverdc{\TroeFcent}  = 0,\qquad
+\doverdc{\Troen}      = 0,\qquad
+\doverdc{\Troec}      = 0,\qquad
+\doverdc{\Troed}      = 0
+\label{Troe:dparameterdc}
+\end{equation}
 \begin{figure}
 \centering
 \includegraphics{falloffs}
