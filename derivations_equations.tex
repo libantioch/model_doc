@@ -1,136 +1,89 @@
 What we want is 
 $\mdot[S] = \doverdt{\mass[S]}$, and its derivatives:
 $\doverdT{\mdot[S]}$, $\doverdm[j]{\mdot[S]}$ with respect to species $j$.
-
+%
 The kinetics model's value is noted \kinMod, the rate constant is noted \rateCons, the
 rate of the reaction is noted \rate.
-
-The kinetics model is Kooij 
-\begin{equation}
-\kinMod = \KooijEq,
-\label{KooijEq}
-\end{equation}
-the chemical process are elementary 
-\begin{equation}
-\rateCons = \kinMod
-\label{ChemProEl}
-\end{equation} 
-or three-body 
-\begin{equation}
-\rateCons = \kinMod \threeBody.
-\label{ChemProTB}
-\end{equation}
-
+%
 We use the equations
 \begin{equation}
 \mass[S] = \Mm[S] \conc[S]
 \end{equation}
+and
 \begin{equation}
 \dd\mass[S] = \Mm[S]\,\dd\conc[S]
 \end{equation}
 as everything in kinetics theory is expressed in concentrations and 
 not in terms of mass.
-
 We have thus:
 \begin{equation}
 \mdot[S] = \doverdt{\mass[S]} = \Mm[S] \doverdt{\conc[S]}
 \end{equation}
 \begin{equation}
-\doverdm[E]{\mdot[S]} = \frac{\Mm[S]}{\Mm[E]}\doverdc[E]{\conc[S]}
+\doverdm[E]{\mdot[S]} = \frac{\Mm[S]}{\Mm[E]}\doverdc[E]{\doverdt{\conc[S]}}
+\label{derive:m_T}
 \end{equation}
 \begin{equation}
-\doverdT{\mdot[S]} = \Mm[S]\doverdT{\conc[S]}
+\doverdT{\mdot[S]} = \Mm[S]\doverdT{\doverdt{\conc[S]}}
+\label{derive:m_c}
 \end{equation}
-but for Paul's sake, we will do the full derivation with mass.
+but for Paul's sake, we will do the full differentiation with mass as well
+as the differentiation with respect to concentration.
 
-\subsection{Forward}
-
-The forward rate \fwdrate\ for a reaction is by definition for species \ce{S}:
+Kinetics theory gives us:
 \begin{equation}
 \begin{split}
-\fwdrate &= \frac{1}{\scoef[S]}\frac{\dd\conc[S]}{\dd t}\\
-         &= \frac{1}{\scoef[S]} \fwdratecons \prodReac
+\doverdt{\conc[S]} & = \sum_{\text{reactions}} \scoef[r,S] \rate[r] \\
+                   & = \sum_{\text{reactions}} \scoef[r,S] \left[\fwdrate[r] - \bkwdrate[r]\right]\\
+                   & = \sum_{\text{reactions}} \scoef[r,S]
+                        \left[ \fwdratecons[r] \prodReac - \bkwdratecons[r] \prodProd \right]
 \end{split}
+\end{equation}
+
+The game now is thus to differentiate the forward and backward components.
+\subsection{Forward rate}
+
+The forward rate \fwdrate[r] for a reaction $r$ is given by:
+\begin{equation}
+\fwdrate[r] = \fwdratecons[r] \prodReac
 \label{ratefDef}
 \end{equation}
+with
+\begin{equation}
+\fwdratecons = \chemProc
+\end{equation}
+The differentiates are straightforward, just look at Tab.~\ref{antioch::kinMod}
+and \ref{antioch::chemProc}
 
 \paragraph{To derive with respect to \Temp.}
-For any species \ce{S} participating in the reaction\footnote{remember, 
-$\scoef = \left\{\begin{array}{l}-\scoefabs\text{ for reactants}\\\scoefabs\text{ for products}\end{array}\right.$}.
-thus,
-\begin{equation}
-\doverdT{\fwdrate} = \frac{1}{\scoef[S]}
-                   \doverdT{\fwdratecons}
-                   \prodReac
-\end{equation}
-and, for the elementary process, following~\ref{ChemProEl} and \ref{KooijEq}:
+For any species \ce{S} participating in the reaction.
 \begin{equation}
 \begin{split}
-\doverdT{\fwdratecons} & = \doverdT{\kinMod} \\
-                       & = \frac{\kinMod}{\Temp} \left(\frac{E_a}{\Rg \Temp} + \beta\right)
+\doverdT{\fwdrate} & = \doverdT{\fwdratecons} \prodReac \\
+                   & = \doverdT{\left(\chemProc\right)} \prodReac \\
 \end{split}
-\end{equation}
-For the three-body process, following~\ref{ChemProTB} and \ref{KooijEq}:
-\begin{equation}
-\begin{split}
-\doverdT{\fwdratecons} & = \doverdT{\kinMod} \threeBody \\
-                       & = \frac{\kinMod}{\Temp} \left(\frac{E_a}{\Rg \Temp} + \beta\right) \threeBody
-\end{split}
-\end{equation}
-
-Finally,
-for the elementary processes
-\begin{equation}
-\doverdT{\fwdrate} = \frac{1}{\scoef[S]} \frac{\kinMod}{\Temp} \left(\frac{E_a}{\Rg \Temp} + \beta\right)
-                                                \prodReac
-\label{derivTEP}
-\end{equation}
-and the three-body processes
-\begin{equation}
-\doverdT{\fwdrate} = \frac{1}{\scoef[S]} \frac{\kinMod}{\Temp} \left(\frac{E_a}{\Rg \Temp} + \beta\right) \threeBody
-                                                \prodReac
-\label{derivTTB}
 \end{equation}
 
 \paragraph{To derive with respect to \mass.}
 Knowing that $\conc = \frac{\mass}{\Mm}$, we substitute in~\ref{ratefDef}
 \begin{equation}
-\fwdrate = \frac{1}{\scoef[S]} \fwdratecons \prod_\text{reactants}  \left(\frac{\mass[\reac]}{\Mm[\reac]}\right)^{\scoefabs[\reac]}
+\fwdrate[r] = \fwdratecons[r] \prod_\text{reactants}  \left(\frac{\mass[\reac]}{\Mm[\reac]}\right)^{\scoefabs[\reac]}
+\end{equation}
+The differenciation with respect to concentration is:
+\begin{equation}
+\doverdc[E]{\fwdrate[r]} = \left\{\begin{array}{ll}
+                              \fwdrate[r]\left[ \frac{1}{\fwdratecons[r]} \doverdc[E]{\left(\chemProc[r]\right)} + \frac{\scoefabs[E]}{\conc[E]}\right] & \text{if \ce{E} is a reactant} \\[5pt]
+                              \fwdrate[r]\left[ \frac{1}{\fwdratecons[r]} \doverdc[E]{\left(\chemProc[r]\right)}\right] & \text{else} \\
+                              \end{array}\right.
 \end{equation}
 We obtain for a derivation with respect to \mass[E]\ of species \ce{E}:
 \begin{equation}
-\doverdm[E]{\fwdrate} = \fwdrate \left[
-                                \doverdm[E]{\fwdratecons} \frac{1}{\fwdratecons} +
-                                \underbrace{\frac{\scoefabs[E]}{\mass[E]}}_{\text{if \ce{E} is a reactant}}
-                              \right]
+\doverdm[E]{\fwdrate[r]} = \left\{\begin{array}{ll}
+                             \fwdrate[r] \left[\doverdm[E]{\fwdratecons[r]} \frac{1}{\fwdratecons[r]} + \frac{\scoefabs[E]}{\mass[E]}\right] & \text{if \ce{E} is a reactant} \\[5pt]
+                             \fwdrate[r] \left[\doverdm[E]{\fwdratecons[r]} \frac{1}{\fwdratecons[r]}\right] & \text{else} 
+                           \end{array}\right.
 \end{equation}
 
-For elementary process:
-\begin{equation}
-\doverdm[E]{\fwdratecons} = 0
-\end{equation}
-For a three-body process:
-\begin{equation}
-\doverdm[E]{\fwdratecons} = \kinMod \frac{\epsilon_{\ce{E}}}{\Mm[E]}
-\end{equation}
-
-Finally, for an elementary process:
-\begin{equation}
-\doverdm[E]{\fwdrate} = \left\{\begin{array}{ll}
-                        \fwdrate \frac{\scoefabs[E]}{\mass[E]} & \text{if \ce{E} is a reactant} \\
-                        0                                    & \text{if \ce{E} is not a reactant} \\
-                      \end{array}\right.
-\end{equation}
-and for a three-body process:
-\begin{equation}
-\renewcommand{\arraystretch}{1.5}
-\doverdm[E]{\fwdrate} = \left\{\begin{array}{ll}
-                        \fwdrate \left[\frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody} + \frac{\scoefabs[E]}{\mass[E]} \right] 
-                                                & \text{if \ce{E} is a reactant} \\
-                        \fwdrate \frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody} 
-                                                & \text{if \ce{E} is not a reactant} \\
-                      \end{array}\right.
-\end{equation}
 
 \subsection{Backward}
 

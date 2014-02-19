@@ -25,16 +25,16 @@
 \newcommand{\product}{\ce{P}}
 \newcommand{\tc}[1]{\ensuremath{a_{#1}}}
 %%stuff for kinetics
-\newcommand{\rcons}[1][\relax]{\optional@@sub[#1]{k}}
-\newcommand{\kinMod}          {\ensuremath{\alpha(\Temp)}}
-\newcommand{\kinModZ}         {\ensuremath{\alpha_0(\Temp)}}
-\newcommand{\kinModI}         {\ensuremath{\alpha_\infty(\Temp)}}
-\newcommand{\chemProc}        {\ensuremath{\chi(\kinMod,\conc[M])}}
-\newcommand{\rateCons}        {\ensuremath{\rcons(T,\conc[M])}}
-\newcommand{\rate} [1][\relax]{\optional@@sub[#1]{r}}
-\newcommand{\threeBody}       {\ensuremath{\sum_s \epsilon_s\conc[S]}}
-\newcommand{\FLind}           {\ensuremath{F_\text{Lind}}}
-\newcommand{\FTroe}           {\ensuremath{F_\text{Troe}}}
+\newcommand{\rcons}   [1][\relax]{\optional@@sub[#1]{k}}
+\newcommand{\kinMod}  [1][\relax]{\optional@@sub[#1]{\alpha}\ensuremath{(\Temp)}}
+\newcommand{\kinModZ}            {\ensuremath{\alpha_0(\Temp)}}
+\newcommand{\kinModI}            {\ensuremath{\alpha_\infty(\Temp)}}
+\newcommand{\chemProc}[1][\relax]{\optional@@sub[#1]{\chi}\ensuremath{(\kinMod,\conc[M])}}
+\newcommand{\rateCons}           {\ensuremath{\rcons(T,\conc[M])}}
+\newcommand{\rate}    [1][\relax]{\optional@@sub[#1]{r}}
+\newcommand{\threeBody}          {\ensuremath{\sum_s \epsilon_s\conc[S]}}
+\newcommand{\FLind}              {\ensuremath{F_\text{Lind}}}
+\newcommand{\FTroe}              {\ensuremath{F_\text{Troe}}}
 %%%% kinetics model parameter
 \newcommand{\Tref}{\ensuremath{\mathrm{T_{ref}}}}
 \newcommand{\PreExp}{\ensuremath{A}}
@@ -47,9 +47,9 @@
 \newcommand{\TroeTtwo}  {\ensuremath{T^{**}}}
 \newcommand{\TroeTthree}{\ensuremath{T^{***}}}
 \newcommand{\TroeFcent} {\ensuremath{F_\text{cent}}}
-\newcommand{\Troen}     {\ensuremath{n}}
-\newcommand{\Troed}     {\ensuremath{d}}
-\newcommand{\Troec}     {\ensuremath{c}}
+\newcommand{\Troen}     {\ensuremath{n_\text{T}}}
+\newcommand{\Troed}     {\ensuremath{d_\text{T}}}
+\newcommand{\Troec}     {\ensuremath{c_\text{T}}}
 %
 \newcommand{\conc}[1][\relax]{\ifx#1\relax\molar\else\ce{[#1]}\fi}
 \newcommand{\Mm}[1][\relax]{\optional@sub[#1]{\mathrm{M}}}
