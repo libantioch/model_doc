@@ -89,25 +89,24 @@ We obtain for a derivation with respect to \mass[E]\ of species \ce{E}:
 
 The backward rate is
 \begin{equation}
-\bkwdrate = \frac{1}{\scoef[S]}\bkwdratecons\prodProd
+\bkwdrate[r] = \bkwdratecons[r]\prodProd
 \end{equation}
-
 The backward rate constant is given by
 \begin{equation}
-\bkwdratecons = \frac{\fwdratecons}{\Eqconst}
+\bkwdratecons[r] = \frac{\fwdratecons[r]}{\Eqconst}
 \end{equation}
 
 \paragraph{Derive with respect to \Temp.}
 It makes:
 \begin{equation}
-\doverdT{\bkwdrate} = \frac{1}{\scoef[S]}\prodProd\doverdT{\bkwdratecons}
+\doverdT{\bkwdrate[r]} = \doverdT{\bkwdratecons[r]}\prodProd
 \end{equation}
 Decomposition gives
 \begin{equation}
-\doverdT{\bkwdratecons} = \doverdT{\fwdratecons}\Eqconst^{-1} - \doverdT{\Eqconst}\frac{\bkwdratecons}{\Eqconst^{2}}
+\doverdT{\bkwdratecons[r]} = \doverdT{\fwdratecons[r]}\Eqconst^{-1} - \doverdT{\Eqconst}\frac{\bkwdratecons[r]}{\Eqconst^{2}}
 \label{rateb-decomp}
 \end{equation}
-For \Eqconst, we have
+For \Eqconst (see subsection~\ref{relations}), we have
 \begin{equation}
 \begin{split}
 \doverdT{\Eqconst} & = \doverdT{\left[\left(\frac{\pz}{\Rg \Temp}\right)^{\sum_s \scoef[s]} \exp\left(-\frac{\DGibbsZ(\Temp)}{\Rg \Temp}\right)\right]} \\
@@ -119,137 +118,57 @@ The derived value of \DGibbsZ(\Temp) is easily given, see~\ref{data-thermo}
 \begin{split}
 \doverdT{\left[\frac{\DGibbsZ(\Temp)}{\Rg \Temp}\right]} 
         &= \doverdT{\left[\frac{\DenthZ(T)}{\Rg \Temp}\right]} - \doverdT{\left[\frac{\DenthZ(\Temp)}{\Rg \Temp}\right]} \\
-        &= 2\tc{0}\Temp^{-3} + \tc{1}\Temp^{-2}\left(1+\ln(\Temp)\right) + \frac{\tc{3}}{2} + 
+        &= 2\tc{0}\Temp^{-3} + \tc{1}\Temp^{-2}\left(1+\ln(\RedTemp)\right) + \frac{\tc{3}}{2} + 
            \frac{2}{3}\tc{4}\Temp + \frac{3}{4}\tc{5}\Temp^{2} + \frac{4}{5}\tc{6}\Temp^3 - \tc{8}\Temp^{-2}\\
-        &+ \tc{0}\Temp^{-3} + \tc{1}\Temp^{-2} + \tc{2}\Temp^{-1} + \tc{3} + \tc{4}\Temp + \tc{5} \Temp^{2} + \tc{6} \Temp^{3}
+        & \spacehack + \tc{0}\Temp^{-3} + \tc{1}\Temp^{-2} + \tc{2}\Temp^{-1} + \tc{3} + \tc{4}\Temp + \tc{5} \Temp^{2} + \tc{6} \Temp^{3}
 \end{split}
 \end{equation}
+with \RedTemp\ the reduced temperature: $\RedTemp = \frac{\Temp}{\Tref}$, here $\Tref = 1~\unit{K}$.
 Finally,
 \begin{equation}
 \doverdT{\left[\frac{\DGibbsZ(\Temp)}{\Rg \Temp}\right]} =
-        3\tc{0}\Temp^{-3} + \tc{1} \Temp^{-2} \left(2 + \ln(\Temp)\right) + \frac{3}{2} \tc{3} + \frac{5}{3} \tc{4} \Temp
+        3\tc{0}\Temp^{-3} + \tc{1} \Temp^{-2} \left(2 + \ln(\RedTemp)\right) + \frac{3}{2} \tc{3} + \frac{5}{3} \tc{4} \Temp
         + \frac{7}{4}\tc{5} \Temp^2 + \frac{9}{5}\tc{6} \Temp^3 - \tc{8} \Temp^{-2}
-\end{equation}
-\emph{Note:} $\ln(\Temp)$ should be understood as $\ln\left(\frac{\Temp}{\mathrm{\Temp_{ref}}}\right)$ with 
-$\mathrm{\Temp_{ref}} = 1$~K.
-
-Thus, for elementary processes
-\begin{equation}
-\begin{split}
-\doverdT{\bkwdrate} = & \frac{1}{\scoef[S]} \prodProd \\
-&\bigg[
-        \frac{\kinMod}{\Temp} \left(\frac{E_a}{\Rg \Temp} + \beta\right)\prodReac \Eqconst^{-1}
-                  - 3\tc{0}\Temp^{-3} - \tc{1} \Temp^{-2} \left(2 + \ln(\Temp)\right) - \frac{3}{2} \tc{3} \\
-&                 - \frac{5}{3} \tc{4} \Temp - \frac{7}{4}\tc{5} \Temp^2 - \frac{9}{5}\tc{6} \Temp^3 + \tc{8} \Temp^{-2} \bigg]
-\end{split}
-\end{equation}
-and for third-body processes
-\begin{equation}
-\begin{split}
-\doverdT{\bkwdrate} = & \frac{1}{\scoef[S]} \prodProd \\
-&\bigg[
-        \frac{\kinMod}{\Temp} \left(\frac{E_a}{\Rg \Temp} + \beta\right) \threeBody \Eqconst^{-1} 
-                  - 3\tc{0}\Temp^{-3} - \tc{1} \Temp^{-2} \left(2 + \ln(\Temp)\right) - \frac{3}{2} \tc{3} \\
-&                 - \frac{5}{3} \tc{4} \Temp - \frac{7}{4}\tc{5} \Temp^2 - \frac{9}{5}\tc{6} \Temp^3 + \tc{8} \Temp^{-2} \bigg]
-\end{split}
 \end{equation}
 
 \paragraph{Derivation with respect to mass.}
 Using~\ref{rateb-decomp}
 \begin{equation}
 \begin{split}
-\doverdm[E]{\bkwdratecons} & = \doverdm[E]{\fwdratecons}\Eqconst^{-1} - \doverdm[E]{\Eqconst}\frac{\bkwdratecons}{\Eqconst^{2}} \\
-                           & = \doverdm[E]{\fwdratecons}\Eqconst^{-1}
+\doverdm[E]{\bkwdratecons[r]} & = \doverdm[E]{\fwdratecons[r]}\Eqconst^{-1} - \doverdm[E]{\Eqconst}\frac{\bkwdratecons[r]}{\Eqconst^{2}} \\
+                              & = \doverdm[E]{\fwdratecons[r]}\Eqconst^{-1}
 \end{split}
 \label{rateb-decomp-m}
-\end{equation}
-thus, for elementary processes
-\begin{equation}
-\doverdm[E]{\rate} = \left\{\begin{array}{ll}
-                        \fwdrate \frac{\scoefabs[E]}{\mass[E]} \Eqconst^{-1} & \text{if \ce{E} is a reactant} \\
-                          0                                                  & \text{if \ce{E} is not a reactant} \\
-                      \end{array}\right.
-\end{equation}
-and for three-body processes
-\begin{equation}
-\renewcommand{\arraystretch}{1.5}
-\doverdm[E]{\fwdrate} = \left\{\begin{array}{ll}
-                        \fwdrate \left[\frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody} + \frac{\scoefabs[E]}{\mass[E]} \right] \Eqconst^{-1}
-                                                & \text{if \ce{E} is a reactant} \\
-                        \fwdrate \frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody} \Eqconst^{-1}
-                                                & \text{if \ce{E} is not a reactant} \\
-                      \end{array}\right.
 \end{equation}
 
 \subsection{Net rate}
 
 The net rate is
 \begin{equation}
-\rate = \fwdrate - \bkwdrate
+\rate[r] = \fwdrate[r] - \bkwdrate[r]
 \end{equation}
 thus,
 \begin{equation}
-\doverdT{\rate} = \doverdT{\fwdrate} - \doverdT{\bkwdrate}
+\doverdT{\rate[r]} = \doverdT{\fwdrate[r]} - \doverdT{\bkwdrate[r]}
 \end{equation}
 and
 \begin{equation}
-\doverdm{\rate} = \doverdm{\fwdrate} - \doverdm{\bkwdrate}
-\end{equation}
-thus, for elementary processes
-\begin{equation}
-\begin{split}
-\doverdT{\rate[{\text{net}}]} &= \frac{1}{\scoef[S]} \frac{\kinMod}{\Temp} \left(\frac{E_a}{\Rg \Temp} + \beta\right) \prodReac\\
-& -
-\frac{1}{\scoef[S]} \prodProd 
-\bigg[
-        \frac{\kinMod}{\Temp} \left(\frac{E_a}{\Rg \Temp} + \beta\right)\prodReac \Eqconst^{-1} \\
-                  & \hspace{3cm} - 3\tc{0}\Temp^{-3} - \tc{1} \Temp^{-2} \left(2 + \ln(\Temp)\right) - \frac{3}{2} \tc{3} \\
-                  & \hspace{3cm} - \frac{5}{3} \tc{4} \Temp - \frac{7}{4}\tc{5} \Temp^2 - \frac{9}{5}\tc{6} \Temp^3 + \tc{8} \Temp^{-2} \bigg]
-\end{split}
-\end{equation}
-and for three-body processes
-\begin{equation}
-\begin{split}
-\doverdT{\rate[{\text{net}}]} & = \frac{1}{\scoef[S]} \frac{\kinMod}{\Temp} \left(\frac{E_a}{\Rg \Temp} + \beta\right) \threeBody\prodReac\\
-& -
-\frac{1}{\scoef[S]} \prodProd 
-\bigg[
-        \frac{\kinMod}{\Temp} \left(\frac{E_a}{\Rg \Temp} + \beta\right)\threeBody\prodReac \Eqconst^{-1} \\
-                  & \hspace{3cm} - 3\tc{0}\Temp^{-3} - \tc{1} \Temp^{-2} \left(2 + \ln(\Temp)\right) - \frac{3}{2} \tc{3} \\
-                  & \hspace{3cm} - \frac{5}{3} \tc{4} \Temp - \frac{7}{4}\tc{5} \Temp^2 - \frac{9}{5}\tc{6} \Temp^3 + \tc{8} \Temp^{-2} \bigg]
-\end{split}
-\end{equation}
-and for the mass, elementary processes
-\begin{equation}
-\doverdm[E]{\rate} = \left\{\begin{array}{ll}
-                        \fwdrate \frac{\scoefabs[E]}{\mass[E]}\left(1-\Eqconst^{-1}\right) & \text{if \ce{E} is a reactant} \\
-                          0                                                                & \text{if \ce{E} is not a reactant} \\
-                      \end{array}\right.
-\end{equation}
-and for the three-body processes
-\begin{equation}
-\renewcommand{\arraystretch}{1.5}
-\doverdm[E]{\rate} = \left\{\begin{array}{ll}
-                        \fwdrate \left[\frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody} + \frac{\scoefabs[E]}{\mass[E]} \right] \left(1 - \Eqconst^{-1}\right)
-                                                & \text{if \ce{E} is a reactant} \\
-                        \fwdrate \frac{\epsilon_{\ce{E}}}{\Mm[E]\threeBody}  \left(1 - \Eqconst^{-1}\right)
-                                                & \text{if \ce{E} is not a reactant} \\
-                      \end{array}\right.
+\doverdm{\rate[r]} = \doverdm{\fwdrate[r]} - \doverdm{\bkwdrate[r]}
 \end{equation}
 
-Back to \mdot:
+\subsection{Back to \texorpdfstring{\mdot}{omega dot}}
 \begin{equation}
 \begin{split}
 \mdot[S] &= \Mm[S] \doverdt{\ce{S}} \\
-         &= \Mm[S] \scoef[S]\rate
+         &= \Mm[S] \sum_{\text{reactions}}\scoef[r,S]\rate[r]
 \end{split}
 \end{equation}
 
 \begin{equation}
-\renewcommand{\arraystretch}{1.5}
-\left\{\begin{array}{l}
-\doverdT{\mdot[S]} = \Mm[S] \scoef[S]\doverdT{\rate}\\
-\doverdm[E]{\mdot[S]} = \Mm[S] \scoef[S]\doverdm[E]{\rate}
-\end{array}\right.
+\doverdT{\mdot[S]} = \Mm[S] \sum_{\text{reactions}}\scoef[r,S]\doverdT{\rate[r]}
+\end{equation}
+and
+\begin{equation}
+\doverdm[E]{\mdot[S]} = \Mm[S] \sum_{\text{reactions}}\scoef[r,S]\doverdm[E]{\rate[r]}
 \end{equation}
 
