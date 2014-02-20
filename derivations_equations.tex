@@ -55,7 +55,7 @@ with
 The differentiates are straightforward, just look at Tab.~\ref{antioch::kinMod}
 and \ref{antioch::chemProc}
 
-\paragraph{To derive with respect to \Temp.}
+\subsubsection{To derive with respect to \Temp}
 For any species \ce{S} participating in the reaction.
 \begin{equation}
 \begin{split}
@@ -64,7 +64,7 @@ For any species \ce{S} participating in the reaction.
 \end{split}
 \end{equation}
 
-\paragraph{To derive with respect to \mass.}
+\subsubsection{To derive with respect to \mass}
 Knowing that $\conc = \frac{\mass}{\Mm}$, we substitute in~\ref{ratefDef}
 \begin{equation}
 \fwdrate[r] = \fwdratecons[r] \prod_\text{reactants}  \left(\frac{\mass[\reac]}{\Mm[\reac]}\right)^{\scoefabs[\reac]}
@@ -96,7 +96,7 @@ The backward rate constant is given by
 \bkwdratecons[r] = \frac{\fwdratecons[r]}{\Eqconst}
 \end{equation}
 
-\paragraph{Derive with respect to \Temp.}
+\subsubsection{Derive with respect to \Temp}
 It makes:
 \begin{equation}
 \doverdT{\bkwdrate[r]} = \doverdT{\bkwdratecons[r]}\prodProd
@@ -106,21 +106,22 @@ Decomposition gives
 \doverdT{\bkwdratecons[r]} = \doverdT{\fwdratecons[r]}\Eqconst^{-1} - \doverdT{\Eqconst}\frac{\bkwdratecons[r]}{\Eqconst^{2}}
 \label{rateb-decomp}
 \end{equation}
-For \Eqconst (see subsection~\ref{relations}), we have
+For \Eqconst we have \eqref{therm:K_therm}
 \begin{equation}
 \begin{split}
 \doverdT{\Eqconst} & = \doverdT{\left[\left(\frac{\pz}{\Rg \Temp}\right)^{\sum_s \scoef[s]} \exp\left(-\frac{\DGibbsZ(\Temp)}{\Rg \Temp}\right)\right]} \\
                    & = \Eqconst\left[-\frac{\sum_s\scoef[s]}{\Temp} - \doverdT{\left[\frac{\DGibbsZ(\Temp)}{\Rg \Temp}\right]}\right]
 \end{split}
 \end{equation}
-The derived value of \DGibbsZ(\Temp) is easily given, see~\ref{data-thermo}
+The derived value of \DGibbsZ(\Temp) is easily given, 
+see Eq.~\ref{therm:DH} and \ref{therm:DS}:
 \begin{equation}
 \begin{split}
 \doverdT{\left[\frac{\DGibbsZ(\Temp)}{\Rg \Temp}\right]} 
-        &= \doverdT{\left[\frac{\DenthZ(T)}{\Rg \Temp}\right]} - \doverdT{\left[\frac{\DenthZ(\Temp)}{\Rg \Temp}\right]} \\
-        &= 2\tc{0}\Temp^{-3} + \tc{1}\Temp^{-2}\left(1+\ln(\RedTemp)\right) + \frac{\tc{3}}{2} + 
-           \frac{2}{3}\tc{4}\Temp + \frac{3}{4}\tc{5}\Temp^{2} + \frac{4}{5}\tc{6}\Temp^3 - \tc{8}\Temp^{-2}\\
-        & \spacehack + \tc{0}\Temp^{-3} + \tc{1}\Temp^{-2} + \tc{2}\Temp^{-1} + \tc{3} + \tc{4}\Temp + \tc{5} \Temp^{2} + \tc{6} \Temp^{3}
+        & = \doverdT{\left[\frac{\DenthZ(T)}{\Rg \Temp}\right]} - \doverdT{\left[\frac{\DentrZ(\Temp)}{\Rg}\right]} \\
+        & = 2\tc{0}\Temp^{-3} + \tc{1}\Temp^{-2}\left(1+\ln(\RedTemp)\right) + \frac{\tc{3}}{2} + 
+           \frac{2}{3}\tc{4}\Temp + \frac{3}{4}\tc{5}\Temp^{2} + \frac{4}{5}\tc{6}\Temp^3 \\ 
+        &  \spacehack - \tc{8}\Temp^{-2} + \tc{0}\Temp^{-3} + \tc{1}\Temp^{-2} + \tc{2}\Temp^{-1} + \tc{3} + \tc{4}\Temp + \tc{5} \Temp^{2} + \tc{6} \Temp^{3}
 \end{split}
 \end{equation}
 with \RedTemp\ the reduced temperature: $\RedTemp = \frac{\Temp}{\Tref}$, here $\Tref = 1~\unit{K}$.
@@ -131,7 +132,7 @@ Finally,
         + \frac{7}{4}\tc{5} \Temp^2 + \frac{9}{5}\tc{6} \Temp^3 - \tc{8} \Temp^{-2}
 \end{equation}
 
-\paragraph{Derivation with respect to mass.}
+\subsubsection{Derivation with respect to \mass}
 Using~\ref{rateb-decomp}
 \begin{equation}
 \begin{split}

@@ -1,7 +1,8 @@
-\documentclass{article}
+\documentclass[twoside]{report}
 \usepackage{booktabs,geometry,amsmath,multicol,multirow,array,graphicx}
 \usepackage[autolanguage]{numprint}
 \usepackage[version=3,arrows=pgf-filled]{mhchem}
+\usepackage{fancyhdr}
 \usepackage[linkcolor=black,colorlinks=true,citecolor=black,urlcolor=blue]{hyperref}
 \makeatletter
 \input{preamble}
@@ -15,10 +16,16 @@
 \maketitle
 \tableofcontents
 
-\section{Intro}
+\chapter{Intro}
 
-\subsection{General stuff on libantioch}
+\section{This manual}
 \input{generalities}
+
+\chapter{Let's go physical}
+\chaptermark{\ANTIOCHPhys}
+\label{Antioch:physics}
+
+\section{Preliminary knownledge}
 
 \subsection{Notations for this manual}
 \input{notation}
@@ -32,9 +39,11 @@
 \input{relation}
 
 \section{Chemical kinetics}
+
 \subsection{What is a reaction?}
 \label{kinetics_gen}
 \input{kinetics_generalities}
+
 \subsection{Kinetics computing}
 \label{kinetics_comput}
 \input{kinetics_computations}
@@ -43,24 +52,37 @@
 \label{derivations}
 \input{derivations_equations}
 
-\section{Let's solve some problems}
+
+\chapter{Let's go technical}
+\chaptermark{\ANTIOCHTech}
+\label{Antioch:technique}
+
+\section{So many templates}
+
+\section{Off to the GPU}
+
+\section{Don't forget \Doxygen}
+
+\chapter{Let's go practical}
+\chaptermark{\ANTIOCHPrac}
+\label{Antioch:practice}
+
+\section{Let's get data}
+
 \subsection{Data}
 \input{kinetics_data}
 
 \section{First problem: kinetics regression}
 \input{kinetics_regression}
 
-\section{Second problem: kinetics equilibrium}
-\input{kinetics_equilibrium}
-
 \appendix
-\section{Demonstrations}
+\chapter{Demonstrations}
 \label{demo}
 \input{demonstrations}
 
-\section{Program flow}
+\chapter{Program flow}
 \label{progflow}
-\subsection{Kinetics}
+\section{Kinetics}
 \label{progflow:kinetics}
 \input{prog_flow_kinetics}
 

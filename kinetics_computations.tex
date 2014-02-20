@@ -251,3 +251,82 @@ $\Troealpha     = \numprint{0.405}$,
 $\TroeTone      = \numprint{69.6}~\unit{K}$ and
 $\TroeTthree    = \numprint{1120.0}~\unit{K}$.}
 \end{figure}
+
+\subsection{Thermodynamics}
+
+\antioch\ uses the NASA polynoms.
+These relations are used in the standard state, \textit{i.e.} $\Press = \pz = 10^5~\unit{Pa}$.
+Thus what is means is that, for any quantity $A$ (\enth, \entr, \dots), $A^0$ is $A$ at
+\pz.
+The relations are:
+\begin{equation}
+\frac{\enthZ(T)}{\Rg T} = - \tc{0} T^{-2} 
+                       + \tc{1} T^{-1} \ln(T)
+                       + \tc{2} 
+                       + \tc{3} \frac{T}{2}
+                       + \tc{4} \frac{T^2}{3}
+                       + \tc{5} \frac{T^3}{4}
+                       + \tc{6} \frac{T^4}{5}
+                       + \tc{8} T^{-1}
+\label{therm:DH}
+\end{equation}
+and
+\begin{equation}
+\frac{\entrZ(T)}{\Rg}    = - \tc{0} \frac{T^{-2}}{2}
+                       - \tc{1} T^{-1}
+                       + \tc{2} \ln(T)
+                       + \tc{3} T
+                       + \tc{4} \frac{T^2}{2}
+                       + \tc{5} \frac{T^3}{3}
+                       + \tc{6} \frac{T^4}{4}
+                       + \tc{9}
+\label{therm:DS}
+\end{equation}
+%
+Table~\ref{therm:unit} gives the units of the parameters.
+\begin{table}
+\centering
+\begin{tabular}{cccc}\toprule
+Parameter & homegeneous SI unit &
+Parameter & homegeneous SI unit \\\midrule
+\tc{0} & \unit{K^2}         &
+\tc{1} & \unit{K}           \\
+\tc{2} & \nounit            &
+\tc{3} & \unit{K^{-1}}      \\
+\tc{4} & \unit{K^{-2}}      &
+\tc{5} & \unit{K^{-3}}      \\
+\tc{6} & \unit{K^{-4}}      &
+\tc{7} & not used, always 0 \\
+\tc{8} & \unit{K}           &
+\tc{9} & \nounit            \\
+\bottomrule
+\end{tabular}
+\caption{\label{therm:unit}Units of the parameters of the NASA polynoms, as defined in
+Eq.~\ref{therm:DH} and \ref{therm:DS}.}
+\end{table}
+%
+These equations are easily differentiables:
+\begin{equation}
+\doverdT{\left(\frac{\enthZ(T)}{\Rg T}\right)} 
+                     =   2 \tc{0} T^{-3} 
+                       - \tc{1} T^{-2} \ln(T)
+                       + \tc{1} T^{-2}
+                       + \tc{3} \frac{1}{2}
+                       + \tc{4} \frac{2}{3} T
+                       + \tc{5} \frac{3}{4} T^2
+                       + \tc{6} \frac{4}{5} T^3
+                       - \tc{8} T^{-2}
+\label{therm:dDH_dT}
+\end{equation}
+and
+\begin{equation}
+\doverdT{\left(\frac{\entrZ(T)}{\Rg}\right)} 
+                     =   \tc{0} T^{-3}
+                       + \tc{1} T^{-2}
+                       + \tc{2} T^{-1}
+                       + \tc{3}
+                       + \tc{4} T
+                       + \tc{5} T^2
+                       + \tc{6} T^3
+\label{therm:dDS_dT}
+\end{equation}

@@ -6,6 +6,8 @@ Thus chemical kinetics is the mathematical model
 to calculate the rate at which the molecules disappear and
 appear.
 
+\subsubsection{Going forward}
+
 \antioch's kinetics is based on the elementary step
 hypothesis. It means that, as far as the kinetics is
 concerned, every reaction is an elementary step:
@@ -56,3 +58,36 @@ a kinetics model:
 \begin{equation}
 \rateCons = \chemProc
 \end{equation}
+
+\subsubsection{Going backward}
+
+Usually, a reaction will be reversible, which means, if we consider
+that reaction~\ref{genericX} is reversible, we should note it:
+\begin{chemicalEquation}
+\ce{\scoefabs[A] A + \scoefabs[B] B <=>[\fwdratecons][\bkwdratecons] \scoefabs[C] C + \scoefabs[D] D}
+\label{genericXrev}
+\end{chemicalEquation}
+with \fwdratecons\ the forward rate constant and \bkwdratecons\ the backward rate constant.
+In a given physico-chemical environment, this reaction will eventually reach
+steady state, characterized by an equilibrium constant \Eqconst. 
+This equilibrium constant is given by
+\begin{equation}
+\Eqconst[r] = \frac{\fwdratecons[r]}{\bkwdratecons[r]}
+\label{therm:K_kin}
+\end{equation}
+for a reaction $r$.
+It is possible to estimate it from thermodynamics considerations, 
+using the relation
+\begin{equation}
+\Eqconst[r] = \left(\frac{\pz}{\Rg \Temp}\right)^\gamma \exp\left(-\frac{\DGibbsZ[r](\Temp)}{\Rg \Temp}\right)
+\label{therm:K_therm}
+\end{equation}
+The demonstrations are given in appendix~\ref{demo-eq_kin} and \ref{demo-eq_therm}. 
+Thus the backward rate constant is therefore known given:
+\begin{itemize}
+\item the forward rate constant;
+\item the thermodynamics of the molecules.
+\end{itemize}
+
+\subsection{Going nowhere: steady state, a.k.a equilibrium}
+\input{kinetics_equilibrium}

@@ -1,8 +1,55 @@
 %first thing first
 \graphicspath{{./figs/}}
-\newcommand{\antioch}{\texttt{antioch}}
+\newcommand{\font@library}[1]{\texttt{#1}}
+\newcommand{\font@prog}[1]{\textsf{#1}}
+\newcommand{\make@program}[1]{%
+\expandafter\gdef\csname#1\endcsname{\font@prog{#1}}%
+}
+\newcommand{\antioch}{\font@library{Antioch}}
+\newcommand{\Antioch}{\font@library{Antioch}}
+\newcommand{\ANTIOCH}{\font@library{A}
+                      \font@library{N}ew
+                      \font@library{T}emplated
+                      \font@library{I}mplementation
+                      \font@library{O}f
+                      \font@library{C}hemistry
+                      \font@library{H}ydrodynamics}
+\newcommand{\ANTIOCHPhys}{\Antioch's
+                         \font@library{N}oble
+                         \font@library{T}ry to
+                         \font@library{I}mitate the
+                         \font@library{O}rdered
+                         \font@library{C}osmos
+                         \font@library{H}umbly}
+\newcommand{\ANTIOCHTech}{\Antioch's
+                         \font@library{N}ot
+                         \font@library{T}emplated
+                         \font@library{I}rresponsibly, this
+                         \font@library{O}utstanding
+                         \font@library{C}ode is
+                         \font@library{H}appiness}
+\newcommand{\ANTIOCHPrac}{\Antioch\
+                         \font@library{N}ewbies'
+                         \font@library{T}empting
+                         \font@library{I}nvitation to
+                         \font@library{O}pen this
+                         \font@library{C}hapter with
+                         \font@library{H}aste}
 \renewcommand{\theequation}{Eq.~\thesection-\arabic{equation}}
+\renewcommand{\theequation}{Eq.~\thesection-\arabic{equation}}
+\make@program{Doxygen}
+%%
 \@addtoreset{equation}{section}
+%%% beauty here
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection~\sl #1}}
+\geometry{headheight=2cm}
+\fancyhead{} %empty
+\fancyhead[LO]{\parbox[b]{0.45\textwidth}{\leftmark}}
+\fancyhead[RE]{\parbox[b]{0.45\textwidth}{\raggedleft\leftmark}}
+\fancyhead[LE]{\parbox[b]{0.45\textwidth}{\rightmark}}
+\fancyhead[RO]{\parbox[b]{0.45\textwidth}{\raggedleft\rightmark}}
 %% a little hack
 \newcommand{\spacehack}{\ensuremath{\textcolor{white}{=}}}
 %internal stuff
