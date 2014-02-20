@@ -110,6 +110,35 @@
 \newcommand{\nounit}{\unit{no~unit}}
 \newcommand{\file}[1]{\textsf{#1}}
 \newcommand{\prog}[1]{\texttt{#1}}
+%%%%%
+\newcommand{\reactionEq}[1]{%
+\ce{#1}%
+}
+\newcommand{\ArrjPar}[4]{%
+\texttt{Arrhenius} model\\*[2pt]
+\null\hspace{12pt}$\left\{\begin{array}{l@{~=~}l}
+\PreExp & #1~\unit{#2} \\
+\AcEn   & #3~\unit{#4} \\
+\end{array}\right.$%
+}
+\newcommand{\KooijPar}[5]{%
+\texttt{Kooij} model\\*[2pt]
+\null\hspace{12pt}$\left\{\begin{array}{l@{~=~}l}
+\PreExp & #1~\unit{#2} \\
+\Power  & #3           \\
+\AcEn   & #4~\unit{#5} \\
+\end{array}\right.$%
+}
+\newcommand{\TBcoeff}[2]{%
+\ensuremath{\epsilon_{\ce{#1}} = #2}%
+}
+\newcommand{\reactionParameter}[3][\null]{%
+\vspace{5pt minus 3pt}
+\begin{minipage}{5.5cm}
+\null\hfill#2\hfill\null\\[3pt]
+#3\\[5pt]
+#1%
+\end{minipage}}
 %% chemistry equation 
 \newcounter{chemeq}
 \setcounter{chemeq}{0}
