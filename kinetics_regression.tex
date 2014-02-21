@@ -1,86 +1,89 @@
-\def\MNN{$28.0160$}
-\def\MOO{$32.0000$}
-\def\MNO{$30.0080$}
-\def\MN{$14.0080$}
-\def\MO{$16.0000$}
-\def\Mmix{$21.3533$}
-\def\cmix{$8.01816$}
-\def\xNN{$0.152436$}
-\def\xOO{$0.133458$}
-\def\xNO{$0.142317$}
-\def\xN{$0.304873$}
-\def\xO{$0.266916$}
-\def\cNN{$1.22226$}
-\def\cOO{$1.07009$}
-\def\cNO{$1.14112$}
-\def\cN{$2.44452$}
-\def\cO{$2.14017$}
+Let's face it, \Antioch\ is mainly about calculating
+efficiently, with elegance and a sexy attitude, rates,
+be them with respect to mass or molar concentration. 
 
-\renewcommand{\arraystretch}{1.2}
-\noindent
-\begin{tabular}{lcccccc}\toprule
-                 & \ce{N2}    & \ce{O2}    & \ce{NO}     & \ce{N}      & \ce{O} & mixture\\\midrule
-$M$ (\unit{g\,mol^{-1}})
-                 &  \MNN      &  \MOO      & \MNO        & \MN         & \MO    & \Mmix \\
-$y$ (--)         &  0.2       & 0.2        & 0.2         & 0.2         & 0.2    &  1 \\
-$x$ (--)         & \xNN       & \xOO       & \xNO        & \xN         & \xO    &  1 \\
-$c$ (\unit{mol\,m^{-3}})
-                 & \cNN       & \cOO       & \cNO        & \cN         & \cO    & \cmix
-\\\bottomrule
-\end{tabular}
+The first thing to clear out is the template choice. 
+\Antioch\ is very suple about this, 
+The objects we will need are
+a \prog{ReactionSet} and a \prog{KineticsEvaluator}. We will
+use as \prog{double} a \prog{double} and as vector the standard 
+\prog{std::vector< >} 
 
-\def\epsk{$23.0821$}
-\def\epskk{$26.3569$}
-\def\epskkk{$128.26$}
-\def\k{$2.36458\,10^{-21}~\unit{s^{-1}}$}
-\def\kk{$6.06428\,10^{-6}~\unit{s^{-1}}$}
-\def\kkk{$9.13732\,10^{-11}~\unit{s^{-1}}$}
-\def\kkkk{$4.63777\,10^{-5}~\unit{m^3\,mol^{-1}\,s^{-1}}$}
-\def\kkkkk{$20.4719~\unit{m^3\,mol^{-1}\,s^{-1}}$}
-\def\K{$2.95812\,10^{-26}~\unit{mol\,m^{-3}}$}
-\def\KK{$1.31826\,10^{-10}~\unit{mol\,m^{-3}}$}
-\def\KKK{$6.56396\,10^{-16}~\unit{mol\,m^{-3}}$}
-\def\KKKK{$4.5066\,10^{-11}$}
-\def\KKKKK{$4.9793\,10^{-6}$}
-\def\kb{$7.99355\,10^{4}$}
-\def\kbb{$4.60026\,10^{4}$}
-\def\kbbb{$1.39204\,10^{5}$}
-\def\kbbbb{$1.02911\,10^{6}$}
-\def\kbbbbb{$4.11139\,10^{6}$}
+\begin{verbatim}
+// C++
+#include <string>
+#include <vector>
 
-\def\ds{$15.8623$}
-\def\dss{$15.9271$}
-\def\dsss{$14.3647$}
-\def\dssss{$1.49763$}
-\def\dsssss{$-1.56249$}
-\def\de{$76.7267$}
-\def\dee{$40.7584$}
-\def\deee{$51.4061$}
-\def\deeee{$25.3205$}
-\def\deeeee{$10.6477$}
-\def\g{60.8844}
-\def\gg{24.8313}
-\def\ggg{37.0415}
-\def\gggg{23.8229}
-\def\ggggg{12.2102}
-\noindent
-\begin{tabular}{lccc}\toprule
-      &  $\frac{\DenthZ}{\Rg T}$ (\nounit) & $\frac{\DentrZ}{\Rg}$ (\nounit) & $\frac{\DGibbsZ}{\Rg T}$ (\nounit)\\\midrule
-$r_1$ & \de     & \ds     & \g      \\
-$r_2$ & \dee    & \dss    & \gg     \\
-$r_3$ & \deee   & \dsss   & \ggg    \\
-$r_4$ & \deeee  & \dssss  & \gggg   \\
-$r_5$ & \deeeee & \dsssss & \ggggg  
-\\\bottomrule
-\end{tabular}
+// Antioch
+#include "antioch/vector_utils.h"
 
-\noindent
-\begin{tabular}{lcccc}\toprule
-      & $\sum_s \epsilon_s \molar[s]$ (\unit{mol\,m^{-1}}) & \fwdrate & \Eqconst & \bkwdrate (\unit{m^3\,mol^{-1}\,s^{-1}})\\\midrule
-$r_1$ & \epsk                   & \k     & \K     & \kb\\
-$r_2$ & \epskk                  & \kk    & \KK    & \kbb\\
-$r_3$ & \epskkk                 & \kkk   & \KKK   & \kbbb\\
-$r_4$ & -                       & \kkkk  & \KKKK  & \kbbbb\\
-$r_5$ & -                       & \kkkkk & \KKKKK & \kbbbbb
-\\\bottomrule
-\end{tabular}
+#include "antioch/antioch_asserts.h"
+#include "antioch/chemical_species.h"
+#include "antioch/chemical_mixture.h"
+#include "antioch/reaction_set.h"
+#include "antioch/read_reaction_set_data_xml.h"
+#include "antioch/cea_thermo.h"
+#include "antioch/kinetics_evaluator.h"
+
+int compute_rates(const std::string& input_name,
+  std::vector<double> & omega_dot,
+  std::vector<double> & domega_dot_dT,
+  std::vector<std::vector<double> > & domega_dot_drho_s)
+{
+  std::vector<std::string> species_str_list;
+  const unsigned int n_species = 5;
+  species_str_list.reserve(n_species);
+  species_str_list.push_back( "N2" );
+  species_str_list.push_back( "O2" );
+  species_str_list.push_back( "N" );
+  species_str_list.push_back( "O" );
+  species_str_list.push_back( "NO" );
+
+  Antioch::ChemicalMixture<double> chem_mixture( species_str_list );
+  Antioch::ReactionSet<double> reaction_set( chem_mixture );
+  Antioch::CEAThermodynamics<double> thermo( chem_mixture );
+
+  Antioch::read_reaction_set_data_xml<double>( input_name, true, 
+                                               reaction_set );
+
+  const double T = 1500.0; // K
+  const double P = 1.0e5; // Pa
+
+  // Mass fractions
+  std::vector<double> Y(n_species,0.2);
+
+  const double R_mix = chem_mixture.R(Y); //get R_tot in J.kg-1.K-1
+
+  const double rho = P/(R_mix*T); // kg.m-3
+
+  std::vector<double> molar_densities(n_species,0.0);
+  chem_mixture.molar_densities(rho,Y,molar_densities);
+
+  std::vector<double> h_RT_minus_s_R(n_species);
+  std::vector<double> dh_RT_minus_s_R_dT(n_species);
+
+  typedef typename Antioch::CEAThermodynamics<double>::template 
+                Cache<double> Cache;
+  thermo.h_RT_minus_s_R(Cache(T),h_RT_minus_s_R);
+  thermo.dh_RT_minus_s_R_dT(Cache(T),dh_RT_minus_s_R_dT);
+
+  Antioch::KineticsEvaluator<double> kinetics( reaction_set, 0 );
+
+  omega_dot.resize(n_species,0.L);
+  domega_dot_dT(n_species,0.L);
+  domega_dot_drho_s(n_species);
+  for( unsigned int s = 0; s < n_species; s++ )
+    {
+      domega_dot_drho_s[s].resize(n_species);
+    }
+  
+  kinetics.compute_mass_sources( T, molar_densities, 
+                                 h_RT_minus_s_R, omega_dot);
+
+  kinetics.compute_mass_sources_and_derivs( T, molar_densities, 
+                                            h_RT_minus_s_R, dh_RT_minus_s_R_dT,
+                                            omega_dot, domega_dot_dT, 
+                                            domega_dot_drho_s );
+  return 0;
+}
+\end{verbatim}
