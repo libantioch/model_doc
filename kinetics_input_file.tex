@@ -155,6 +155,65 @@ Let's consider a reaction closely:
       <products>O2:1 N:1</products>
     </reaction>
 \end{verbatim}
+%
+\begin{table}
+\centering
+\begin{tabular}{cccc}\toprule
+Parameter         & keyword(s)              & Default value  & Type\\\midrule
+Chemical reaction & \verb!reaction!         &                & environment \\
+Chemical process  & \verb!type!             & Elementary     & attribute   \\
+Elementary        & \verb!Elementary!       &                & value       \\
+Duplicate         & \verb!Duplicate!        &                & value       \\
+Three-body        & \verb!ThreeBody! or
+                    \verb!threeBody!        &                & value       \\
+Lindemann falloff & \verb!LindemannFalloff! &                & value       \\
+Troe Falloff      & \verb!TroeFalloff!      &                & value       \\[5pt]
+id                & \verb!id!               &                & attribute   \\
+Reversible?       & \verb!reversible!       & yes            & attribute   \\[5pt]
+Chemical equation & \verb!equation!         &                & environment \\
+Reactants         & \verb!reactants!        &                & environment \\
+Products          & \verb!products!         &                & environment \\[5pt]
+Rate constant     & \verb!rateCoeff!        &                & environment \\
+Rate constant's name
+                  & \verb!name!             &                & attribute   \\
+\kinModZ          & \verb!k0!               &                & value       \\
+Efficiencies      & \verb!efficiency!       & 1.0            & environment \\[5pt]
+Hercourt-Essen    & \verb!HercourtEssen!    &                & environment \\
+Arrhenius         & \verb!Arrhenius!        &                & environment \\
+Berthelot         & \verb!Berthelot!        &                & environment \\
+Berthelot Hercourt-Essen
+                  & \verb!BerthelotHercourtEssen!  &         & environment \\
+Kooij             & \verb!Kooij!            &                & environment \\
+Van't Hoff        & \verb!VantHoff!         &                & environment \\
+Photochemistry    & \verb!photochemistry!   &                & environment \\[5pt]
+\Tref             & \verb!Tref!             & 1~\unit{K}     & environment \\
+\PreExp           & \verb!A!                &                & environment \\
+\Power            & \verb!b!                &                & environment \\
+\AcEn             & \verb!E!                &                & environment \\
+\BerthExp         & \verb!D!                &                & environment \\
+\wavelength       & \verb!lambda!           &                & environment \\
+\crosssection     & \verb!cross_section!    &                & environment \\[5pt]
+Unit              & \verb!units!            & see Tab. \ref{unit:default} 
+                                                             & attribute \\
+\bottomrule
+\end{tabular}
+\caption{\label{antioch:keyword_reading}Keyword for the \texttt{xml} input file.}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{lcccccc}\toprule
+                   & \verb!A!                                        & \verb!b! & \verb!E!             & \verb!D!       & \verb!lambda! & \verb!cross_section! \\\midrule
+Elementary         & \unit{(m^3\,mol^{-1})^{\orderReac - 1}\,s^{-1}} & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &  \unit{nm}    &  \unit{cm^2\,nm^{-1}} \\
+Duplicate          & \unit{(m^3\,mol^{-1})^{\orderReac - 1}\,s^{-1}} & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
+ThreeBody          & \unit{(m^3\,mol^{-1})^{\orderReac}\,s^{-1}}     & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
+Falloff (\kinModZ) & \unit{(m^3\,mol^{-1})^{\orderReac}\,s^{-1}}     & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
+Falloff (\kinModI) & \unit{(m^3\,mol^{-1})^{\orderReac - 1}\,s^{-1}} & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
+\bottomrule
+\end{tabular}
+\caption{\label{unit:default}Default units given to the parameters by \Antioch\ 
+if not provided in the input file.}
+\end{table}
 
 Let's build it together, asking and answering every question that
 arises along the way.
@@ -285,64 +344,5 @@ as bold as to provide a falloff without precision as to what rate
 constant is the low pressure limit, the so-called \kinModZ, then
 \Antioch\ will consider that the first one encountered is the
 low-pressure limit.
-
-\begin{table}
-\centering
-\begin{tabular}{cccc}\toprule
-Parameter         & keyword(s)              & Default value  & Type\\\midrule
-Chemical reaction & \verb!reaction!         &                & environment \\
-Chemical process  & \verb!type!             & Elementary     & attribute   \\
-Elementary        & \verb!Elementary!       &                & value       \\
-Duplicate         & \verb!Duplicate!        &                & value       \\
-Three-body        & \verb!ThreeBody! or
-                    \verb!threeBody!        &                & value       \\
-Lindemann falloff & \verb!LindemannFalloff! &                & value       \\
-Troe Falloff      & \verb!TroeFalloff!      &                & value       \\[5pt]
-id                & \verb!id!               &                & attribute   \\
-Reversible?       & \verb!reversible!       & yes            & attribute   \\[5pt]
-Chemical equation & \verb!equation!         &                & environment \\
-Reactants         & \verb!reactants!        &                & environment \\
-Products          & \verb!products!         &                & environment \\[5pt]
-Rate constant     & \verb!rateCoeff!        &                & environment \\
-Rate constant's name
-                  & \verb!name!             &                & attribute   \\
-\kinModZ          & \verb!k0!               &                & value       \\
-Efficiencies      & \verb!efficiency!       & 1.0            & environment \\[5pt]
-Hercourt-Essen    & \verb!HercourtEssen!    &                & environment \\
-Arrhenius         & \verb!Arrhenius!        &                & environment \\
-Berthelot         & \verb!Berthelot!        &                & environment \\
-Berthelot Hercourt-Essen
-                  & \verb!BerthelotHercourtEssen!  &         & environment \\
-Kooij             & \verb!Kooij!            &                & environment \\
-Van't Hoff        & \verb!VantHoff!         &                & environment \\
-Photochemistry    & \verb!photochemistry!   &                & environment \\[5pt]
-\Tref             & \verb!Tref!             & 1~\unit{K}     & environment \\
-\PreExp           & \verb!A!                &                & environment \\
-\Power            & \verb!b!                &                & environment \\
-\AcEn             & \verb!E!                &                & environment \\
-\BerthExp         & \verb!D!                &                & environment \\
-\wavelength       & \verb!lambda!           &                & environment \\
-\crosssection     & \verb!cross_section!    &                & environment \\[5pt]
-Unit              & \verb!units!            & see Tab. \ref{unit:default} 
-                                                             & attribute \\
-\bottomrule
-\end{tabular}
-\caption{\label{antioch:keyword_reading}Keyword for the \texttt{xml} input file.}
-\end{table}
-
-\begin{table}
-\centering
-\begin{tabular}{lcccccc}\toprule
-                   & \verb!A!                                        & \verb!b! & \verb!E!             & \verb!D!       & \verb!lambda! & \verb!cross_section! \\\midrule
-Elementary         & \unit{(m^3\,mol^{-1})^{\orderReac - 1}\,s^{-1}} & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &  \unit{nm}    &  \unit{cm^2\,nm^{-1}} \\
-Duplicate          & \unit{(m^3\,mol^{-1})^{\orderReac - 1}\,s^{-1}} & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
-ThreeBody          & \unit{(m^3\,mol^{-1})^{\orderReac}\,s^{-1}}     & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
-Falloff (\kinModZ) & \unit{(m^3\,mol^{-1})^{\orderReac}\,s^{-1}}     & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
-Falloff (\kinModI) & \unit{(m^3\,mol^{-1})^{\orderReac - 1}\,s^{-1}} & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
-\bottomrule
-\end{tabular}
-\caption{\label{unit:default}Default units given to the parameters by \Antioch\ 
-if not provided in the input file.}
-\end{table}
 
 Congratulations, you have a nice input file.

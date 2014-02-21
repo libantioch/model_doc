@@ -1,17 +1,23 @@
 %first thing first
 \graphicspath{{./figs/}}
 %%%% meta-meta-function
-\newcommand{\make@}[2]{%
-\expandafter\gdef\csname font@#1\endcsname##1{% create font@something macro
-{\csname#2\endcsname{##1}}%
+\newcommand{\make@}[3][upshape]{%
+\expandafter\gdef\csname font@#2\endcsname##1{% create font@something macro
+{\csname#1\endcsname\csname#3\endcsname{##1}}%
 }%
-\expandafter\gdef\csname make@#1\endcsname##1{% create make@something meta macro
-\expandafter\gdef\csname ##1\endcsname{\csname font@#1\endcsname{##1}}%
+\expandafter\gdef\csname make@#2\endcsname##1{% create make@something meta macro
+\expandafter\gdef\csname ##1\endcsname{\csname font@#2\endcsname{##1}}%
 }
+\expandafter\gdef\csname#2\endcsname##1{\csname font@#2\endcsname{##1}}%create the \something macro
 }
+%% meta font
+\newcommand{\prog@type}[1]{\textcolor{green!60!black}{\object{#1}}}
 %% meta function
 \make@{program}{sf}
 \make@{library}{tt}
+\make@[bf]{object}{tt}
+\make@{file}{sf}
+\make@{prog}{prog@type}
 %% macros
 \make@program{Doxygen}
 \make@library{Antioch}
@@ -22,6 +28,15 @@
 \make@library{MetaPhysicL}
 \make@library{GRVY}
 \make@library{EIGEN}
+%% for tutorial
+\make@object{ReactionSet}
+\make@object{KineticsEvaluator}
+\make@object{ChemicalMixture}
+\make@object{CEAThermodynamics}
+\make@prog{double}
+\newcommand{\stdvector}{\prog{std::vector< >}}
+\newcommand{\stdstring}{\prog{std::string}}
+%
 %%% versions
 \newcommand{\version}[3]{%
 \setcounter{vmajor}{#1}
@@ -101,6 +116,7 @@
 \newcommand{\pz}{\ensuremath{\mathrm{p^0}}}
 \newcommand{\Tz}{\ensuremath{\mathrm{T^0}}}
 \newcommand{\eq}{\ensuremath{\text{eq}}}
+\newcommand{\Rmix}{\ensuremath{\mathrm{R}_\text{mix}}}
 \newcommand{\reac}{\ce{R}}
 \newcommand{\product}{\ce{P}}
 \newcommand{\tc}[1]{\ensuremath{a_{#1}}}
@@ -190,8 +206,6 @@
 \newcommand{\dd}{\ensuremath{\mathrm{d}}}
 \newcommand{\unit}[1]{\ensuremath{\mathtt{#1}}}
 \newcommand{\nounit}{\unit{no~unit}}
-\newcommand{\file}[1]{\textsf{#1}}
-\newcommand{\prog}[1]{\texttt{#1}}
 %%%%%
 \newcommand{\reactionEq}[1]{%
 \ce{#1}%

@@ -1,14 +1,17 @@
+\subsection{The code}
+
 Let's face it, \Antioch\ is mainly about calculating
 efficiently, with elegance and a sexy attitude, rates,
 be them with respect to mass or molar concentration. 
 
 The first thing to clear out is the template choice. 
-\Antioch\ is very suple about this, 
+\Antioch\ is very supple about this, 
 The objects we will need are
-a \prog{ReactionSet} and a \prog{KineticsEvaluator}. We will
-use as \prog{double} a \prog{double} and as vector the standard 
-\prog{std::vector< >} 
+a \ReactionSet\ and a \KineticsEvaluator. We will
+use as template parameter for a scalar a \double\
+and as vector the standard \stdvector.
 
+\linenumbers
 \begin{verbatim}
 // C++
 #include <string>
@@ -86,4 +89,150 @@ int compute_rates(const std::string& input_name,
                                             domega_dot_drho_s );
   return 0;
 }
+
+int main(int argc, char* argv[])
+{
+  // Check command line count.
+  if( argc < 2 )
+    {
+      std::cerr << "Error: Must specify reaction set XML input file." << std::endl;
+      antioch_error();
+    }
+
+  std::vector<double> omega_dot;
+  std::vector<double> domega_dot_dT;
+  std::vector<std::vector<double> > domega_dot_drho_s;
+
+  compute_rate(std::string(argv[1],omega_dot,
+                                   domega_dot_dT,
+                                   domega_dot_drho_s))
+
+  //do stuff with the omega_dot s vectors and matrix
+
+  return 0;
+}
 \end{verbatim}
+\nolinenumbers
+
+Chemistry happens in a chemical mixture. Thus,
+we need to define our chemical system. The appropriate object is a
+\ChemicalMixture, defined in file \file{chemical\_mixture.h} 
+(lines~10 and 30). We also
+need a place to manage the reactions, this is the \ReactionSet, defined
+in the file \file{reaction\_set.h} (lines~11 and 31). To calculate
+the backward rate constants, as seen in subsection~\ref{phys:equilibrium},
+we need the thermodynamics of the species. \Antioch\ uses the object
+\CEAThermodynamics, defined in file \file{cea\_thermo.h}. Finally, the
+object that controls the kinetics is the \KineticsEvaluator, defined
+in the file \file{kinetics\_evaluator.h} (lines~14 and 58).
+%
+\begin{table}
+\centering
+\begin{tabular}{llc}\toprule
+\hfil Objects      & \hfil Header                 & Lines \\\midrule
+\ChemicalMixture   & \file{chemical\_mixture.h}   & 10, 30\\
+\ReactionSet       & \file{reaction\_set.h}       & 11, 31\\
+\CEAThermodynamics & \file{cea\_thermo.h}         & 13, 32\\
+\KineticsEvaluator & \file{kinetics\_evaluator.h} & 14, 58\\
+\bottomrule
+\end{tabular}
+\caption{\label{tuto:kin_reg_step}Main objects, their locations and the 
+        corresponding lines in the given example program.}
+\end{table}
+%
+These informations are summarized in Tab.~\ref{tuto:kin_reg_step}. We will
+now look into each of those object in more details.
+
+\subsection{A \ChemicalMixture}
+\label{tuto:ChemMix}
+
+For performance reasons, \Antioch\ has all the species she knows and their
+characteristics hard-coded\footnote{May evolve in the futur, knowing that
+performance is the main issue.}. Thus to define a chemical mixture, all
+is needed is to point out to \Antioch\ the species we want. It is done
+by giving \emph{at the construction step} a \stdvector\ of \stdstring\
+containing the names of the desired species (lines~21 to 30).
+It takes care of defining everything that's needed to find efficiently
+any data on the provided list of species.
+
+This object will provide the information needed of a mixture, provided
+a composition. Basically you'll need to get the molar composition
+at the end, if only because this is what the \KineticsEvaluator\ wants
+(see below, subsection~\ref{tuto:KineticsEval}). As some of us are
+not enough chemist too much physicist, instead of having directly
+a molar composition, it can happen that you have a mass composition
+instead of a molar composition\footnote{Life is hard, but \Antioch\
+will help you get over this one.}. Lines 40--48 illustrate this,
+the steps are as follow:
+\begin{enumerate}
+\item obtain the mixture mass ideal gas constant \Rmix\ 
+        in \unit{J\,kg^{-1}\,K^{-1}} (line~43);
+\item calculate the mass density of the mixture in \unit{kg\,m^{-3}}
+        (line~45);
+\item ask for the molar composition (line~48).
+\end{enumerate}
+
+
+\subsection{A \ReactionSet}
+
+A \ReactionSet\ acts on a mixture by means of a chemical reactions
+network. The mixture is defined \emph{at construction time} by
+providing the \ChemicalMixture\ concerned, the chemical network
+is added afterward, using the method 
+\verb!Antioch::read_reaction_set_data_xml!, defined in the file
+\file{read\_reaction\_set\_data\_xml.h} (lines~12 and 34). This
+method takes three arguments, the xml file where the reactions are
+to be read, a boolean for verbosity purposes: true if you want the
+method to tell you the reactions, false if you don't; and the \ReactionSet\ 
+object to store the chemical network.
+
+\subsection{A \CEAThermodynamics}
+\label{tuto:CEATherm}
+
+As previously said, everything is hard-coded in \Antioch, thus
+the only data a \CEAThermodynamics\ needs is the chemical
+mixture, still \emph{at construction time}.
+
+This object will compute the NASA polynoms for the wanted
+species at a given temperature. There we have a very interesting
+template shims: the NASA polynoms (Eq.~\ref{therm:DH} and \ref{therm:DS}
+in subsection~\ref{phys:NASA_therm}) have logarithms in their
+definitions, which is slow to calculate. Thus to store $\ln(\Temp)$
+would be a gain of time. This is the story of lines~53 and 54. This
+\object{Cache} enables a gain of time by caching the value
+of $\ln(\Temp)$. The fancy of line~53 is needed to manage
+properly the template capacities of \Antioch.
+Once the \object{Cache} is created, \CEAThermodynamics\ will
+calculate the necessary thermodynamics, as shown in lines~55
+and 56.
+
+\subsection{A \KineticsEvaluator}
+\label{tuto:KineticsEval}
+
+This is the top-level object, where you asks for
+answers once all is set. Basically, it computes
+rates, derivatives with respect to temperature,
+molar or mass concentrations given a composition in
+moles, the thermodynamics value $\frac{\gibbs}{\Rg\Temp}$
+for each species, and the temperature.
+These are lines~68, 69 and 71--74.
+
+So you need to be clear on the three steps to use its power:
+\begin{itemize}
+\item a temperature (line~37);
+\item a molar composition (see the \ChemicalMixture\ object
+        at subsection~\ref{tuto:ChemMix}, lines~40--48);
+\item a thermodynamics description (see the \CEAThermodynamics\
+        object, lines~50--56).
+\end{itemize}
+
+\subsection{A note on the \object{resize}}
+
+\Antioch\ is meant to be a passing in the lives of
+the wanted quantities, thus all the calculated values
+are calculated and stored in a array given by the
+user. Arises there the question of who gives the vector
+the required size? \Antioch's answer is the user. Thus
+before using \Antioch's capacity, the storage of the
+wanted quantities must be created and properly sized,
+as seen on the lines~47, 50, 51, 60--66 and 87--89.
