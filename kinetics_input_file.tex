@@ -1,0 +1,347 @@
+At this point, \antioch-\theversion, only the \verb!xml! format is
+supported, but soon some \verb!hdf5! joy will be added.
+
+\subsubsection{The file}
+
+Thus you want to have a proper input file, therefore providing
+\Antioch\ with the proper data, as seen in subsection~\ref{kin:data}.
+This is pretty straightforward, here what it should look like:
+\begin{verbatim}
+<?xml version="1.0"?>
+<ctml>
+  <reactionData id="some name, does not matter">
+    <!-- reaction 0001    -->
+    <reaction reversible="yes" type="ThreeBody" id="0001">
+      <equation>N2 + M [=] 2 N + M</equation>
+      <rateCoeff>
+        <Kooij>
+           <A units="m3/kmol/s">7.e+18</A>
+           <b>-1.6</b>
+           <E units="cal/mol">224801.3</E>
+        </Kooij>
+        <efficiencies default="1.0">N:4.2857 O:4.2857 </efficiencies>
+      </rateCoeff>
+      <reactants>N2:1.0</reactants>
+      <products>N:2.0</products>
+    </reaction>
+
+    <!-- reaction 0002    -->
+    <reaction reversible="yes" type="ThreeBody" id="0002">
+      <equation>O2 + M [=] 2 O + M</equation>
+      <rateCoeff>
+        <Kooij>
+           <A units="m3/kmol/s">2.e+18</A>
+           <b>-1.5</b>
+           <E units="cal/mol">117881.7</E>
+        </Kooij>
+        <efficiencies default="1.0">N:5.0 O:5.0</efficiencies>
+      </rateCoeff>
+      <reactants>O2:1.0</reactants>
+      <products>O:2.0</products>
+    </reaction>
+
+    <!-- reaction 0003    -->
+    <reaction reversible="yes" type="ThreeBody" id="0003">
+      <equation>NO + M [=] N + O + M</equation>
+      <rateCoeff>
+        <Arrhenius>
+           <A units="m3/kmol/s">5.e+12</A>
+           <E units="cal/mol">149943.0</E>
+        </Arrhenius>
+        <efficiencies default="1.0">NO:22 N:22 O:22</efficiencies>
+      </rateCoeff>
+      <reactants>NO:1</reactants>
+      <products>N:1 O:1</products>
+    </reaction>
+
+    <!-- reaction 0004    -->
+    <reaction reversible="yes" type="Elementary" id="0004">
+      <equation>N2 + O [=] NO + N</equation>
+      <rateCoeff>
+        <Kooij>
+           <A units="m3/kmol/s">5.7e+9</A>
+           <b>0.42</b>
+           <E units="cal/mol">85269.6</E>
+        </Kooij>
+      </rateCoeff>
+      <reactants>N2:1 O:1</reactants>
+      <products>NO:1 N:1</products>
+    </reaction>
+
+    <!-- reaction 0005    -->
+    <reaction reversible="yes" type="Elementary" id="0005">
+      <equation>NO + O [=] O2 + N</equation>
+      <rateCoeff>
+        <Arrhenius>
+           <A units="m3/kmol/s">8.4e+09</A>
+           <E units="cal/mol">38526.0</E>
+        </Arrhenius>
+      </rateCoeff>
+      <reactants>NO:1 O:1</reactants>
+      <products>O2:1 N:1</products>
+    </reaction>
+  </reactionData>
+<\ctml>
+\end{verbatim}
+
+The things you want to know about this file are simple:
+\begin{itemize}
+\item \verb!reactionData! needs to be called \verb!reactionData!, 
+        this is hard-coded and imposed;
+\item if you place several \verb!reactionData! groups, only the first
+        one is considered;
+\item every keyword is actually hard-coded and imposed, check
+        throughfully your input file before launching it;
+\item \Antioch's a little touchy with the formatting of the inputs.
+        If you don't provide the units for example, she\footnote{Yes, \Antioch's feminine,
+        if you don't like it, quit whining and get over it.} will use
+        default units (see Tab.~\ref{unit:default}), but she'll complain.
+\item Historically, a \verb!GRI-Mech! file format was used, thus defining
+        the defaults. Using \verb!GRI-Mech! files will give you the expected
+        behavior, but she'll complain.
+\end{itemize}
+
+\subsubsection{Formatting your inputs}
+
+Letting alone the \verb!xml! imposed rules, once you've put
+the lines
+\begin{verbatim}
+<?xml version="1.0"?>
+<ctml>
+</ctml>
+\end{verbatim}
+you enter into \Antioch's realm, her rules apply from there, don't
+resist, you'll abide by her rules.
+Again, let's insist on the \verb!reactionData! environment, only
+a \verb!reactionData! is searched, and only the first is read.
+Any meta data given in the \verb!reactionData! tag is ignored.
+
+Before starting, a little vocabulary for this section:
+\begin{itemize}
+\item an \emph{environment} requires an opening tag
+        and a closing tag. Anything in between belongs to it.
+\item an \emph{attribute} is within the opening tag of an
+        environment. 
+\item a \emph{value} is the value associated with either
+        an environment or an attribute.
+\end{itemize}
+An attribute's value is in between quotation marks, an environment's
+value is between its tags, with nothing else.
+\begin{center}
+\begin{minipage}{9cm}
+\tt
+\tikz[overlay,baseline={(0,-3pt)}]\draw[red,stealth-] (0,0) -- (-2,0)node[left]{Opening tag};<anEnvironment %
+   anAttr\tikz[overlay,baseline={(0,-6pt)}]\draw[red,stealth-](0,0) |- (2,0.5)node[right]{Attribute} ;ibute="attribu%
+               \tikz[overlay,baseline={(0,2pt)}]\draw[red,stealth-] (0,0) |- (2,-0.5)node[right]{Attribute value};te value">\\
+\tikz[overlay,baseline={(0,-3pt)}]\draw[red,stealth-,shorten <=-2em](0,0) -- (-2,0)node[left]{Environment value};%
+\null\hspace{2em} environment value\\
+\tikz[overlay,baseline={(0,-3pt)}]\draw[red,stealth-](0,0) -- (-2,0)node[left]{Closing tag};</anEnvironment>
+\end{minipage}
+\end{center}
+
+Let's consider a reaction closely:
+\begin{verbatim}
+    <!-- reaction 0005    -->
+    <reaction reversible="yes" type="Elementary" id="0005">
+      <equation>NO + O [=] O2 + N</equation>
+      <rateCoeff>
+        <Arrhenius>
+           <A units="m3/kmol/s">8.4e+09</A>
+           <E units="cal/mol">38526.0</E>
+        </Arrhenius>
+      </rateCoeff>
+      <reactants>NO:1 O:1</reactants>
+      <products>O2:1 N:1</products>
+    </reaction>
+\end{verbatim}
+
+Let's build it together, asking and answering every question that
+arises along the way.
+So we start from an \verb!xml! empty reaction database:
+%
+\begin{verbatim}
+<?xml version="1.0"?>
+<ctml>
+  <reactionData>
+  </reactionData>
+</ctml>
+\end{verbatim}
+%
+We want to add a reaction, with a commentary for the
+reader:
+\begin{verbatim}
+<?xml version="1.0"?>
+<ctml>
+  <reactionData>
+    <!-- my very first xml reaction, how cute! -->
+    <reaction>
+    </reaction>
+  </reactionData>
+</ctml>
+\end{verbatim}
+This reaction, as can be seen in chapter~\ref{Antioch:physics},
+is characterized by its chemical process, its kinetics model and
+if it is reversible or not. So, as attribute, we will provide
+the chemical process and the reversibility of the reaction. An id
+can be provided too, \Antioch\ will use it for warning or error
+message purpose at the reading step.
+\begin{verbatim}
+<?xml version="1.0"?>
+<ctml>
+  <reactionData>
+    <!-- my very first xml reaction, how cute! -->
+    <reaction reversible="yes" type="Elementary" id="Reaction1">
+    </reaction>
+  </reactionData>
+</ctml>
+\end{verbatim}
+Next thing we want, is the equation, we simply put it in the
+appropriate environment:
+\begin{verbatim}
+<?xml version="1.0"?>
+<ctml>
+  <reactionData>
+    <!-- my very first xml reaction, how cute! -->
+    <reaction reversible="yes" type="Elementary" id="Reaction1">
+      <equation>NO + O [=] O2 + N </equation>
+    </reaction>
+  </reactionData>
+</ctml>
+\end{verbatim}
+Along with the equation, comes the description of the reaction
+in terms of reactants and products. There we need to define
+each reactant (resp. product) with its stoichiometric
+coefficient:
+\begin{verbatim}
+<?xml version="1.0"?>
+<ctml>
+  <reactionData>
+    <!-- my very first xml reaction, how cute! -->
+    <reaction reversible="yes" type="Elementary" id="Reaction1">
+      <equation>NO + O [=] O2 + N </equation>
+      <reactants>NO:1 O:1 </reactants>
+      <products>O2:1 N:1 </products>
+    </reaction>
+  </reactionData>
+</ctml>
+\end{verbatim}
+This step is needed because \Antioch\ does not parse the
+chemical equation (so basically you can get creative there),
+\Antioch\ parses these environments to internally define the
+reaction.
+
+Next step is to define the rate constant. All these information
+are going into a \verb!rateCoeff! environment. Several cases arise
+there. In our case, an elementary reaction, we but need to define
+the kinetics models and its parameters, each with its unit. But
+if we had a three-body reaction, we then should define the efficiencies,
+if we had a falloff, we need to define two rate constants.
+The kinetics model is an environment, each parameter is an environment
+too, having a unit attribute (except \Power).
+Thus the general layout is:
+\begin{verbatim}
+      <rateCoeff>
+        <kinModel name="k0">
+          <Parameter units="appropriate unit"> value of parameter</A>
+        </kinModel>
+        <efficiencies> molecule:efficiency ... </efficiencies>
+      </rateCoeff>
+\end{verbatim}
+with the \verb!name! attribute having a sense only in a falloff
+reaction, and the \verb!efficiencies! for three-body reactions.
+The efficiencies are formatted as shown, the molecule, a colon, the
+stoichiometric coefficient. If a molecule has no efficiency
+given, the default is 1.0.
+Thus in our case, we have an Arrhenius kinetics model with the
+following parameters:
+\begin{itemize}
+\item $\PreExp = 8.4\,10^9~\unit{m^3\,kmol^{-1}\,s^{-1}}$,
+\item $\AcEn = \numprint{38526.0}~\unit{cal\,mol^{-1}}$.
+\end{itemize}
+Thus, our final reaction is therefore:
+\begin{verbatim}
+<?xml version="1.0"?>
+<ctml>
+  <reactionData>
+    <!-- my very first xml reaction, how cute! -->
+    <reaction reversible="yes" type="Elementary" id="Reaction1">
+      <equation>NO + O [=] O2 + N </equation>
+      <reactants>NO:1 O:1 </reactants>
+      <products>O2:1 N:1 </products>
+      <rateCoeff>
+        <Arrhenius>
+           <A units="m3/kmol/s">8.4e+09</A>
+           <E units="cal/mol">38526.0</E>
+        </Arrhenius>
+      </rateCoeff>
+    </reaction>
+  </reactionData>
+</ctml>
+\end{verbatim}
+Note that the order of environments inside environment have little
+interest, at the slight exception of falloff. If ever you are
+as bold as to provide a falloff without precision as to what rate
+constant is the low pressure limit, the so-called \kinModZ, then
+\Antioch\ will consider that the first one encountered is the
+low-pressure limit.
+
+\begin{table}
+\centering
+\begin{tabular}{cccc}\toprule
+Parameter         & keyword(s)              & Default value  & Type\\\midrule
+Chemical reaction & \verb!reaction!         &                & environment \\
+Chemical process  & \verb!type!             & Elementary     & attribute   \\
+Elementary        & \verb!Elementary!       &                & value       \\
+Duplicate         & \verb!Duplicate!        &                & value       \\
+Three-body        & \verb!ThreeBody! or
+                    \verb!threeBody!        &                & value       \\
+Lindemann falloff & \verb!LindemannFalloff! &                & value       \\
+Troe Falloff      & \verb!TroeFalloff!      &                & value       \\[5pt]
+id                & \verb!id!               &                & attribute   \\
+Reversible?       & \verb!reversible!       & yes            & attribute   \\[5pt]
+Chemical equation & \verb!equation!         &                & environment \\
+Reactants         & \verb!reactants!        &                & environment \\
+Products          & \verb!products!         &                & environment \\[5pt]
+Rate constant     & \verb!rateCoeff!        &                & environment \\
+Rate constant's name
+                  & \verb!name!             &                & attribute   \\
+\kinModZ          & \verb!k0!               &                & value       \\
+Efficiencies      & \verb!efficiency!       & 1.0            & environment \\[5pt]
+Hercourt-Essen    & \verb!HercourtEssen!    &                & environment \\
+Arrhenius         & \verb!Arrhenius!        &                & environment \\
+Berthelot         & \verb!Berthelot!        &                & environment \\
+Berthelot Hercourt-Essen
+                  & \verb!BerthelotHercourtEssen!  &         & environment \\
+Kooij             & \verb!Kooij!            &                & environment \\
+Van't Hoff        & \verb!VantHoff!         &                & environment \\
+Photochemistry    & \verb!photochemistry!   &                & environment \\[5pt]
+\Tref             & \verb!Tref!             & 1~\unit{K}     & environment \\
+\PreExp           & \verb!A!                &                & environment \\
+\Power            & \verb!b!                &                & environment \\
+\AcEn             & \verb!E!                &                & environment \\
+\BerthExp         & \verb!D!                &                & environment \\
+\wavelength       & \verb!lambda!           &                & environment \\
+\crosssection     & \verb!cross_section!    &                & environment \\[5pt]
+Unit              & \verb!units!            & see Tab. \ref{unit:default} 
+                                                             & attribute \\
+\bottomrule
+\end{tabular}
+\caption{\label{antioch:keyword_reading}Keyword for the \texttt{xml} input file.}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{lcccccc}\toprule
+                   & \verb!A!                                        & \verb!b! & \verb!E!             & \verb!D!       & \verb!lambda! & \verb!cross_section! \\\midrule
+Elementary         & \unit{(m^3\,mol^{-1})^{\orderReac - 1}\,s^{-1}} & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &  \unit{nm}    &  \unit{cm^2\,nm^{-1}} \\
+Duplicate          & \unit{(m^3\,mol^{-1})^{\orderReac - 1}\,s^{-1}} & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
+ThreeBody          & \unit{(m^3\,mol^{-1})^{\orderReac}\,s^{-1}}     & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
+Falloff (\kinModZ) & \unit{(m^3\,mol^{-1})^{\orderReac}\,s^{-1}}     & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
+Falloff (\kinModI) & \unit{(m^3\,mol^{-1})^{\orderReac - 1}\,s^{-1}} & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
+\bottomrule
+\end{tabular}
+\caption{\label{unit:default}Default units given to the parameters by \Antioch\ 
+if not provided in the input file.}
+\end{table}
+
+Congratulations, you have a nice input file.

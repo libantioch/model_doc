@@ -33,9 +33,15 @@ at that level is the temperature differentiation.
                 & $\kinMod = \PreExp \left(\frac{\Temp}{\Tref}\right)^\Power\exp\left(\BerthExp\Temp-\frac{\AcEn}{\Rg\Temp}\right)$
                         & \multirow{2}{*}{\PreExp, \Power, \BerthExp, \AcEn}\\
                 & $\ddoverdT{\kinMod} = \kinMod \left(\frac{\Power}{\Temp} + \BerthExp +  \frac{\AcEn}{\Rg\Temp^2}\right)$ \\
+\multirow{2}{*}{Photochemistry}
+                & $\kinMod = \int_0^\infty f(\wavelength)\crosssection\dd\wavelength$
+                        & \multirow{2}{*}{\wavelength, \crosssection}\\
+                & $\ddoverdT{\kinMod} = 0$\\
 \bottomrule
 \end{tabular}
-\caption{\label{antioch::kinMod}Kinetics models available in \antioch.}
+\caption{\label{antioch::kinMod}Kinetics models available in \Antioch. In the photochemical
+kinetics model, $f$ is the photon flux, which is user-defined, \wavelength\ and \crosssection\
+are vectors.}
 \end{table}
 
 \subsubsection{Chemical processes}
@@ -81,7 +87,7 @@ chemical process) to adding a pressure dependance over the temperature dependanc
                   &                       & \ref{Falloff:doverdc} with $F = \FTroe$\\[10pt]
 \bottomrule
 \end{tabular}
-\caption{\label{antioch::chemProc}Chemical processes available in \antioch.
+\caption{\label{antioch::chemProc}Chemical processes available in \Antioch.
 \dag: the duplicate chemical process do not permit several kinetics
 models to be mixed. The functions $F$ for the falloff are described in section~\ref{subsub:falloff}}
 \end{table}
@@ -254,7 +260,7 @@ $\TroeTthree    = \numprint{1120.0}~\unit{K}$.}
 
 \subsection{Thermodynamics}
 
-\antioch\ uses the NASA polynoms.
+\Antioch\ uses the NASA polynoms.
 These relations are used in the standard state, \textit{i.e.} $\Press = \pz = 10^5~\unit{Pa}$.
 Thus what is means is that, for any quantity $A$ (\enth, \entr, \dots), $A^0$ is $A$ at
 \pz.

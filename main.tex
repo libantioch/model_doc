@@ -1,5 +1,5 @@
 \documentclass[twoside]{report}
-\usepackage{booktabs,geometry,amsmath,multicol,multirow,array,graphicx}
+\usepackage{booktabs,geometry,amsmath,multicol,multirow,array,graphicx,tikz}
 \usepackage[autolanguage]{numprint}
 \usepackage[version=3,arrows=pgf-filled]{mhchem}
 \usepackage{fancyhdr}
@@ -9,8 +9,9 @@
 \makeatother
 \begin{document}
 
-\title{\antioch\ my love}
-\date{version number to be printed here}
+\version{0}{1}{0}
+\title{\Antioch\ my love}
+\date{\theversion}
 \author{Paul Bauman \and Benjamin Kirk \and Todd Oliver \and Sylvain Plessis \and Roy Stogner}
 
 \maketitle
@@ -25,7 +26,7 @@
 \chaptermark{\ANTIOCHPhys}
 \label{Antioch:physics}
 
-\section{Preliminary knownledge}
+\section{Preliminary knowledge}
 
 \subsection{Notations for this manual}
 \input{notation}
@@ -59,9 +60,25 @@
 
 \section{So many templates}
 
-\section{Off to the GPU}
+\section{C++ 11}
+
+\section{One tuple, two tuples,\dots}
+
+\section{\EIGEN}
+
+\section{\Boost}
+
+\section{\MetaPhysicL}
+
+\section{Off to the GPU with \VexCL}
+
+\section{\ViennaCL}
+
+\section{\GRVY}
 
 \section{Don't forget \Doxygen}
+\label{dox}
+\input{doxygen}
 
 \chapter{Let's go practical}
 \chaptermark{\ANTIOCHPrac}
@@ -70,7 +87,11 @@
 \section{Let's get data}
 
 \subsection{Data}
+\label{kin:data}
 \input{kinetics_data}
+
+\subsection{First thing first: the input file}
+\input{kinetics_input_file}
 
 \section{First problem: kinetics regression}
 \input{kinetics_regression}
@@ -82,6 +103,7 @@
 
 \chapter{Program flow}
 \label{progflow}
+
 \section{Kinetics}
 \label{progflow:kinetics}
 \input{prog_flow_kinetics}

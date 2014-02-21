@@ -1,12 +1,38 @@
 %first thing first
 \graphicspath{{./figs/}}
-\newcommand{\font@library}[1]{\texttt{#1}}
-\newcommand{\font@prog}[1]{\textsf{#1}}
-\newcommand{\make@program}[1]{%
-\expandafter\gdef\csname#1\endcsname{\font@prog{#1}}%
+%%%% meta-meta-function
+\newcommand{\make@}[2]{%
+\expandafter\gdef\csname font@#1\endcsname##1{% create font@something macro
+{\csname#2\endcsname{##1}}%
+}%
+\expandafter\gdef\csname make@#1\endcsname##1{% create make@something meta macro
+\expandafter\gdef\csname ##1\endcsname{\csname font@#1\endcsname{##1}}%
 }
-\newcommand{\antioch}{\font@library{Antioch}}
-\newcommand{\Antioch}{\font@library{Antioch}}
+}
+%% meta function
+\make@{program}{sf}
+\make@{library}{tt}
+%% macros
+\make@program{Doxygen}
+\make@library{Antioch}
+\make@library{antioch}
+\make@library{Boost}
+\make@library{VexCL}
+\make@library{ViennaCL}
+\make@library{MetaPhysicL}
+\make@library{GRVY}
+\make@library{EIGEN}
+%%% versions
+\newcommand{\version}[3]{%
+\setcounter{vmajor}{#1}
+\setcounter{vmedium}{#2}
+\setcounter{vminor}{#3}
+}
+\newcounter{vmajor}
+\newcounter{vmedium}
+\newcounter{vminor}
+\newcommand{\theversion}{\thevmajor.\thevmedium.\thevminor}
+%% fun
 \newcommand{\ANTIOCH}{\font@library{A}
                       \font@library{N}ew
                       \font@library{T}emplated
@@ -29,16 +55,14 @@
                          \font@library{C}ode is
                          \font@library{H}appiness}
 \newcommand{\ANTIOCHPrac}{\Antioch\
-                         \font@library{N}ewbies'
+                         \font@library{N}ewbies
                          \font@library{T}empting
                          \font@library{I}nvitation to
                          \font@library{O}pen this
                          \font@library{C}hapter with
                          \font@library{H}aste}
+%% I like my equations this way
 \renewcommand{\theequation}{Eq.~\thesection-\arabic{equation}}
-\renewcommand{\theequation}{Eq.~\thesection-\arabic{equation}}
-\make@program{Doxygen}
-%%
 \@addtoreset{equation}{section}
 %%% beauty here
 \pagestyle{fancy}
@@ -52,6 +76,13 @@
 \fancyhead[RO]{\parbox[b]{0.45\textwidth}{\raggedleft\rightmark}}
 %% a little hack
 \newcommand{\spacehack}{\ensuremath{\textcolor{white}{=}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%%  stuffs start here
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %internal stuff
 \newcommand{\optional@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{{#2}_{#1}}}\fi}
 \newcommand{\optional@@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{#2}_{#1}}\fi}
@@ -85,11 +116,13 @@
 \newcommand{\FLind}              {\ensuremath{F_\text{Lind}}}
 \newcommand{\FTroe}              {\ensuremath{F_\text{Troe}}}
 %%%% kinetics model parameter
-\newcommand{\Tref}{\ensuremath{\mathrm{T_{ref}}}}
-\newcommand{\PreExp}{\ensuremath{A}}
-\newcommand{\Power}{\ensuremath{\beta}}
-\newcommand{\BerthExp}{\ensuremath{D}}
-\newcommand{\AcEn}{\ensuremath{{E_a}}}
+\newcommand{\Tref}        {\ensuremath{\mathrm{T_{ref}}}}
+\newcommand{\PreExp}      {\ensuremath{A}}
+\newcommand{\Power}       {\ensuremath{\beta}}
+\newcommand{\BerthExp}    {\ensuremath{D}}
+\newcommand{\AcEn}        {\ensuremath{{E_a}}}
+\newcommand{\wavelength}  {\ensuremath{{\lambda}}}
+\newcommand{\crosssection}{\ensuremath{{\sigma(\wavelength)}}}
 %%%% Troe falloff
 \newcommand{\Troealpha} {\ensuremath{\alpha}}
 \newcommand{\TroeTone}  {\ensuremath{T^{*}}}
@@ -105,6 +138,8 @@
 \newcommand{\scoefabs}[1][\relax]{\optional@sub[#1]{\mathrm{n}}}
 \newcommand{\scoef}[1][\relax]{\optional@sub[#1]{\nu}}
 \newcommand{\sumscoef}[1][\relax]{\optional@sub[#1]{\gamma}}
+\newcommand{\partialOrder}[1][\relax]{\optional@sub[#1]{\mathrm{m}}}
+\newcommand{\orderReac}{\ensuremath{{\mathrm{m}}}}
 \newcommand{\massfrac}[1][\relax]{\optional@sub[#1]{y}}
 \newcommand{\mass}[1][\relax]{\optional@sub[#1]{\rho}}
 \newcommand{\mdot}[1][\relax]{\optional@sub[#1]{\dot{\omega}}}
