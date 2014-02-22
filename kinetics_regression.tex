@@ -5,11 +5,9 @@ efficiently, with elegance and a sexy attitude, rates,
 be them with respect to mass or molar concentration. 
 
 The first thing to clear out is the template choice. 
-\Antioch\ is very supple about this, 
-The objects we will need are
-a \ReactionSet\ and a \KineticsEvaluator. We will
-use as template parameter for a scalar a \double\
-and as vector the standard \stdvector.
+\Antioch\ is very supple about this, in this example
+we will consider a simple choice: a \double\ for a 
+scalar and a \stdvector\ for a vector.
 
 \linenumbers
 \begin{verbatim}
@@ -95,7 +93,8 @@ int main(int argc, char* argv[])
   // Check command line count.
   if( argc < 2 )
     {
-      std::cerr << "Error: Must specify reaction set XML input file." << std::endl;
+      std::cerr << "Error: Must specify reaction set XML input file." 
+                << std::endl;
       antioch_error();
     }
 
@@ -235,4 +234,4 @@ user. Arises there the question of who gives the vector
 the required size? \Antioch's answer is the user. Thus
 before using \Antioch's capacity, the storage of the
 wanted quantities must be created and properly sized,
-as seen on the lines~47, 50, 51, 60--66 and 87--89.
+as seen on the lines~47, 50, 51, 60--66 and 88--90.
