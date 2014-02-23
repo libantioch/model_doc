@@ -1,15 +1,112 @@
 %first thing first
 \graphicspath{{./figs/}}
-\newcommand{\antioch}{\texttt{antioch}}
+%%%% meta-meta-function
+\newcommand{\make@}[3][upshape]{%
+\expandafter\gdef\csname font@#2\endcsname##1{% create font@something macro
+{\csname#1\endcsname\csname#3\endcsname{##1}}%
+}%
+\expandafter\gdef\csname make@#2\endcsname##1{% create make@something meta macro
+\expandafter\gdef\csname ##1\endcsname{\csname font@#2\endcsname{##1}}%
+}
+\expandafter\gdef\csname#2\endcsname##1{\csname font@#2\endcsname{##1}}%create the \something macro
+}
+%% meta font
+\newcommand{\prog@type}[1]{\textcolor{green!60!black}{\object{#1}}}
+%% meta function
+\make@{program}{sf}
+\make@{library}{tt}
+\make@[bf]{object}{tt}
+\make@{file}{sf}
+\make@{prog}{prog@type}
+%% macros
+\make@program{Doxygen}
+\make@library{Antioch}
+\make@library{antioch}
+\make@library{Boost}
+\make@library{VexCL}
+\make@library{ViennaCL}
+\make@library{MetaPhysicL}
+\make@library{GRVY}
+\make@library{EIGEN}
+%% for tutorial
+\make@object{ReactionSet}
+\make@object{KineticsEvaluator}
+\make@object{ChemicalMixture}
+\make@object{CEAThermodynamics}
+\make@prog{double}
+\newcommand{\stdvector}{\prog{std::vector< >}}
+\newcommand{\stdstring}{\prog{std::string}}
+%
+%%% versions
+\newcommand{\version}[3]{%
+\setcounter{vmajor}{#1}
+\setcounter{vmedium}{#2}
+\setcounter{vminor}{#3}
+}
+\newcounter{vmajor}
+\newcounter{vmedium}
+\newcounter{vminor}
+\newcommand{\theversion}{\thevmajor.\thevmedium.\thevminor}
+%% fun
+\newcommand{\ANTIOCH}{\font@library{A}
+                      \font@library{N}ew
+                      \font@library{T}emplated
+                      \font@library{I}mplementation
+                      \font@library{O}f
+                      \font@library{C}hemistry
+                      \font@library{H}ydrodynamics}
+\newcommand{\ANTIOCHPhys}{\Antioch's
+                         \font@library{N}oble
+                         \font@library{T}ry to
+                         \font@library{I}mitate the
+                         \font@library{O}rdered
+                         \font@library{C}osmos
+                         \font@library{H}umbly}
+\newcommand{\ANTIOCHTech}{\Antioch's
+                         \font@library{N}ot
+                         \font@library{T}emplated
+                         \font@library{I}rresponsibly, this
+                         \font@library{O}utstanding
+                         \font@library{C}ode is
+                         \font@library{H}appiness}
+\newcommand{\ANTIOCHPrac}{\Antioch\
+                         \font@library{N}ewbies
+                         \font@library{T}empting
+                         \font@library{I}nvitation to
+                         \font@library{O}pen this
+                         \font@library{C}hapter with
+                         \font@library{H}aste}
+%% I like my equations this way
 \renewcommand{\theequation}{Eq.~\thesection-\arabic{equation}}
 \@addtoreset{equation}{section}
+%%% beauty here
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection~\sl #1}}
+\geometry{headheight=2cm}
+\fancyhead{} %empty
+\fancyhead[LO]{\parbox[b]{0.45\textwidth}{\raggedright\leftmark}}
+\fancyhead[RE]{\parbox[b]{0.45\textwidth}{\raggedleft\leftmark}}
+\fancyhead[LE]{\parbox[b]{0.45\textwidth}{\raggedright\rightmark}}
+\fancyhead[RO]{\parbox[b]{0.45\textwidth}{\raggedleft\rightmark}}
+%% a little hack
+\newcommand{\spacehack}{\ensuremath{\textcolor{white}{=}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%%  stuffs start here
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %internal stuff
 \newcommand{\optional@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{{#2}_{#1}}}\fi}
 \newcommand{\optional@@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{#2}_{#1}}\fi}
 \newcommand{\d@d}[2]{\ensuremath{\frac{\partial#2}{\partial #1}}}
+\newcommand{\dd@d}[2]{\ensuremath{\frac{\dd #2}{\dd #1}}}
 %chem def
 \newcommand{\doverdt}[1]{\d@d{t}{#1}}
 \newcommand{\doverdT}[1]{\d@d{\Temp}{#1}}
+\newcommand{\ddoverdT}[1]{\dd@d{\Temp}{#1}}
 \newcommand{\doverdm}[2][\relax]{\d@d{\mass[#1]}{#2}}
 \newcommand{\doverdc}[2][\relax]{\d@d{\conc[#1]}{#2}}
 \newcommand{\doverdn}[2][\relax]{\d@d{\Mol[#1]}{#2}}
@@ -19,28 +116,46 @@
 \newcommand{\pz}{\ensuremath{\mathrm{p^0}}}
 \newcommand{\Tz}{\ensuremath{\mathrm{T^0}}}
 \newcommand{\eq}{\ensuremath{\text{eq}}}
+\newcommand{\Rmix}{\ensuremath{\mathrm{R}_\text{mix}}}
 \newcommand{\reac}{\ce{R}}
 \newcommand{\product}{\ce{P}}
 \newcommand{\tc}[1]{\ensuremath{a_{#1}}}
 %%stuff for kinetics
-\newcommand{\rcons}[1][\relax]{\optional@@sub[#1]{k}}
-\newcommand{\kinMod}{\ensuremath{\alpha(T)}}
-\newcommand{\chemProc}{\ensuremath{\chi(\kinMod,\conc[M])}}
-\newcommand{\rateCons}{\ensuremath{\rcons(T,\conc[M])}}
-\newcommand{\rate}[1][\relax]{\optional@@sub[#1]{r}}
-\newcommand{\threeBody}{\ensuremath{\sum_s \epsilon_s\conc[S]}}
+\newcommand{\rcons}   [1][\relax]{\optional@@sub[#1]{k}}
+\newcommand{\kinMod}  [1][\relax]{\optional@@sub[#1]{\alpha}\ensuremath{(\Temp)}}
+\newcommand{\kinModZ}            {\ensuremath{\alpha_0(\Temp)}}
+\newcommand{\kinModI}            {\ensuremath{\alpha_\infty(\Temp)}}
+\newcommand{\chemProc}[1][\relax]{\optional@@sub[#1]{\chi}\ensuremath{(\kinMod,\conc[M])}}
+\newcommand{\rateCons}           {\ensuremath{\rcons(T,\conc[M])}}
+\newcommand{\rate}    [1][\relax]{\optional@@sub[#1]{r}}
+\newcommand{\threeBody}          {\ensuremath{\sum_s \epsilon_s\conc[S]}}
+\newcommand{\FLind}              {\ensuremath{F_\text{Lind}}}
+\newcommand{\FTroe}              {\ensuremath{F_\text{Troe}}}
 %%%% kinetics model parameter
-\newcommand{\Tref}{\ensuremath{\mathrm{T_{ref}}}}
-\newcommand{\PreExp}{\ensuremath{A}}
-\newcommand{\Power}{\ensuremath{\beta}}
-\newcommand{\BerthExp}{\ensuremath{D}}
-\newcommand{\AcEn}{\ensuremath{E_a}}
+\newcommand{\Tref}        {\ensuremath{\mathrm{T_{ref}}}}
+\newcommand{\PreExp}      {\ensuremath{A}}
+\newcommand{\Power}       {\ensuremath{\beta}}
+\newcommand{\BerthExp}    {\ensuremath{D}}
+\newcommand{\AcEn}        {\ensuremath{{E_a}}}
+\newcommand{\wavelength}  {\ensuremath{{\lambda}}}
+\newcommand{\crosssection}{\ensuremath{{\sigma(\wavelength)}}}
+%%%% Troe falloff
+\newcommand{\Troealpha} {\ensuremath{\alpha}}
+\newcommand{\TroeTone}  {\ensuremath{T^{*}}}
+\newcommand{\TroeTtwo}  {\ensuremath{T^{**}}}
+\newcommand{\TroeTthree}{\ensuremath{T^{***}}}
+\newcommand{\TroeFcent} {\ensuremath{F_\text{cent}}}
+\newcommand{\Troen}     {\ensuremath{n_\text{T}}}
+\newcommand{\Troed}     {\ensuremath{d_\text{T}}}
+\newcommand{\Troec}     {\ensuremath{c_\text{T}}}
 %
 \newcommand{\conc}[1][\relax]{\ifx#1\relax\molar\else\ce{[#1]}\fi}
 \newcommand{\Mm}[1][\relax]{\optional@sub[#1]{\mathrm{M}}}
 \newcommand{\scoefabs}[1][\relax]{\optional@sub[#1]{\mathrm{n}}}
 \newcommand{\scoef}[1][\relax]{\optional@sub[#1]{\nu}}
 \newcommand{\sumscoef}[1][\relax]{\optional@sub[#1]{\gamma}}
+\newcommand{\partialOrder}[1][\relax]{\optional@sub[#1]{\mathrm{m}}}
+\newcommand{\orderReac}{\ensuremath{{\mathrm{m}}}}
 \newcommand{\massfrac}[1][\relax]{\optional@sub[#1]{y}}
 \newcommand{\mass}[1][\relax]{\optional@sub[#1]{\rho}}
 \newcommand{\mdot}[1][\relax]{\optional@sub[#1]{\dot{\omega}}}
@@ -58,6 +173,7 @@
 \newcommand{\Vol}[1][\relax]{\optional@sub[#1]{V}}
 \newcommand{\Press}[1][\relax]{\optional@sub[#1]{P}}
 \newcommand{\Temp}[1][\relax]{\optional@sub[#1]{T}}
+\newcommand{\RedTemp}{\ensuremath{T_r}}
 \newcommand{\Mol}[1][\relax]{\optional@sub[#1]{N}}
 \newcommand{\Gibbs}[1][\relax]{\optional@sub[#1]{G}}
 \newcommand{\GibbsZ}[1][\relax]{\ensuremath{{\Gibbs[#1]}^{0}}}
@@ -88,10 +204,37 @@
 \newcommand{\Kooij}[4][1]{\ensuremath{{#2} \left(\frac{T}{#1}\right)^{#3}\exp\left(-\frac{#4}{\Rg T}\right)}}
 \newcommand{\KooijEq}{\Kooij[\mathrm{T_{ref}}]{A}{\beta}{E_a}}
 \newcommand{\dd}{\ensuremath{\mathrm{d}}}
-\newcommand{\unit}[1]{\texttt{#1}}
-\newcommand{\nounit}{\unit{no unit}}
-\newcommand{\file}[1]{\textsf{#1}}
-\newcommand{\prog}[1]{\texttt{#1}}
+\newcommand{\unit}[1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\nounit}{\unit{no~unit}}
+%%%%%
+\newcommand{\reactionEq}[1]{%
+\ce{#1}%
+}
+\newcommand{\ArrjPar}[4]{%
+\texttt{Arrhenius} model\\*[2pt]
+\null\hspace{12pt}$\left\{\begin{array}{l@{~=~}l}
+\PreExp & #1~\unit{#2} \\
+\AcEn   & #3~\unit{#4} \\
+\end{array}\right.$%
+}
+\newcommand{\KooijPar}[5]{%
+\texttt{Kooij} model\\*[2pt]
+\null\hspace{12pt}$\left\{\begin{array}{l@{~=~}l}
+\PreExp & #1~\unit{#2} \\
+\Power  & #3           \\
+\AcEn   & #4~\unit{#5} \\
+\end{array}\right.$%
+}
+\newcommand{\TBcoeff}[2]{%
+\ensuremath{\epsilon_{\ce{#1}} = #2}%
+}
+\newcommand{\reactionParameter}[3][\null]{%
+\vspace{5pt minus 3pt}
+\begin{minipage}{5.5cm}
+\null\hfill#2\hfill\null\\[3pt]
+#3\\[5pt]
+#1%
+\end{minipage}}
 %% chemistry equation 
 \newcounter{chemeq}
 \setcounter{chemeq}{0}

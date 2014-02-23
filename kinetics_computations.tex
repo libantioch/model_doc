@@ -1,0 +1,339 @@
+\subsubsection{Kinetics models}
+The kinetics models are all given in Tab.~\ref{antioch::kinMod}.
+The kinetics model will render the temperature evolution of
+the rate constant, thus the only differential that is needed
+at that level is the temperature differentiation.
+\begin{table}
+\centering\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{clr}\toprule
+\multirow{2}{*}{Kinetics model}
+                & Expression                     & Parameters \\
+                & $\frac{\dd}{\dd T}$ Expression &\\\midrule
+\multirow{2}{*}{Hercourt-Hessen} 
+                & $\kinMod = \PreExp \left(\frac{\Temp}{\Tref}\right)^\Power$ 
+                        & \multirow{2}{*}{\PreExp, \Power}\\
+                & $\ddoverdT{\kinMod} = \kinMod \frac{\Power}{\Temp}$ \\[10pt]
+\multirow{2}{*}{Berthelot}
+                & $\kinMod = \PreExp \exp\left(\BerthExp\Temp\right)$ 
+                        & \multirow{2}{*}{\PreExp, \BerthExp}\\
+                & $\ddoverdT{\kinMod} = \kinMod \BerthExp$ \\[10pt]
+\multirow{2}{*}{Arrhenius}
+                & $\kinMod = \PreExp \exp\left(-\frac{\AcEn}{\Rg\Temp}\right)$ 
+                        & \multirow{2}{*}{\PreExp, \AcEn}\\
+                & $\ddoverdT{\kinMod} = \kinMod \frac{\AcEn}{\Rg\Temp^2}$ \\[10pt]
+\multirow{2}{*}{Kooij}
+                & $\kinMod = \PreExp \left(\frac{\Temp}{\Tref}\right)^\Power\exp\left(-\frac{\AcEn}{\Rg\Temp}\right)$
+                        & \multirow{2}{*}{\PreExp, \Power, \AcEn}\\
+                & $\ddoverdT{\kinMod} = \kinMod \left(\frac{\Power}{\Temp} + \frac{\AcEn}{\Rg\Temp^2}\right)$ \\[10pt]
+\multirow{2}{*}{Berthelot Hercourt-Essen}
+                & $\kinMod = \PreExp \left(\frac{\Temp}{\Tref}\right)^\Power\exp\left(\BerthExp\Temp\right)$
+                        & \multirow{2}{*}{\PreExp, \Power, \BerthExp}\\
+                & $\ddoverdT{\kinMod} = \kinMod \left(\frac{\Power}{\Temp} + \BerthExp\right)$ \\[10pt]
+\multirow{2}{*}{Van't Hoff}
+                & $\kinMod = \PreExp \left(\frac{\Temp}{\Tref}\right)^\Power\exp\left(\BerthExp\Temp-\frac{\AcEn}{\Rg\Temp}\right)$
+                        & \multirow{2}{*}{\PreExp, \Power, \BerthExp, \AcEn}\\
+                & $\ddoverdT{\kinMod} = \kinMod \left(\frac{\Power}{\Temp} + \BerthExp +  \frac{\AcEn}{\Rg\Temp^2}\right)$ \\
+\multirow{2}{*}{Photochemistry}
+                & $\kinMod = \int_0^\infty f(\wavelength)\crosssection\dd\wavelength$
+                        & \multirow{2}{*}{\wavelength, \crosssection}\\
+                & $\ddoverdT{\kinMod} = 0$\\
+\bottomrule
+\end{tabular}
+\caption{\label{antioch::kinMod}Kinetics models available in \Antioch. In the photochemical
+kinetics model, $f$ is the photon flux, which is user-defined, \wavelength\ and \crosssection\
+are vectors.}
+\end{table}
+
+\subsubsection{Chemical processes}
+\label{subsec:chem_proc}
+The chemical processes is how this kinetics model behave with respect to
+the densities of the molecules in the medium. Either they're all equivalent,
+and only the total density matters (falloff type), or each species can 
+influence the rate constant in a specific manner (three-body type).
+The chemical processes are given in Tab.~\ref{antioch::chemProc}. This is where
+chemical modeling begins to be stretched a little: as seen on section~\ref{kinetics_gen},
+we assume that every reaction modeled is an elementary step, even in the case of
+non-elementary reactions. Therefore some corrections need to be made. This is where
+the chemical process adds, if needed, more suppleness to the rate constant
+function, from adding degrees of freedom to the temperature dependency (duplicate
+chemical process) to adding a pressure dependance over the temperature dependance
+(falloff).
+\begin{table}
+\centering\renewcommand{\arraystretch}{2}
+\begin{tabular}{ccc}\toprule
+\multirow{2}{*}{Chemical process}
+                  & \multirow{2}{*}{Expression}
+                                           & $\doverdT{\text{Expression}}$ \\
+                  &                        & $\doverdc{\text{Expression}}$ \\\midrule
+\multirow{2}{*}{Elementary}
+                  & \multirow{2}{*}{$\chemProc = \kinMod$}  
+                                           & $\doverdT{\chemProc} = \ddoverdT{\kinMod}$ \\
+                  &                        & $\doverdc{\chemProc} = 0$ \\[10pt]
+\multirow{2}{*}{Duplicate \dag}
+                  & \multirow{2}{*}{$\chemProc = \displaystyle\sum_i^{\mathrm{N_{proc}}}\kinMod_i$}
+                                           & $\doverdT{\chemProc} = \displaystyle\sum_i^\mathrm{N_{proc}}\ddoverdT{\kinMod_i}$ \\
+                  &                        & $\doverdc{\chemProc} = 0$ \\[10pt]
+\multirow{2}{*}{Three-Body}
+                  & \multirow{2}{*}{$\chemProc = \kinMod \threeBody$}
+                                           & $\doverdT{\chemProc} = \ddoverdT{\kinMod}\threeBody$ \\
+                  &                        & $\doverdc[I]{\chemProc} = \kinMod\epsilon_i\sum_{s\neq i}\epsilon_s\conc[S] $ \\[10pt]
+\multirow{2}{*}{Lindemann falloff}
+                  & \multirow{2}{*}{$\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\FLind$}
+                                          & \ref{Falloff:doverdT} with $F = \FLind$\\
+                  &                       & \ref{Falloff:doverdc} with $F = \FLind$\\[10pt]
+\multirow{2}{*}{Troe falloff}
+                  & \multirow{2}{*}{$\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\FTroe$}
+                                          & \ref{Falloff:doverdT} with $F = \FTroe$\\
+                  &                       & \ref{Falloff:doverdc} with $F = \FTroe$\\[10pt]
+\bottomrule
+\end{tabular}
+\caption{\label{antioch::chemProc}Chemical processes available in \Antioch.
+\dag: the duplicate chemical process do not permit several kinetics
+models to be mixed. The functions $F$ for the falloff are described in section~\ref{subsub:falloff}}
+\end{table}
+
+\subsubsection{Falloffs}
+\label{subsub:falloff}
+The falloffs are reaction having two different regimes: a low-pressure (\kinModZ) and
+a high-pressure (\kinModI) regime. Any pressure's rate constant can be expressed in
+terms if those two regimes:
+\begin{equation}
+\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}} F
+\label{falloff:k}
+\end{equation}
+with \conc[M] being the total molar density and $F$ the falloff model.
+
+The differentiations are:
+\begin{equation}
+\begin{split}
+\doverdT{\chemProc} & = \chemProc 
+                        \Bigg[\frac{1}{F}\doverdT{F} \\
+                    &      + \left(\frac{1}{\kinModZ} - \frac{\conc[M]}{\kinModI}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\right)\doverdT{\kinModZ} \\
+                    &      - \conc[M]\frac{\kinModZ}{\kinModI^2}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\doverdT{\kinModI}
+                        \Bigg]
+\end{split}
+\label{Falloff:doverdT}
+\end{equation}
+and
+\begin{equation}
+\doverdc[I]{\chemProc} = \chemProc
+                          \left(\frac{1}{\conc[M]} 
+                               + \frac{\kinModZ}{\kinModI}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}} 
+                               + \doverdT{F}\frac{1}{F}
+                          \right)
+\label{Falloff:doverdc}
+\end{equation}
+\paragraph{Lindemann}
+The Lindemann falloff is the simplest falloff, it is given by:
+\begin{equation}
+\FLind = 1,
+\label{Falloff:Lindeman}
+\end{equation}
+which gives:
+\begin{equation}
+\begin{split}
+\doverdT{\FLind} & = 0 \\
+\doverdc{\FLind} & = 0 \\
+\end{split}
+\label{Falloff:Lindemann:diff}
+\end{equation}
+
+\paragraph{Troe}
+The Troe model is more elaborate and rely on the definition of three or
+four parameters:
+\begin{itemize}
+\item \Troealpha, with \nounit,
+\item \TroeTone\ in \unit{K},
+\item \TroeTtwo\ in \unit{K},
+\item \TroeTthree\ in \unit{K}.
+\end{itemize}
+Sometimes, the parameter \TroeTtwo\ is not provided, as its contribution
+may be negligible.
+The falloff calculations need the definition of several parameters:
+\begin{equation}
+\begin{split}
+\TroeFcent & = \left(1 - \Troealpha\right)\exp\left(-\frac{\Temp}{\TroeTthree}\right)
+              +          \Troealpha       \exp\left(-\frac{\Temp}{\TroeTone}\right)
+              +                           \exp\left(-\frac{\TroeTtwo}{\Temp}\right) \\[5pt]
+\Troen     & =   \numprint{0.75} - \numprint{1.27}\log_{10}\left(\TroeFcent\right)  \\[5pt]
+\Troec     & = - \numprint{0.4}  - \numprint{0.64}\log_{10}\left(\TroeFcent\right)  \\[5pt]
+\Troed     & =   \numprint{0.14}
+\end{split}
+\label{Troe:parameter}
+\end{equation}
+to finally have
+\newcommand{\pr}{\ensuremath{\log_{10}\left(\frac{\conc[M]\kinMod_0}{\kinMod_\infty}\right)}}
+\begin{equation}
+\FTroe = \frac{\log_{10}\left(\TroeFcent\right)}
+              {1 + \left[
+                        \log_{10}\left(
+                                        \frac{\pr + \Troec}
+                                             {\Troen - \Troed\left(
+                                                                \pr + \Troec
+                                                            \right)}
+                                 \right) 
+                   \right]^2}
+\label{Troe:F}
+\end{equation}
+Thus the differentials will be:
+\begin{equation}
+\begin{split}
+\doverdT{\TroeFcent} & = - \frac{1 - \Troealpha}{\TroeTthree}\exp\left(-\frac{\Temp}{\TroeTthree}\right)
+                         - \frac{\Troealpha}{\TroeTone}\exp\left(-\frac{\Temp}{\TroeTone}\right)
+                         + \frac{\TroeTtwo}{\Temp^2}\exp\left(-\frac{\TroeTtwo}{\Temp}\right)\\[5pt]
+\doverdT{\Troen}     & = - \frac{\numprint{1.27}}{\ln(10)\TroeFcent}\doverdT{\TroeFcent} \\[5pt]
+\doverdT{\Troec}     & = - \frac{\numprint{0.64}}{\ln(10)\TroeFcent}\doverdT{\TroeFcent} \\[5pt]
+\doverdT{\Troed}     & = 0
+\end{split}
+\label{Troe:dparameterdT}
+\end{equation}
+and of course
+\begin{equation}
+\doverdc{\TroeFcent}  = 0,\qquad
+\doverdc{\Troen}      = 0,\qquad
+\doverdc{\Troec}      = 0,\qquad
+\doverdc{\Troed}      = 0
+\label{Troe:dparameterdc}
+\end{equation}
+For simplicity of writing, we define:
+\begin{equation}
+\begin{split}
+g(\kinMod_0,\kinMod_\infty) = & \conc[M] \frac{\kinMod_0}{\kinMod_\infty} \\[5pt]
+h(\kinMod_0,\kinMod_\infty) = & \log_{10}(g) + \Troec \\[5pt]
+l(\kinMod_0,\kinMod_\infty) = & \log_{10}\left(\frac{h}{\Troen - \Troed h}\right) \\
+\end{split}
+\end{equation}
+Therefore:
+\begin{equation}
+\FTroe = \frac{\log_{10}\left(\TroeFcent\right)}{1 + l^2}
+\end{equation}
+When we derive, we obtain:
+\begin{equation}
+\begin{split}
+\doverdT{g} & = g \left(\frac{1}{\kinMod_0}\doverdT{\kinMod_0} - \frac{1}{\kinMod_\infty}\doverdT{\kinMod_\infty} \right) \\[5pt]
+\doverdc{g} & = g \frac{1}{\conc[M]}\doverdc{\conc[M]}
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split}
+\doverdT{h} & = \frac{1}{g \ln(10)}\doverdT{g} + \doverdT{\Troec} \\[5pt]
+\doverdc{h} & = \frac{1}{g\ln(10)}\doverdc{g}
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split}
+\doverdT{l} & = \frac{1}{h \ln(10)}\left[\left(1 + \frac{\Troed h}{\Troen - \Troed h}\right) \doverdT{h} - \frac{h}{\Troen - \Troed h}\doverdT{\Troen} \right]  \\[5pt]
+\doverdc{l} & = \frac{1}{h \ln(10)}\left(1 + \frac{h\Troed}{\Troen - \Troed h} \right)\doverdT{h}
+\end{split}
+\end{equation}
+Thus, we have:
+\begin{equation}
+\doverdT{\FTroe} = \FTroe \left[
+                                  \frac{1}{\ln(10)\log_{10}(\TroeFcent)}\doverdT{\TroeFcent}
+                                - \frac{2 l}{1 + l^2} \doverdT{l}
+                          \right]
+\end{equation}
+and
+\begin{equation}
+\doverdc{\FTroe} = \FTroe \left[
+                                  \frac{1}{\ln(10)\log_{10}(\TroeFcent)}\doverdc{\TroeFcent}
+                                - \frac{2 l}{1 + l^2} \doverdc{l}
+                          \right]
+\end{equation}
+\begin{figure}
+\centering
+\includegraphics{falloffs}
+\caption{\label{kinetics::falloffs}%
+Example of falloff for the reaction \ce{CH3 + CH3 ( + M) -> C2H6 ( + M)}.
+The rate constants are calculated for a temperature of $T = 1000~\unit{K}$. The kinetics model
+used is a Kooij model. Parameters are:
+$\PreExp_0      = \numprint{1.135}\,10^{36}~\unit{mol^{-2}\,cm^6\,s^{-1}}$,
+$\Power_0       = \numprint{-5.245}$,
+$\AcEn_0        = \numprint{1704.8}~\unit{cal\,mol^{-1}}$,
+$\PreExp_\infty = \numprint{6.22}\,10^{16}~\unit{mol^-2\,cm^6\,s^{-1}}$,
+$\Power_\infty  = \numprint{-1.174}$,
+$\AcEn_\infty   = \numprint{653.8}~\unit{cal\,mol^{-1}}$,
+$\Troealpha     = \numprint{0.405}$,
+$\TroeTone      = \numprint{69.6}~\unit{K}$ and
+$\TroeTthree    = \numprint{1120.0}~\unit{K}$.}
+\end{figure}
+
+\subsection{Thermodynamics}
+\label{phys:NASA_therm}
+
+\Antioch\ uses the NASA polynoms.
+These relations are used in the standard state, \textit{i.e.} $\Press = \pz = 10^5~\unit{Pa}$.
+Thus what is means is that, for any quantity $A$ (\enth, \entr, \dots), $A^0$ is $A$ at
+\pz.
+The relations are:
+\begin{equation}
+\frac{\enthZ(T)}{\Rg T} = - \tc{0} T^{-2} 
+                       + \tc{1} T^{-1} \ln(T)
+                       + \tc{2} 
+                       + \tc{3} \frac{T}{2}
+                       + \tc{4} \frac{T^2}{3}
+                       + \tc{5} \frac{T^3}{4}
+                       + \tc{6} \frac{T^4}{5}
+                       + \tc{8} T^{-1}
+\label{therm:DH}
+\end{equation}
+and
+\begin{equation}
+\frac{\entrZ(T)}{\Rg}    = - \tc{0} \frac{T^{-2}}{2}
+                       - \tc{1} T^{-1}
+                       + \tc{2} \ln(T)
+                       + \tc{3} T
+                       + \tc{4} \frac{T^2}{2}
+                       + \tc{5} \frac{T^3}{3}
+                       + \tc{6} \frac{T^4}{4}
+                       + \tc{9}
+\label{therm:DS}
+\end{equation}
+%
+Table~\ref{therm:unit} gives the units of the parameters.
+\begin{table}
+\centering
+\begin{tabular}{cccc}\toprule
+Parameter & homegeneous SI unit &
+Parameter & homegeneous SI unit \\\midrule
+\tc{0} & \unit{K^2}         &
+\tc{1} & \unit{K}           \\
+\tc{2} & \nounit            &
+\tc{3} & \unit{K^{-1}}      \\
+\tc{4} & \unit{K^{-2}}      &
+\tc{5} & \unit{K^{-3}}      \\
+\tc{6} & \unit{K^{-4}}      &
+\tc{7} & not used, always 0 \\
+\tc{8} & \unit{K}           &
+\tc{9} & \nounit            \\
+\bottomrule
+\end{tabular}
+\caption{\label{therm:unit}Units of the parameters of the NASA polynoms, as defined in
+Eq.~\ref{therm:DH} and \ref{therm:DS}.}
+\end{table}
+%
+These equations are easily differentiables:
+\begin{equation}
+\doverdT{\left(\frac{\enthZ(T)}{\Rg T}\right)} 
+                     =   2 \tc{0} T^{-3} 
+                       - \tc{1} T^{-2} \ln(T)
+                       + \tc{1} T^{-2}
+                       + \tc{3} \frac{1}{2}
+                       + \tc{4} \frac{2}{3} T
+                       + \tc{5} \frac{3}{4} T^2
+                       + \tc{6} \frac{4}{5} T^3
+                       - \tc{8} T^{-2}
+\label{therm:dDH_dT}
+\end{equation}
+and
+\begin{equation}
+\doverdT{\left(\frac{\entrZ(T)}{\Rg}\right)} 
+                     =   \tc{0} T^{-3}
+                       + \tc{1} T^{-2}
+                       + \tc{2} T^{-1}
+                       + \tc{3}
+                       + \tc{4} T
+                       + \tc{5} T^2
+                       + \tc{6} T^3
+\label{therm:dDS_dT}
+\end{equation}

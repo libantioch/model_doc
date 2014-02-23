@@ -11,18 +11,19 @@ Requirements
 
 1. The GNU ``make'' tool
 2. A reasonnably up-to-date LaTeX distribution, it should includes the packages:
-        - booktabs
-        - geometry
-        - amsmaths
-        - multicol
-        - multirow
-        - array
-        - graphicx
-        - mhchem
-        - numprint
-        - hyperref
-        - tikz
-        - pgfplots
+  * booktabs
+  * geometry
+  * amsmaths
+  * multicol
+  * multirow
+  * array
+  * graphicx
+  * mhchem
+  * numprint
+  * hyperref
+  * tikz
+  * pgfplots
+  * lineno
 
 Producing the pdf
 -----------------

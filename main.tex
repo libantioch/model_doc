@@ -1,24 +1,32 @@
-\documentclass{article}
-\usepackage{booktabs,geometry,amsmath,multicol,multirow,array,graphicx}
+\documentclass[twoside]{report}
+\usepackage{booktabs,geometry,amsmath,multicol,multirow,array,graphicx,tikz,lineno}
 \usepackage[autolanguage]{numprint}
 \usepackage[version=3,arrows=pgf-filled]{mhchem}
+\usepackage{fancyhdr}
 \usepackage[linkcolor=black,colorlinks=true,citecolor=black,urlcolor=blue]{hyperref}
 \makeatletter
 \input{preamble}
 \makeatother
 \begin{document}
 
-\title{libantioch my love}
-\date{version number to be printed here}
-\author{author list}
+\version{0}{1}{0}
+\title{\Antioch\ my love}
+\date{\theversion}
+\author{Paul Bauman \and Benjamin Kirk \and Todd Oliver \and Sylvain Plessis \and Roy Stogner}
 
 \maketitle
 \tableofcontents
 
-\section{Intro}
+\chapter{Intro}
 
-\subsection{General stuff on libantioch}
+\section{This manual}
 \input{generalities}
+
+\chapter{Let's go physical}
+\chaptermark{\ANTIOCHPhys}
+\label{Antioch:physics}
+
+\section{Preliminary knowledge}
 
 \subsection{Notations for this manual}
 \input{notation}
@@ -27,36 +35,76 @@
 \label{units_in_Antioch}
 \input{unit}
 
+\subsection{Useful relations}
+\label{relations}
+\input{relation}
+
+\section{Chemical kinetics}
+
 \subsection{What is a reaction?}
 \label{kinetics_gen}
 \input{kinetics_generalities}
 
-\subsection{Useful relations}
-\label{relations}
-\input{relation}
+\subsection{Kinetics computing}
+\label{kinetics_comput}
+\input{kinetics_computations}
 
 \section{Full derivations for a chemical kinetics system}
 \label{derivations}
 \input{derivations_equations}
 
-\section{Let's look at some problems}
+
+\chapter{Let's go technical}
+\chaptermark{\ANTIOCHTech}
+\label{Antioch:technique}
+
+\section{So many templates}
+
+\section{C++ 11}
+
+\section{One tuple, two tuples, three tuples,\dots}
+
+\section{\EIGEN}
+
+\section{\Boost}
+
+\section{\MetaPhysicL}
+
+\section{Off to the GPU with \VexCL}
+
+\section{\ViennaCL}
+
+\section{\GRVY}
+
+\section{Don't forget \Doxygen}
+\label{dox}
+\input{doxygen}
+
+\chapter{Let's go practical}
+\chaptermark{\ANTIOCHPrac}
+\label{Antioch:practice}
+
+\section{Let's get data}
+
 \subsection{Data}
+\label{kin:data}
 \input{kinetics_data}
 
-\section{First problem: kinetics regression}
+\subsection{First thing first: the input file}
+\input{kinetics_input_file}
+
+\section{Let's code some kinetics regression}
 \input{kinetics_regression}
 
-\section{Second problem: kinetics equilibrium}
-\input{kinetics_equilibrium}
-
 \appendix
-\section{Demonstrations}
+\chapter{Demonstrations}
 \label{demo}
 \input{demonstrations}
 
-\section{Program flow}
+\chapter{Program flow}
 \label{progflow}
-\subsection{Kinetics}
+
+\section{Kinetics}
 \label{progflow:kinetics}
 \input{prog_flow_kinetics}
 
