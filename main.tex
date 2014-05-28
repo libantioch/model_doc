@@ -12,6 +12,7 @@
 \usepackage[autolanguage]{numprint}
 \usepackage[version=3,arrows=pgf-filled]{mhchem}
 \usepackage{fancyhdr}
+\usepackage[round]{natbib}
 \usepackage[linkcolor=black,colorlinks=true,citecolor=black,urlcolor=blue]{hyperref}
 \makeatletter
 \input{preamble}
@@ -165,5 +166,10 @@
 {\footnotesize
 \input{units_goodie}
 }
+
+\bibliography{ref}
+\addcontentsline{toc}{0}{\bibname}
+\bibliographystyle{unsrtnat}
+
 
 \end{document}

@@ -48,6 +48,17 @@
 \newcounter{vmedium}
 \newcounter{vminor}
 \newcommand{\theversion}{\thevmajor.\thevmedium.\thevminor}
+%%% constant equation management
+\newcommand{\make@equation}[6][0] %% name, symbol, value, dvalue, unit | symbol = value (dvalue) \unit{unit}
+{%
+\expandafter\gdef\csname#2\endcsname{\ensuremath{#3}}%                                                          \"name"     produces "symbol"
+\expandafter\gdef\csname#2val\endcsname{\numprint{#4}\ifnum#1=0\else\,10^{#1}\fi}%                              \"name"val  produces "value"
+\expandafter\gdef\csname#2dval\endcsname{\numprint{#5}}%                                                        \"name"dval produces "dvalue"
+\expandafter\gdef\csname#2num\endcsname{\numprint{#4}\,(\csname#2dval\endcsname)\ifnum#1=0\else\,10^{#1}\fi}%   \"name"num  produces "value (dvalue)"
+\expandafter\gdef\csname#2unit\endcsname{\unit{#6}}%                                                            \"name"unit produces "unit"
+\expandafter\gdef\csname#2Equation\endcsname{% %% equation
+ \ensuremath{\csname#2\endcsname = \csname#2num\endcsname~\csname#2unit\endcsname}}%                            \"name"Equation produces "symbol = value (dvalue)~unit"
+}
 %% fun
 \newcommand{\ANTIOCH}{\font@library{A}
                       \font@library{N}ew
@@ -132,6 +143,16 @@
 \newcommand{\d@d} [2]{\ensuremath{\frac{\partial#2}{\partial #1}}}
 \newcommand{\dd@d}[2]{\ensuremath{\frac{\dd #2}{\dd #1}}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% universal constant, using
+%% meta macro make@equation
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\make@equation     {Rg}       {\mathrm{R}}         {8.3144621}{75}{J\,mol^{-1}\,K^{-1}}
+\make@equation[-23]{Boltzmann}{\mathrm{k}_\text{B}}{1.3806488}{13}{J\,K^{-1}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %%  chemical definitions
@@ -145,7 +166,6 @@
 \newcommand{\doverdn}    [2][\relax]{\d@d{\Mol[#1]}{#2}}
 \newcommand{\doverdext}  [2][\relax]{\d@d{\ext[#1]}{#2}}
 \newcommand{\ddoverddext}[3]{\ensuremath{\frac{\partial^2#1}{\partial\ext[#2]\partial\ext[#3]}}}
-\newcommand{\Rg}            {\ensuremath{\mathrm{R}}}
 \newcommand{\pz}            {\ensuremath{\mathrm{p^0}}}
 \newcommand{\Tz}            {\ensuremath{\mathrm{T^0}}}
 \newcommand{\eq}            {\ensuremath{\text{eq}}}
@@ -237,9 +257,12 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\vis}      [1][\relax]{\optional@sub[#1]{\mu}}
-\newcommand{\diff}     [1][\relax]{\optional@sub[#1]{D}}
-\newcommand{\thermcond}[1][\relax]{\optional@sub[#1]{\lambda}}
+\newcommand{\vis}       [1][\relax]{\optional@sub[#1]{\eta}}
+\newcommand{\diff}      [1][\relax]{\optional@sub[#1]{D}}
+\newcommand{\thermcond} [1][\relax]{\optional@sub[#1]{\lambda}}
+\newcommand{\LJdepth}   [1][\relax]{\optional@sub[#1]{\epsilon}}
+\newcommand{\LJdia}     [1][\relax]{\optional@sub[#1]{\sigma}}
+\newcommand{\Stockmayer}[1]        {\ensuremath{\left<\Omega^{(#1,#1)*}\right>}}
 
 %misc
 \newcommand{\prodReac}    {\ensuremath{\prod_{\text{reactants}} \conc[\reac]^{\scoefabs[\reac]}}}
