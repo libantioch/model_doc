@@ -38,13 +38,16 @@ with \Press\ the pressure (\unit{Pa}), \conc\ the molar concentration
 (\unit{mol\,m^{-3}}), \Rg\ the universal gas constant (\RgEquation)
 and \Temp\ the temperature (\unit{K}).
 
-We use the following formul\ae\ for the species $s$:
+We use the following formul\ae\ for the species $s$, from \citet{Monchick1961}:
 \begin{equation}
-\vis[s] = \frac{5}{16} \frac{\sqrt{\pi\Mass[s]\Boltzmann\Temp}}{\Press\LJdia[s]^2\Stockmayer{2}}
+\vis[s] = \frac{5}{16} \sqrt{\frac{\Mass[s]\Boltzmann\Temp}{\pi}}\frac{f_{\vis}}{\LJdia[s]^2\Stockmayer{2}}
 \label{visc_kin_theory:eq}
 \end{equation}
 with \Mass\ the molecular mass of the species (\unit{kg}), \LJdia\ the Lennard-Jones
 potential diameter associated to the species (\unit{m}), \Boltzmann\ the Boltzmann
-constant (\BoltzmannEquation), \Press\ the pressure (\unit{Pa}), \Stockmayer{2}\ is the
-value of the integrated integral as discussed in \citet{Monchick1961}
+constant (\BoltzmannEquation), \Stockmayer{2}\ is the
+value of the dimensionless integrated integral and $f_{\vis}$ a factor close
+to one (see Eq.~5 in \citet{Monchick1961}). We use the approximation
+$f_{\vis} = 1$ and a polynomial fit to \Stockmayer{2}.
 
+\paragraph{Stockmayer potentials}
