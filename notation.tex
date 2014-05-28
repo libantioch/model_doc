@@ -31,6 +31,9 @@
 \item \Gibbs[i]:          Gibbs free energy of thermodynamic phase $i$, homogeneous to \unit{J\,mol^{-1}};
 \item \Enth[i]:           enthalpy of thermodynamic phase $i$, homogeneous to \unit{J\,mol^{-1}};
 \item \Entr[i]:           entropy of thermodynamic phase $i$, homogeneous to \unit{J\,mol^{-1}\,K^{-1}}.
+\item \vis[i]:            viscosity of species $i$, homogeneous to \unit{C\,m}.
+\item \diff[i]:           bimolecular diffusion of species $i$, homogeneous to \unit{m^2\,s^{-1}}
+\item \thermcond[i]:      thermal conduction of species $i$, homogeneous to \unit{J\,m^2\,s^{-1}}
 \end{itemize}
 %
 \begin{tabular}{lcccc}\toprule
@@ -58,6 +61,11 @@ Mass fraction
           & \massfrac    &   1        &                  & \nounit\\
 Molar fraction
           & \molarfrac   &   1        &                  & \nounit\\\cmidrule(lr){2-2}
+Viscosity & \vis         &   \vis     &                  & \unit{C\,m}\\
+Diffusion & \diff        &  \diff     &                  & \unit{m^2\,s^{-1}}\\
+Thermal conduction 
+          & \thermcond   &  \thermcond 
+                                      &                  & \unit{J\,m^2\,s^{-1}}\\\cmidrule(lr){2-2}
 Kinetic model
           &              &            &   \kinMod        & depends\\
 Chemical process
