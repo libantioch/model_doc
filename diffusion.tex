@@ -1,1 +1,22 @@
-Diffusion to be put here
+The diffusion model used in \Antioch\ is at the species
+level the molecular binary diffusion model as computed from kinetics
+theory, assuming the ideal gas hypothesis.
+
+The molecular binary diffusion coefficient is given by:
+\begin{equation}
+\diff[ij] = \frac{3}{16} \sqrt{\frac{2\Boltzmann^3\Temp^3}{\pi\Mass_{ij}}}\frac{1}{\Press\LJdia_{ij}^2\Stockmayer{1}}
+\label{bimol_diff:eq}
+\end{equation}
+with $\Mass_{ij}$ the reduced mass (\unit{kg})
+\begin{equation}
+\Mass_{ij} = \frac{\Mass_i\Mass_j}{\Mass_i + \Mass_j},
+\label{diffusion:bimol:red_mass}
+\end{equation}
+$\LJdia_{ij}$ the Lennard-Jones collision diameter (\unit{m})
+between species $i$ and $j$:
+\begin{equation}
+\LJdia_{ij} = \frac{1}{2}\left(\LJdia_i + \LJdia_j\right)
+\label{diffusion:bimol:LJdia}
+\end{equation}
+and \Stockmayer{1}\ the integrated collision interval, fitted from
+the tables given in \citet{Monchick1961}.

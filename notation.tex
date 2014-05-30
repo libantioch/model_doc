@@ -31,13 +31,16 @@
 \item \Gibbs[i]:          Gibbs free energy of thermodynamic phase $i$, homogeneous to \unit{J\,mol^{-1}};
 \item \Enth[i]:           enthalpy of thermodynamic phase $i$, homogeneous to \unit{J\,mol^{-1}};
 \item \Entr[i]:           entropy of thermodynamic phase $i$, homogeneous to \unit{J\,mol^{-1}\,K^{-1}}.
+\item \specificHeat[i]:   specific heat of species $i$, homogeneous to \unit{J\,mol^{-1}\,K^{-1}} or
+                                \unit{J\,kg^{-1}\,K^{-1}} depending if it is the mass or molar
+                                specific heat.
 \item \vis[i]:            viscosity of species $i$, homogeneous to \unit{Pa\,s}.
 \item \dipole[i]:         dipole moment of species $i$, homogeneous to \unit{C\,m}.
 \item \diff[i]:           bimolecular diffusion of species $i$, homogeneous to \unit{m^2\,s^{-1}}.
 \item \thermcond[i]:      thermal conduction of species $i$, homogeneous to \unit{J\,m^2\,s^{-1}}.
-\item \LJdepth[i]:        Lennard-Jones potential well's depth, usually in reduced form, that
+\item \LJdepth[i]:        Lennard-Jones potential well's depth, sometimes in reduced form, that
                           is divided by Boltzmann's constant (\BoltzmannEquation)
-                          homegeneous (when reduced) to \unit{K}.
+                          homegeneous to \unit{J} and to \unit{K} when reduced.
 \item \LJdia[i]:          Lennard-Jones potential diameter, homogeneous to \unit{m}.
 \end{itemize}
 %
@@ -68,11 +71,19 @@ Molar fraction
           & \molarfrac   &   1        &                  & \nounit\\\cmidrule(lr){2-2}
 Viscosity & \vis         &   \vis     &                  & \unit{Pa\,s}\\
 Dipole moment 
-          & \dipole      &            &                  & \unit{C\,m}\\
+          & \dipole      &  \dipole   &                  & \unit{C\,m}\\
 Diffusion & \diff        &  \diff     &                  & \unit{m^2\,s^{-1}}\\
 Thermal conduction 
           & \thermcond   &  \thermcond 
-                                      &                  & \unit{J\,m^2\,s^{-1}}\\\cmidrule(lr){2-2}
+                                      &                  & \unit{J\,m^2\,s^{-1}}\\
+Specific heat
+          & \specificHeat
+                         &  \specificHeat
+                                      &                  & \unit{J\,\frac{mol^{-1}}{kg^{-1}}\,K^{-1}}\\\cmidrule(lr){2-2}
+Lennard-Jones diameter 
+          & \LJdepth     &            &                  & \unit{m}\\
+Lennard-Jones depth well
+          & \LJdia       &            &                  & \unit{J}\\\cmidrule(lr){2-2}
 Kinetic model
           &              &            &   \kinMod        & depends\\
 Chemical process

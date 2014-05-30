@@ -257,13 +257,16 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\vis}       [1][\relax]{\optional@sub[#1]{\eta}}
-\newcommand{\diff}      [1][\relax]{\optional@sub[#1]{D}}
-\newcommand{\thermcond} [1][\relax]{\optional@sub[#1]{\lambda}}
-\newcommand{\LJdepth}   [1][\relax]{\optional@sub[#1]{\epsilon}}
-\newcommand{\LJdia}     [1][\relax]{\optional@sub[#1]{\sigma}}
-\newcommand{\Stockmayer}[1]        {\ensuremath{\left<\Omega^{(#1,#1)*}\right>}}
-\newcommand{\dipole}    [1][\relax]{\optional@sub[#1]{\mu}}
+\newcommand{\vis}           [1][\relax]{\optional@sub[#1]{\eta}}
+\newcommand{\diff}          [1][\relax]{\optional@sub[#1]{D}}
+\newcommand{\thermcond}     [1][\relax]{\optional@sub[#1]{\lambda}}
+\newcommand{\LJdepth}       [1][\relax]{\optional@sub[#1]{\epsilon}}
+\newcommand{\LJdia}         [1][\relax]{\optional@sub[#1]{\sigma}}
+\newcommand{\Stockmayer}    [1]        {\ensuremath{\left<\Omega^{(#1,#1)*}\right>}}
+\newcommand{\dipole}        [1][\relax]{\optional@sub[#1]{\mu}}
+\newcommand{\polarizability}[1][\relax]{\optional@sub[#1]{\alpha}}
+\newcommand{\specificHeat}  [1][\relax]{\optional@sub[#1]{C}}
+\newcommand{\rotRelax}      [1][\relax]{\optional@sub[\text{rot}#1]{Z}}
 
 %misc
 \newcommand{\prodReac}    {\ensuremath{\prod_{\text{reactants}} \conc[\reac]^{\scoefabs[\reac]}}}

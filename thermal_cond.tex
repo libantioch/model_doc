@@ -1,1 +1,60 @@
-thermal conduction to be put here
+\subsubsection{Eucken thermal conduction}
+
+The Eucken thermal conduction is given by
+\begin{equation}
+\thermcond[s] = \vis[s]\left(\foreach \pre/\mod in {/vib,+/rot,+2.5/trans,+/elec} 
+                {
+                    \pre\specificHeat[\Vol,s]^{(\text{\mod})}
+                }
+                \right)
+\label{thermal_cond:eucken:eq}
+\end{equation}
+
+\subsubsection{Kinetics theory thermal conduction}
+
+The thermal conduction of a species $s$ is given by
+\begin{equation}
+\begin{split}
+\thermcond[s] & = \thermcond[s]^{(\text{rot})} + \thermcond[s]^{(\text{trans})} + \thermcond[s]^{(\text{vib})} \\
+              & = \frac{\vis[s]}{\Mass[s]} \left(
+                        \foreach \signe/\mode in {/vib,+/rot,+/trans}
+                                {\signe \specificHeat[\Vol,s]^{(\text{\mode})}\thermcond[s]^{(\text{\mode})}}
+                                          \right)
+\end{split}
+\label{transport:therm_cond}
+\end{equation}
+with
+%%
+\begin{equation}
+\begin{split}
+\thermcond[\Vol,s]^{(\text{vib})}   & = \mass[s] \frac{\diff[s s]}{\vis[s]} \\
+\thermcond[\Vol,s]^{(\text{rot})}   & = \mass[s] \frac{\diff[s s]}{\vis[s]}\left(1 + \frac{2}{\pi}\frac{A}{B}\right) \\
+\thermcond[\Vol,s]^{(\text{trans})} & = \frac{5}{2} \left(1 - \frac{2}{\pi}\frac{\specificHeat[\Vol,s]^{(\text{rot})}}{\specificHeat[\Vol,s]^{(\text{trans})}}\frac{A}{B}\right)
+\end{split}
+\label{thermal_cond:modes}
+\end{equation}
+%%
+and
+%%
+\begin{equation}
+\begin{split}
+  A & = \frac{5}{2} - \mass[s] \frac{\diff[s s]}{\vis[s]} \\
+  B & = \rotRelax + \frac{2}{\pi} \left(\frac{3}{5}\frac{\specificHeat[\Vol,s]^{(\text{rot})}}{\Rg} + \mass[s] \frac{\diff[s s]}{\vis[s]}\right)
+\end{split}
+\label{thermal_cond:A_B}
+\end{equation}
+%%
+the rotational relaxation number is given by
+\begin{equation}
+\rotRelax[,s](\Temp) = \rotRelax[,s](298)\frac{F(298)}{F(\Temp)}
+\label{thermal_cond:Zrot}
+\end{equation}
+with the function $F$ defined as
+\begin{equation}
+F(T) = 1 + \frac{\pi^{\frac{3}{2}}}{2}\sqrt{\left(\frac{\LJdepth[s]}{\Boltzmann\Temp}\right)}
+         + \left(\frac{\pi^2}{4} + 2\right)\left(\frac{\LJdepth[s]}{\Boltzmann\Temp}\right)
+         + \pi^{\frac{3}{2}}\left(\frac{\LJdepth[s]}{\Boltzmann\Temp}\right)^{\frac{3}{2}}
+\label{therm_cond:F}
+\end{equation}
+
+The specific heat are given by the thermodynamic module (not documented here yet).

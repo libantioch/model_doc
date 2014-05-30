@@ -47,18 +47,5 @@ with \Mass\ the molecular mass of the species (\unit{kg}), \LJdia\ the Lennard-J
 potential diameter associated to the species (\unit{m}), \Boltzmann\ the Boltzmann
 constant (\BoltzmannEquation), \Stockmayer{2}\ is the
 value of the dimensionless integrated integral and $f_{\vis}$ a factor close
-to one (see Eq.~5 in \citet{Monchick1961}). We use the approximation
-$f_{\vis} = 1$ and a polynomial fit to \Stockmayer{2}.
-
-\paragraph{Stockmayer potentials}
-
-The Stokmayer potential is a generalization of the Lennard-Jones potential:
-\begin{equation}
-\varphi(r) = \underbrace{4 \LJdepth \left[\left(\frac{\LJdia[0]}{r}\right)^{12} - \left(\frac{\LJdia[0]}{r}\right)^{6}\right]}_\text{Lennard-Jones}
-             - \frac{\dipole[i]\dipole[j]}{r^3}\xi
-\label{Stockmayer:equation}
-\end{equation}
-with 
-\begin{equation}
-\xi = 2 \cos(\theta_1)\cos(\theta_2) - \sin(\theta_1)\sin(\theta_2)\cos(\phi)
-\end{equation}
+to one (see Eq.~5 in \citet{Monchick1961}). We use the 
+the hard sphere approximation ($f_{\vis} = 1$), and a polynomial fit to \Stockmayer{2}.

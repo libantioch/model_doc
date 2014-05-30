@@ -7,29 +7,41 @@
 \centering
 \def\eps{1.5}
 \def\sig{2.5}
+\tikzset{%
+plan/.style={shading=axis,
+            left color=gray!70,right color=gray!10,
+            shading angle=-225,
+            fill opacity=0.7}
+}
 \begin{tikzpicture}[scale=1.5]
-\draw[fill] (0,0)circle(0.5pt) -- (5,0)circle(0.5pt) node[pos=0.5,above]{r};
 %
-\draw[dashdotted,very thin,gray] (0,0) circle(2 and 0.82);
+\coordinate (tip1) at (70:1cm);
 \draw[dashdotted,very thin,gray] (0,0) circle(2);
+\draw (0,0) -- (70:-1cm); %% dipole bottom
+\shade[plan] (0,0) circle(0.82 and 2);
+\draw[dashdotted,gray] (100:-0.7) -- (100:0.7) -- (tip1);
 \draw[red,-stealth] (0,0,0) -- (0,0,2)node[above left]  {$y$};
 \draw[red,-stealth] (0,0,0) -- (0,2,0)node[below left]  {$x$};
-\draw[-stealth] (70:-1cm) -- (70:1cm);
-\draw[densely dotted] (70:0.7) arc(70:0:0.3 and 1) coordinate (theta1) arc(-80:-18:1 and 0.41);
-\draw[dashdotted,gray] (0,0) -- (theta1);
-\path (0,0) ++(30:6mm)node {$\theta_1$};
-\path (0,0) ++(-10:1.2cm)node {$\phi_1$};
+\draw[-stealth] (0,0) -- (70:1cm); %% dipole top
+\draw[dotted] (70:0.7) arc(70:16:0.3 and 1);
+\path (0,0) ++(30:7mm)node {$\theta_1$};
+\draw[dotted] (100:0.35) arc(100:185:0.15 and 0.5);
+\path (0,0) ++(170:0.5cm)node {$\phi_1$};
 %
-\draw[dashdotted,very thin,gray] (5,0) circle(2 and 0.82);
+\draw[fill] (0,0)circle(0.5pt) -- (5,0)circle(0.5pt) node[pos=0.5,above]{r};
 \draw[dashdotted,very thin,gray] (5,0) circle(2);
+\path (5,0) ++(140:2cm) coordinate(tip2); %% dipole
+\draw[dashdotted,gray] (5,0) ++(-110:1.3cm) -- ++(-110:-2.6cm) -- (tip2);
+\draw[-stealth] (5,0) -- ++(-40:-2cm) ; %% dipole top
+\shade[plan] (5,0) circle(0.82 and 2);
+\draw (5,0) -- ++(-40:2cm); %% dipole bottom
 \draw[red,-stealth] (5,0,0) -- (5,0,2)node[above left]  {$y$};
 \draw[red,-stealth] (5,0,0) -- (5,2,0)node[below left]  {$x$};
-\draw[-stealth] (5,0) ++(-40:2cm) -- ++(-40:-4cm);
-\draw[dashdotted,gray] (5,0) ++(-20:1cm) -- ++(-20:-2cm);
-\draw[densely dotted] (5,0) ++(-20:0.7) arc(0:135:0.7 and 1);
-\draw[densely dotted] (5,0) ++(-20:0.7)  arc(-40:-180:1 and 0.4);
-\path (5,0) ++(45:8mm)node {$\theta_2$};
-\path (5,0) ++(-100:5mm)node {$\phi_2$};
+\draw[dotted] (5,0) ++(0:0.2) arc(10:100:0.4 and 0.28);
+\path (5,0) ++(50:4mm)node {$\theta_2$};
+%
+\draw[dotted]  (5,0) ++(70:1)  arc(60:200:0.45 and 1);
+\path (5,0) ++(120:1cm)node {$\phi_2$};
 %%
 \draw[red,-stealth] (5,0,0) -- (7,0,0)node[above left] {$z$};
 \coordinate (youpi) at (2.5,-2.5);
