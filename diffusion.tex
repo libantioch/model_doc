@@ -9,7 +9,11 @@ The molecular binary diffusion coefficient is given by:
 \end{equation}
 with $\Mass_{ij}$ the reduced mass (\unit{kg})
 \begin{equation}
-\Mass_{ij} = \frac{\Mass_i\Mass_j}{\Mass_i + \Mass_j},
+\Mass_{ij} = \left\{\begin{array}{l@{\qquad}l}
+                \frac{\Mass_i\Mass_j}{\Mass_i + \Mass_j} & \text{if } j \neq j \\
+                \Mass_i                                  & \text{else}
+                    \end{array}
+              \right.
 \label{diffusion:bimol:red_mass}
 \end{equation}
 $\LJdia_{ij}$ the Lennard-Jones collision diameter (\unit{m})
@@ -20,3 +24,12 @@ between species $i$ and $j$:
 \end{equation}
 and \Stockmayer{1}\ the integrated collision interval, fitted from
 the tables given in \citet{Monchick1961}.
+
+Given the ideal gaz assumption, noting $\Rg = \Boltzmann\Navo$, and
+and $\Mass\Navo = \Mm$ with
+\Navo\ the Avodagro number (\NavoEquation)
+\begin{equation}
+\diff[ij] = \frac{3}{16}\sqrt{\frac{2\Boltzmann}{\Navo\pi}} 
+                \sqrt{\frac{\Temp}{\Mm[ij]}}\frac{1}{\left(\sum_s\conc_s\right)\LJdia[ij]^2\Stockmayer{1}}
+\label{diffusion:bimol:simplified}
+\end{equation}

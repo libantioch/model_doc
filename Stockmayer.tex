@@ -1,0 +1,73 @@
+The Stokmayer potential is a generalization of the Lennard-Jones potential
+(see Fig.~\ref{viscosity:Stockmayer_potential} and \citet{Jasper2014} for a
+full analysis of the Lennard-Jones potential):
+\begin{equation}
+\varphi(r) = \underbrace{4 \LJdepth \left[\left(\frac{\LJdia[0]}{r}\right)^{12} - \left(\frac{\LJdia[0]}{r}\right)^{6}\right]}_\text{Lennard-Jones}
+             - \frac{\dipole[i]\dipole[j]}{r^3}\xi
+\label{Stockmayer:equation}
+\end{equation}
+with 
+\begin{equation}
+\xi = 2 \cos(\theta_1)\cos(\theta_2) - \sin(\theta_1)\sin(\theta_2)\cos(\phi)
+\end{equation}
+\begin{figure}
+\centering
+\includegraphics{Stockmayer_angles}
+\caption[Stockmayer/Lennard-Jones potential]{\label{viscosity:Stockmayer_potential}The angles considered in the
+Stockmayer potential are the axis inclination ($\theta_i$) and the azimuthal
+angle between the dipoles ($\phi = \phi_2 - \phi_1$). Below is given the
+Lennard-Jones potential.}
+\end{figure}
+
+The integrated collision integrals (\Stockmayer{1} and \Stockmayer{2}) are tabulated
+in function of the reduced temperature and reduced dipole moment:
+\begin{equation}
+\Temp_\text{red} = \frac{\Boltzmann\Temp}{\LJdepth}
+\end{equation}
+and
+\begin{equation}
+\dipole_\text{red} = \frac{1}{2}\frac{\dipole^2}{\LJdepth\LJdia^3}
+\end{equation}
+
+For a pair a species, needed for the molecular binary diffusion, we have the relations
+%%
+\begin{equation}
+\begin{array}{l@{\qquad}l}
+\renewcommand{\arraystretch}{1.2}
+\left\{\begin{array}{l@{\quad}l}
+  \LJdia_{ij}                      & = \frac{1}{2}\left(\LJdia_{i} + \LJdia_{j}\right) \\
+  \frac{\LJdepth_{ij}}{\Boltzmann} & = \sqrt{\left(\frac{\LJdepth_{i}}{\Boltzmann}\right)\left(\frac{\LJdepth_{j}}{\Boltzmann}\right)} \\
+  \dipole_{ij}                     & = \sqrt{\dipole_j\dipole_k}\\
+\end{array}\right. & 
+  \text{if $i$ and $j$ are both polar or non polar} \\\\
+\left\{\begin{array}{l@{\quad}l}
+  \LJdia_{ij}                      & = \frac{1}{2}\left(\LJdia_{i} + \LJdia_{j}\right) \xi^2 \\
+  \frac{\LJdepth_{ij}}{\Boltzmann} & = \sqrt{\left(\frac{\LJdepth_{i}}{\Boltzmann}\right)\left(\frac{\LJdepth_{j}}{\Boltzmann}\right)}\; \xi^{-\frac{1}{6}} \\
+  \dipole_{ij}                     & = 0\\
+\end{array}\right. & 
+  \text{else} \\
+\end{array}
+\label{LJ_reduced_parameters}
+\end{equation}
+%%
+with
+%%
+\begin{equation}
+\xi = 1 + \frac{1}{4}\polarizability^{(\not{\dipole})}_\text{red}\dipole^{(\dipole)}_\text{red}\sqrt{\frac{\LJdepth^{(\dipole)}}{\LJdepth^{(\not{\dipole})}}}
+\label{reduced_parameter:xi}
+\end{equation}
+%%
+with the notation $(\not\!\!\dipole)$ denoting the non polar
+species and $(\dipole)$ the polar species.
+%%
+\begin{equation}
+\polarizability_\text{red}^{(\not{\dipole})} = \frac{\polarizability}{\LJdia^3}
+\label{reduced_parameter:pol_non_pol:polarizability}
+\end{equation}
+%%%%
+and
+%%%%
+\begin{equation}
+\dipole_\text{red}^{(\dipole)} = \frac{\dipole}{\sqrt{\LJdepth\LJdia^3}}
+\label{reduced_parameter:pol_non_pol:dipole}
+\end{equation}

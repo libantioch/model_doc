@@ -150,14 +150,15 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\make@equation     {Rg}       {\mathrm{R}}         {8.3144621}{75}{J\,mol^{-1}\,K^{-1}}
-\make@equation[-23]{Boltzmann}{\mathrm{k}_\text{B}}{1.3806488}{13}{J\,K^{-1}}
+\make@equation     {Rg}       {\mathrm{R}}            {8.3144621} {75}{J\,mol^{-1}\,K^{-1}}
+\make@equation[-23]{Boltzmann}{\mathrm{k}_\text{B}}   {1.3806488} {13}{J\,K^{-1}}
+\make@equation[23] {Navo}     {\mathcal{N}_\text{Avo}}{6.02214129}{27}{mol^{-1}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-%%  chemical definitions
+%% mathematical stuff
 %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\doverdt}    [1]{\d@d{t}{#1}}
 \newcommand{\doverdT}    [1]{\d@d{\Temp}{#1}}
 \newcommand{\ddoverdT}   [1]{\dd@d{\Temp}{#1}}
@@ -166,6 +167,11 @@
 \newcommand{\doverdn}    [2][\relax]{\d@d{\Mol[#1]}{#2}}
 \newcommand{\doverdext}  [2][\relax]{\d@d{\ext[#1]}{#2}}
 \newcommand{\ddoverddext}[3]{\ensuremath{\frac{\partial^2#1}{\partial\ext[#2]\partial\ext[#3]}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%  chemical definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\pz}            {\ensuremath{\mathrm{p^0}}}
 \newcommand{\Tz}            {\ensuremath{\mathrm{T^0}}}
 \newcommand{\eq}            {\ensuremath{\text{eq}}}
