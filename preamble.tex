@@ -37,7 +37,13 @@
 \make@prog{double}
 \newcommand{\stdvector}{\prog{std::vector< >}}
 \newcommand{\stdstring}{\prog{std::string}}
+%%physics
+\newcommand{\phenomenom}{\textcolor{red}{phenomenom}}
+\newcommand{\quantity}{\textcolor{blue!60!black}{quantity}}
+\newcommand{\Quantity}{\textcolor{blue!60!black}{Quantity}}
+\newcommand{\model}{\textcolor{green!60!black}{model}}
 %
+
 %%% versions
 \newcommand{\version}[3]{%
 \setcounter{vmajor}{#1}
@@ -48,6 +54,7 @@
 \newcounter{vmedium}
 \newcounter{vminor}
 \newcommand{\theversion}{\thevmajor.\thevmedium.\thevminor}
+
 %%% constant equation management
 \newcommand{\make@equation}[6][0] %% name, symbol, value, dvalue, unit | symbol = value (dvalue) \unit{unit}
 {%
@@ -59,6 +66,7 @@
 \expandafter\gdef\csname#2Equation\endcsname{% %% equation
  \ensuremath{\csname#2\endcsname = \csname#2num\endcsname~\csname#2unit\endcsname}}%                            \"name"Equation produces "symbol = value (dvalue)~unit"
 }
+
 %% fun
 \newcommand{\ANTIOCH}{\font@library{A}
                       \font@library{N}ew
@@ -136,6 +144,13 @@
 
 % unit defs
 \newcommand{\unitbase}{[\unit{m},\unit{kg},\unit{s},\unit{A},\unit{K},\unit{mol},\unit{cd},\unit{rad}]}
+%%%%%%%
+%%
+%% 'cause I'm lazy 
+%%
+%%%%
+\newcommand{\example}[1]{\textit{i.e.} #1}
+
 
 %internal stuff
 \newcommand{\optional@sub} [2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{{#2}_{#1}}}\fi}

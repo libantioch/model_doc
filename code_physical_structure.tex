@@ -1,0 +1,46 @@
+\begin{itemize}
+\item phenomenom (\example{transport})
+\item physical quantities
+\item models
+\end{itemize}
+
+files are stored in \quantity\ folder (\example{\file{src/viscosity}}),
+\file{\model\_\quantity.h}, derived from
+\file{\quantity.h}, sorted with
+\file{\quantity\_enum.h} and constructed with
+\file{\quantity\_parsing.h}, stored in
+\file{\quantity\_set.h}.
+
+And in the \file{src/parsing} folder
+\file{\model\_ascii\_parsing.h} that fills a \object{\Quantity Set}
+
+Files in the \phenomenom\ folder (\example{\file{src/transport}})
+\file{\phenomenom\_mixture.h}
+\file{\phenomenom\_set.h}
+\file{\phenomenom\_evaluator.h}.
+Mixture and/or set is up to the developper I guess, evaluator is needed anyway.
+
+\begin{tabular}{ll}\toprule
+file & example\\
+\phenomenom                      & transport\\
+folder                           & \file{src/transport/include/antioch} \\
+\file{\phenomenom\_mixture.h}    & - \\
+\file{\phenomenom\_set.h}        & \file{transport\_set.h} \\
+\file{\phenomenom\_evaluator.h}  & \file{transport\_evaluator.h} \\[10pt]
+\quantity                        & viscosity  \\
+folder                           & \file{src/viscosity}  \\
+\file{\quantity.h}               & \file{viscosity.h} \\
+\file{\quantity\_enum.h}         & \file{viscosity\_enum.h} \\
+\file{\quantity\_parsing.h}      & \file{viscosity\_parsing.h} \\
+\file{\quantity\_set.h}          & \file{viscosity\_set.h} \\[10pt]
+\multirow{3}{*}{\model}
+                                 & Blottner \\ & Sutherland \\ & kinetics theory \\
+\multirow{3}{*}{\file{\model\_\quantity.h}}
+                                 & \file{blottner\_viscosity.h} \\ 
+                                 & \file{sutherland\_viscosity.h} \\ 
+                                 & \file{kinetics\_theory\_viscosity.h} \\
+\multirow{3}{*}{\file{\model\_ascii\_parsing.h}}
+                                 & \file{blottner\_ascii\_parsing.h} \\ 
+                                 & \file{sutherland\_ascii\_parsing.h} \\ 
+                                 & \file{kinetics\_theory\_ascii\_parsing.h} \\\bottomrule
+\end{tabular}
