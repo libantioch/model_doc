@@ -56,15 +56,23 @@
 \newcommand{\theversion}{\thevmajor.\thevmedium.\thevminor}
 
 %%% constant equation management
-\newcommand{\make@equation}[6][0] %% name, symbol, value, dvalue, unit | symbol = value (dvalue) \unit{unit}
-{%
+\newcommand{\make@meta@equation}[7]
+{
 \expandafter\gdef\csname#2\endcsname{\ensuremath{#3}}%                                                          \"name"     produces "symbol"
-\expandafter\gdef\csname#2val\endcsname{\numprint{#4}\ifnum#1=0\else\,10^{#1}\fi}%                              \"name"val  produces "value"
-\expandafter\gdef\csname#2dval\endcsname{\numprint{#5}}%                                                        \"name"dval produces "dvalue"
-\expandafter\gdef\csname#2num\endcsname{\numprint{#4}\,(\csname#2dval\endcsname)\ifnum#1=0\else\,10^{#1}\fi}%   \"name"num  produces "value (dvalue)"
+\expandafter\gdef\csname#2val\endcsname{\csname#7\endcsname{#4}\ifnum#1=0\else\,10^{#1}\fi}%                              \"name"val  produces "value"
+\expandafter\gdef\csname#2dval\endcsname{\csname#7\endcsname{#5}}%                                                        \"name"dval produces "dvalue"
+\expandafter\gdef\csname#2num\endcsname{\csname#7\endcsname{#4}\ifnum#5=0\else\,(\csname#2dval\endcsname)\fi\ifnum#1=0\else\,10^{#1}\fi}%   \"name"num  produces "value (dvalue)"
 \expandafter\gdef\csname#2unit\endcsname{\unit{#6}}%                                                            \"name"unit produces "unit"
 \expandafter\gdef\csname#2Equation\endcsname{% %% equation
  \ensuremath{\csname#2\endcsname = \csname#2num\endcsname~\csname#2unit\endcsname}}%                            \"name"Equation produces "symbol = value (dvalue)~unit"
+}
+\newcommand{\make@equation}[6][0] %% name, symbol, value, dvalue, unit | symbol = value (dvalue) \unit{unit}
+{%
+ \make@meta@equation{#1}{#2}{#3}{#4}{#5}{#6}{numprint}
+}
+\newcommand{\make@litteralEquation}[4] %% name, symbol, expression, unit | symbol = expression \unit{unit}
+{%
+ \make@meta@equation{0}{#1}{#2}{#3}{0}{#4}{relax}
 }
 
 %% fun
@@ -161,13 +169,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %% universal constant, using
-%% meta macro make@equation
-%%
+%% meta macro make@equation and
+%% meta macro make@litteralEquation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% valued constant
 \make@equation     {Rg}       {\mathrm{R}}            {8.3144621} {75}{J\,mol^{-1}\,K^{-1}}
 \make@equation[-23]{Boltzmann}{\mathrm{k}_\text{B}}   {1.3806488} {13}{J\,K^{-1}}
 \make@equation[23] {Navo}     {\mathcal{N}_\text{Avo}}{6.02214129}{27}{mol^{-1}}
+\make@equation[8]  {cele}     {\mathrm{c}}            {2.99792458}{0} {m\,s^{-1}}
+%% computed from other constants constant
+\make@litteralEquation{vacPerme}{\mu_0}     {4\pi\,10^{-7}}{m\,kg\,s^2\,A^2}
+\make@litteralEquation{vacPermi}{\epsilon_0}{\frac{1}{\vacPerme\cele^2}}{A^2\,s^4\,kg^{-1}\,m^{-3}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%

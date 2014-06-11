@@ -3,10 +3,19 @@ The Stokmayer potential is a generalization of the Lennard-Jones potential
 full analysis of the Lennard-Jones potential):
 \begin{equation}
 \varphi(r) = \underbrace{4 \LJdepth \left[\left(\frac{\LJdia[0]}{r}\right)^{12} - \left(\frac{\LJdia[0]}{r}\right)^{6}\right]}_\text{Lennard-Jones}
-             - \frac{\dipole[i]\dipole[j]}{r^3}\xi
+             - \frac{\dipole[i]\dipole[j]}{4\pi \vacPermi r^3}\xi
 \label{Stockmayer:equation}
 \end{equation}
 with 
+\begin{equation}
+\renewcommand{\arraystretch}{1.2}
+\begin{array}{ll}
+\vacPermi\text{ the vacuum permittivity} & \vacPermiEquation \\
+\vacPerme\text{ the vacuum permeability} & \vacPermeEquation \\
+\cele\text{ the celerity of light}       & \celeEquation
+\end{array}
+\end{equation}
+and
 \begin{equation}
 \xi = 2 \cos(\theta_1)\cos(\theta_2) - \sin(\theta_1)\sin(\theta_2)\cos(\phi)
 \end{equation}
