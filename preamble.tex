@@ -55,6 +55,29 @@
 \newcounter{vminor}
 \newcommand{\theversion}{\thevmajor.\thevmedium.\thevminor}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% general macros and meta-macros
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% unit management here
+\gdef\unit@parser{\cdot}
+\newcommand{\print@unitOrSpace}[2]{%
+\ifnum#1=0#2\else{#2}\fi
+}
+\newcommand{\parse@unit}[2][0]{%
+\def\go@next[#1]{}%
+\ifx#2\relax%%
+\else%
+  \let\go@next=\parse@unit%
+  \print@unitOrSpace{#1}{#2}%
+\fi%
+\newcount\ans
+\if^#1\ans=1\else\ans=0\fi
+\go@next[\the\ans]%
+}
+\newcommand{\unit}[1]{\ensuremath{\mathtt{\parse@unit#1\relax}}}
+
 %%% constant equation management
 \newcommand{\make@meta@equation}[7]
 {
@@ -157,7 +180,7 @@
 %% 'cause I'm lazy 
 %%
 %%%%
-\newcommand{\example}[1]{\textit{i.e.} #1}
+\newcommand{\ie}[1]{\textit{i.e.} #1}
 
 
 %internal stuff
