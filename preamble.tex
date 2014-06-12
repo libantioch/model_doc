@@ -61,20 +61,26 @@
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% unit management here
-\gdef\unit@parser{\cdot}
-\newcommand{\print@unitOrSpace}[2]{%
-\ifnum#1=0#2\else{#2}\fi
+\gdef\unit@parser{\;}
+\newcommand{\print@unitOrSpace}[1]{%
+{\ifnum\unit@n=0{#1}\else#1\fi}
 }
-\newcommand{\parse@unit}[2][0]{%
-\def\go@next[#1]{}%
-\ifx#2\relax%%
+\newcommand{\prev}{\relax}
+\newcommand{\parse@unit}[1]{%
+\let\go@next\parse@unit%
+\ifx#1\relax%%
+  \let\go@next=\relax%
 \else%
-  \let\go@next=\parse@unit%
-  \print@unitOrSpace{#1}{#2}%
+  \ifx#1\,\unit@parser\else%
+    \ifx^#1 \renewcommand{\prev}{^}\else% if superscript
+        \ifx_#1\renewcommand{\prev}{_}\else% if subscript
+         \if_\prev \prev{#1}\renewcommand{\prev}{\relax}\else
+          \if^\prev \prev{#1}\renewcommand{\prev}{\relax}\else#1\fi\fi
+        \fi%
+    \fi%
+  \fi
 \fi%
-\newcount\ans
-\if^#1\ans=1\else\ans=0\fi
-\go@next[\the\ans]%
+\go@next%
 }
 \newcommand{\unit}[1]{\ensuremath{\mathtt{\parse@unit#1\relax}}}
 
