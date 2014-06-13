@@ -3,10 +3,12 @@ The Stokmayer potential is a generalization of the Lennard-Jones potential
 full analysis of the Lennard-Jones potential):
 \begin{equation}
 \varphi(r) = \underbrace{4 \LJdepth \left[\left(\frac{\LJdia[0]}{r}\right)^{12} - \left(\frac{\LJdia[0]}{r}\right)^{6}\right]}_\text{Lennard-Jones}
-             - \frac{\dipole[i]\dipole[j]}{4\pi \vacPermi r^3}\xi
+             - \frac{\dipole[i]\dipole[j]}{4\pi \vacPermi r^3}\zeta
 \label{Stockmayer:equation}
 \end{equation}
+%
 with 
+%
 \begin{equation}
 \renewcommand{\arraystretch}{1.2}
 \begin{array}{ll}
@@ -15,9 +17,11 @@ with
 \cele\text{ the celerity of light}       & \celeEquation
 \end{array}
 \end{equation}
+%
 and
+%
 \begin{equation}
-\xi = 2 \cos(\theta_1)\cos(\theta_2) - \sin(\theta_1)\sin(\theta_2)\cos(\phi)
+\zeta = 2 \cos(\theta_1)\cos(\theta_2) - \sin(\theta_1)\sin(\theta_2)\cos(\phi)
 \end{equation}
 \begin{figure}
 \centering
@@ -28,15 +32,24 @@ angle between the dipoles ($\phi = \phi_2 - \phi_1$). Below is given the
 Lennard-Jones potential.}
 \end{figure}
 
-The integrated collision integrals (\Stockmayer{1} and \Stockmayer{2}) are tabulated
+The integrated collision integrals (\Stockmayer{1} and \Stockmayer{2}, \nounit) are tabulated
 in function of the reduced temperature and reduced dipole moment:
 \begin{equation}
 \Temp_\text{red} = \frac{\Boltzmann\Temp}{\LJdepth}
 \end{equation}
 and
 \begin{equation}
-\dipole_\text{red} = \frac{1}{2}\frac{\dipole^2}{\LJdepth\LJdia^3}
+\dipole_\text{red} = \frac{\zeta}{4}\frac{\dipole^2}{4\pi\vacPermi\LJdepth\LJdia^3}
 \end{equation}
+with a value chosen for $\zeta$ of 2 ($\theta_i = 0$, maximum
+interaction), as \citet{Monchick1961} say: 
+\textsf{``In the first attempt to handle polar gases, Krieger
+assigned a fixed value of 2 to $\zeta$. This corresponds to a
+model where the dipoles maintain a head-to-tail position, 
+corresponding to the maximum attractive orientation, throughout the encounter. This approximation
+has the advantage that it replaces an angle-dependent
+force by a central force, and limits consideration to
+only one relative orientation.''}
 
 For a pair a species, needed for the molecular binary diffusion, we have the relations
 %%
@@ -77,6 +90,6 @@ species and $(\dipole)$ the polar species.
 and
 %%%%
 \begin{equation}
-\dipole_\text{red}^{(\dipole)} = \frac{\dipole}{\sqrt{\LJdepth\LJdia^3}}
+\dipole_\text{red}^{(\dipole)} = \frac{\dipole}{\sqrt{4\pi\vacPermi\LJdepth\LJdia^3}}
 \label{reduced_parameter:pol_non_pol:dipole}
 \end{equation}
