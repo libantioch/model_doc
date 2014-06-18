@@ -33,6 +33,7 @@
 \make@object{KineticsEvaluator}
 \make@object{ChemicalMixture}
 \make@object{CEAThermodynamics}
+\make@object{Units}
 \make@prog{double}
 \newcommand{\stdvector}{\prog{std::vector< >}}
 \newcommand{\stdstring}{\prog{std::string}}
@@ -97,6 +98,9 @@
 %%%%  stuffs start here
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% unit defs
+\newcommand{\unitbase}{[\unit{m},\unit{kg},\unit{s},\unit{A},\unit{K},\unit{mol},\unit{cd},\unit{rad}]}
 
 %internal stuff
 \newcommand{\optional@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{{#2}_{#1}}}\fi}
