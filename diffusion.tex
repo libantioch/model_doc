@@ -19,11 +19,12 @@ with $\Mass_{ij}$ the reduced mass (\unit{kg})
 $\LJdia_{ij}$ the Lennard-Jones collision diameter (\unit{m})
 between species $i$ and $j$:
 \begin{equation}
-\LJdia_{ij} = \frac{1}{2}\left(\LJdia_i + \LJdia_j\right)
+\LJdia_{ij} = \frac{1}{2}\left(\LJdia_i + \LJdia_j\right) \xi^{-\frac{1}{6}}
 \label{diffusion:bimol:LJdia}
 \end{equation}
 and \Stockmayer{1}\ the integrated collision interval, fitted from
-the tables given in \citet{Monchick1961}.
+the tables given in \citet{Monchick1961}, the parameter $\xi$
+is given by \ref{reduced_parameter:xi}.
 
 Given the ideal gaz assumption, noting $\Rg = \Boltzmann\Navo$, and
 and $\Mass\Navo = \Mm$ with
