@@ -1,0 +1,61 @@
+\Antioch\ takes care of the units for every
+parameter thanks to the \Units\ object. This object
+enables powerful unit evaluation and conversion,
+of a physical quantity as well as an equation.
+
+A description of this object and its dependencies is
+given in the \Doxygen\ documentation, thus only a
+brief description and some examples will be given here.
+
+The \Units\ objects projects an unit on a unit basis,
+defined by the SI system plus radian for angles. There are
+three different parts:
+\begin{itemize}
+\item the symbol of the unit,
+\item the power array (basis projection),
+\item the coefficient to convert the unit to the basis.
+\end{itemize}
+
+All is defined so as to provide an easy use should the user
+want to play (or test/analyze) the dimension of some physical
+quantity.
+
+The basis is defined as: \unitbase.
+
+\subsection{Simple example}
+
+Let's consider an energy for instance, say parameter
+$E$ is given in \unit{cal}. You would initialize a \Units\
+object by 
+\begin{verbatim}
+Units<Scalar> E_unit("cal")
+\end{verbatim}
+\prog{Scalar} being the precision you want, typically \prog{float},
+\prog{double} or \prog{long double}.
+
+\subsection{Combining units}
+\subsection{Restrictions}
+No partial power! The physical senses of it is questionnable
+anyway, \Antioch\ will not let you define in any way
+a partial power.
+\subsection{Goodies}
+An object to automatically get the unit
+from an equation:
+\begin{verbatim}
+define operators:
++ and - is check of homogeneity plus choosing a unit and
+        calculating in chosen unit
+
+* is adding unit and performing calculations
+
+/ is substracting unit and performing calculations
+
+pow(a,b) is multiplying `a' unit power by `b',
+        needs check to verify that
+    - the power is unitless
+    - the resulting unit will not have a non integer unit
+
+log requires unitless
+
+cos/sin/... requires angles
+\end{verbatim}
