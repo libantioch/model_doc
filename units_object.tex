@@ -22,6 +22,13 @@ quantity.
 
 The basis is defined as: \unitbase.
 
+The rules for a unit are simple:
+\begin{itemize}
+\item ``.'' and ``/'' are the separators 
+        (thus \verb!m.s-1! and \verb!m/s! are equivalent),
+\item it supports grouping with parenthesises.
+\end{itemize}
+
 \subsection{Simple example}
 
 Let's consider an energy for instance, say parameter
@@ -31,9 +38,26 @@ object by
 Units<Scalar> E_unit("cal")
 \end{verbatim}
 \prog{Scalar} being the precision you want, typically \prog{float},
-\prog{double} or \prog{long double}.
+\prog{double} or \prog{long double}. Then you can obtain factors
+to any unit that is homogeneous to an energy:
+\begin{verbatim}
+Scalar j = E_unit.factor_to_some_unit("J"); // j = 4.1868
+Scalar strange = E_unit.factor_to_some_unit("g.m2/s2"); // strange = 4.1868e3
+Scalar weird = E_unit.factor_to_some_unit("Da.ang2.min-2"); // weird = 9.07686e50
+Scalar error = E_unit.factor_to_some_unit("Da.ang.min-2"); 
+/*
+terminate called after throwing an instance of 'Antioch::UnitError'
+  what():  Units are not homogeneous:
+"cal" and "Da.ang.min-2".
+*/ 
+\end{verbatim}
 
 \subsection{Combining units}
+
+The \Units\ object enables to combine unit
+as they would be combined by an equation.
+
+
 \subsection{Restrictions}
 No partial power! The physical senses of it is questionnable
 anyway, \Antioch\ will not let you define in any way
@@ -41,21 +65,6 @@ a partial power.
 \subsection{Goodies}
 An object to automatically get the unit
 from an equation:
-\begin{verbatim}
-define operators:
-+ and - is check of homogeneity plus choosing a unit and
-        calculating in chosen unit
-
-* is adding unit and performing calculations
-
-/ is substracting unit and performing calculations
-
-pow(a,b) is multiplying `a' unit power by `b',
-        needs check to verify that
-    - the power is unitless
-    - the resulting unit will not have a non integer unit
-
-log requires unitless
-
-cos/sin/... requires angles
-\end{verbatim}
+{\footnotesize
+\input{units_goodie}
+}
