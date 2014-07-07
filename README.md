@@ -23,7 +23,8 @@ Requirements
   * hyperref
   * tikz
   * pgfplots
-  * lineno
+  * listings
+  * fancyhdr
 
 Producing the pdf
 -----------------
