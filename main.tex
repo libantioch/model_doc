@@ -1,5 +1,14 @@
 \documentclass[twoside]{report}
-\usepackage{booktabs,geometry,amsmath,multicol,multirow,array,graphicx,tikz,lineno}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{longtable}
 \usepackage[autolanguage]{numprint}
 \usepackage[version=3,arrows=pgf-filled]{mhchem}
 \usepackage{fancyhdr}
@@ -96,6 +105,9 @@
 \section{Let's code some kinetics regression}
 \input{kinetics_regression}
 
+\section{The \Units\ object}
+\input{units_object}
+
 \appendix
 \chapter{Demonstrations}
 \label{demo}
@@ -107,5 +119,16 @@
 \section{Kinetics}
 \label{progflow:kinetics}
 \input{prog_flow_kinetics}
+
+\chapter{Units}
+\section{List of units supported by \Antioch}
+\label{list_units}
+\input{list_units}
+
+\section{Goodie code}
+\label{unit_goodie}
+{\footnotesize
+\input{units_goodie}
+}
 
 \end{document}

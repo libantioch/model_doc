@@ -1,0 +1,118 @@
+\Antioch\ takes care of the units for every
+parameter thanks to the \Units\ object. This object
+enables powerful unit evaluation and conversion,
+of a physical quantity as well as an equation.
+
+A description of this object and its dependencies is
+given in the \Doxygen\ documentation, thus only a
+brief description and some examples will be given here.
+
+The \Units\ objects projects an unit on a unit basis,
+defined by the SI system plus radian for angles. There are
+three different parts:
+\begin{itemize}
+\item the symbol of the unit,
+\item the power array (basis projection),
+\item the coefficient to convert the unit to the basis.
+\end{itemize}
+
+All is defined so as to provide an easy use should the user
+want to play (or test/analyze) the dimension of some physical
+quantity.
+
+The basis is defined as: \unitbase.
+
+The rules for a unit are simple:
+\begin{itemize}
+\item ``.'' and ``/'' are the separators 
+        (thus \verb!m.s-1! and \verb!m/s! are equivalent),
+\item it supports grouping with parenthesises.
+\end{itemize}
+
+\subsection{Simple example}
+
+Let's consider an energy for instance, say parameter
+$E$ is given in \unit{cal}. You would initialize a \Units\
+object by 
+\begin{cpp}
+Units<Scalar> E_unit("cal")
+\end{cpp}
+\prog{Scalar} being the precision you want, typically \prog{float},
+\prog{double} or \prog{long double}. Then you can obtain factors
+to any unit that is homogeneous to an energy:
+\begin{cpp}
+Scalar j = E_unit.factor_to_some_unit("J"); // j = 4.1868
+Scalar strange = E_unit.factor_to_some_unit("g.m2/s2"); // strange = 4.1868e3
+Scalar weird = E_unit.factor_to_some_unit("Da.ang2.min-2"); // weird = 9.07686e50
+Scalar error = E_unit.factor_to_some_unit("Da.ang.min-2"); 
+/*
+terminate called after throwing an instance of 'Antioch::UnitError'
+  what():  Units are not homogeneous:
+"cal" and "Da.ang.min-2".
+*/ 
+\end{cpp}
+
+\subsection{Combining units}
+
+The \Units\ object enables to combine unit
+as they would be combined by an equation.
+\begin{itemize}
+\item A multiplication is a unit addition, 
+        $A \cdot B \Rightarrow \unit{U_{A\cdot B}} = \unit{U_A} + \unit{U_B}$;
+\item a division       is a unit substraction, 
+        $\frac{A}{B} \Rightarrow \unit{U_{\frac{A}{B}}} = \unit{U_A} - \unit{U_B}$;
+\item an addition      is a unit homogeneity test, 
+        $A + B \Rightarrow \unit{U_A} \text{ is homogeneous to } \unit{U_B}$;
+\item a substraction   is a unit homogeneity test, 
+        $A - B \Rightarrow \unit{U_A} \text{ is homogeneous to } \unit{U_B}$.
+\end{itemize}
+Mathematical functions have specifics requirements:
+\begin{itemize}
+\item $\log$, $\exp$, $\mathrm{pow}$, $\arccos$, $\arcsin$, $\arctan$ require unitless parameters;
+\item $\cos$, $\sin$, $\tan$ require angled-united parameters;
+\item \mbox{\vdots}
+\end{itemize}
+
+The \Units\ object supports all these operations.
+It is therefore easy to define an object to automatically get the unit
+from an equation. One such object is given in appendix~\ref{unit_goodie},
+some capabilities are given here.
+
+
+\begin{minipage}{0.55\linewidth}
+\begin{cpp|} 
+// 1 gram 
+// light celerity
+// Energy contained in 1 gram
+Antioch::PhysicalQuantity<double> 
+        m(1.,"g"),
+        c(299792458.,"m.s-1"),
+        E = m * c * c; 
+
+std::cout << E.value() << " " 
+          << E.unit() << std::endl;
+
+E.change_unit_to("J");
+std::cout << E.value() << " " 
+          << E.unit() << std::endl;
+
+E.change_unit_to("cal");
+std::cout << E.value() << " " 
+          << E.unit() << std::endl;
+
+E.change_unit_to_SI();
+std::cout << E.value() << " " 
+          << E.unit() << std::endl;
+\end{cpp|}
+\end{minipage}
+\terminal{%
+8.987552e+16 g.m.s-1.m.s-1\\
+8.987552e+13 J\\
+2.146640e+13 cal \\
+8.987552e+13 kg.m2.s-2%
+}
+
+\subsection{Restrictions}
+No partial power! The physical senses of it is questionnable
+anyway, \Antioch\ will not let you define in any way
+a partial power.
