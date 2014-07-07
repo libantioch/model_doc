@@ -153,63 +153,63 @@
 \newcommand{\Troed}     {\ensuremath{d_\text{T}}}
 \newcommand{\Troec}     {\ensuremath{c_\text{T}}}
 %
-\newcommand{\conc}[1][\relax]{\ifx#1\relax\molar\else\ce{[#1]}\fi}
-\newcommand{\Mm}[1][\relax]{\optional@sub[#1]{\mathrm{M}}}
-\newcommand{\scoefabs}[1][\relax]{\optional@sub[#1]{\mathrm{n}}}
-\newcommand{\scoef}[1][\relax]{\optional@sub[#1]{\nu}}
-\newcommand{\sumscoef}[1][\relax]{\optional@sub[#1]{\gamma}}
+\newcommand{\conc}        [1][\relax]{\ifx#1\relax\molar\else\ce{[#1]}\fi}
+\newcommand{\Mm}          [1][\relax]{\optional@sub[#1]{\mathrm{M}}}
+\newcommand{\scoefabs}    [1][\relax]{\optional@sub[#1]{\mathrm{n}}}
+\newcommand{\scoef}       [1][\relax]{\optional@sub[#1]{\nu}}
+\newcommand{\sumscoef}    [1][\relax]{\optional@sub[#1]{\gamma}}
 \newcommand{\partialOrder}[1][\relax]{\optional@sub[#1]{\mathrm{m}}}
-\newcommand{\orderReac}{\ensuremath{{\mathrm{m}}}}
-\newcommand{\massfrac}[1][\relax]{\optional@sub[#1]{y}}
-\newcommand{\mass}[1][\relax]{\optional@sub[#1]{\rho}}
-\newcommand{\mdot}[1][\relax]{\optional@sub[#1]{\dot{\omega}}}
-\newcommand{\molarfrac}[1][\relax]{\optional@sub[#1]{x}}
-\newcommand{\molar}[1][\relax]{\optional@sub[#1]{c}}
-\newcommand{\Eqconst}[1][\relax]{\optional@sub[#1]{K}}
-\newcommand{\fwdratecons}[1][\relax]{\ensuremath{\rcons[#1]^{(f)}}}
+\newcommand{\orderReac}              {\ensuremath{{\mathrm{m}}}}
+\newcommand{\massfrac}    [1][\relax]{\optional@sub[#1]{y}}
+\newcommand{\mass}        [1][\relax]{\optional@sub[#1]{\rho}}
+\newcommand{\mdot}        [1][\relax]{\optional@sub[#1]{\dot{\omega}}}
+\newcommand{\molarfrac}   [1][\relax]{\optional@sub[#1]{x}}
+\newcommand{\molar}       [1][\relax]{\optional@sub[#1]{c}}
+\newcommand{\Eqconst}     [1][\relax]{\optional@sub[#1]{K}}
+\newcommand{\fwdratecons} [1][\relax]{\ensuremath{\rcons[#1]^{(f)}}}
 \newcommand{\bkwdratecons}[1][\relax]{\ensuremath{\rcons[#1]^{(b)}}}
-\newcommand{\fwdrate}[1][\relax]{\ensuremath{\rate[#1]^{(f)}}}
-\newcommand{\bkwdrate}[1][\relax]{\ensuremath{\rate[#1]^{(b)}}}
-\newcommand{\ext}[1][\relax]{\optional@sub[#1]{\xi}}
-\newcommand{\nspecies}{\ensuremath{\mathrm{n_{species}}}}
+\newcommand{\fwdrate}     [1][\relax]{\ensuremath{\rate[#1]^{(f)}}}
+\newcommand{\bkwdrate}    [1][\relax]{\ensuremath{\rate[#1]^{(b)}}}
+\newcommand{\ext}         [1][\relax]{\optional@sub[#1]{\xi}}
+\newcommand{\nspecies}               {\ensuremath{\mathrm{n_{species}}}}
 %%thermo
 %%%% phase
-\newcommand{\Vol}[1][\relax]{\optional@sub[#1]{V}}
-\newcommand{\Press}[1][\relax]{\optional@sub[#1]{P}}
-\newcommand{\Temp}[1][\relax]{\optional@sub[#1]{T}}
-\newcommand{\RedTemp}{\ensuremath{T_r}}
-\newcommand{\Mol}[1][\relax]{\optional@sub[#1]{N}}
-\newcommand{\Gibbs}[1][\relax]{\optional@sub[#1]{G}}
+\newcommand{\Vol}   [1][\relax]{\optional@sub[#1]{V}}
+\newcommand{\Press} [1][\relax]{\optional@sub[#1]{P}}
+\newcommand{\Temp}  [1][\relax]{\optional@sub[#1]{T}}
+\newcommand{\RedTemp}          {\ensuremath{T_r}}
+\newcommand{\Mol}   [1][\relax]{\optional@sub[#1]{N}}
+\newcommand{\Gibbs} [1][\relax]{\optional@sub[#1]{G}}
 \newcommand{\GibbsZ}[1][\relax]{\ensuremath{{\Gibbs[#1]}^{0}}}
-\newcommand{\Enth}[1][\relax]{\optional@sub[#1]{H}}
-\newcommand{\Entr}[1][\relax]{\optional@sub[#1]{S}}
-\newcommand{\IntEn}[1][\relax]{\optional@sub[#1]{U}}
-\newcommand{\Mass}[1][\relax]{\optional@sub[#1]{m}}
+\newcommand{\Enth}  [1][\relax]{\optional@sub[#1]{H}}
+\newcommand{\Entr}  [1][\relax]{\optional@sub[#1]{S}}
+\newcommand{\IntEn} [1][\relax]{\optional@sub[#1]{U}}
+\newcommand{\Mass}  [1][\relax]{\optional@sub[#1]{m}}
 %%%% species and Delta
-\newcommand{\press}[1][\relax]{\optional@sub[#1]{p}}
-\newcommand{\chempot}[1][\relax]{\optional@sub[#1]{\mu}}
+\newcommand{\press}   [1][\relax]{\optional@sub[#1]{p}}
+\newcommand{\chempot} [1][\relax]{\optional@sub[#1]{\mu}}
 \newcommand{\chempotZ}[1][\relax]{\ensuremath{\chempot[#1]^{0}}}
-\newcommand{\gibbs}[1][\relax]{\optional@sub[#1]{g}}
-\newcommand{\enth}[1][\relax]{\optional@sub[#1]{h}}
-\newcommand{\entr}[1][\relax]{\optional@sub[#1]{s}}
-\newcommand{\gibbsZ}[1][\relax]{\ensuremath{{\gibbs[#1]}^{0}}}
-\newcommand{\enthZ}[1][\relax]{\ensuremath{{\enth[#1]}^{0}}}
-\newcommand{\entrZ}[1][\relax]{\ensuremath{{\entr[#1]}^{0}}}
-\newcommand{\DGibbs}[1][\relax]{\ensuremath{\optional@sub[#1]{\Delta}G}}
-\newcommand{\DGibbsZ}[1][\relax]{\ensuremath{{\DGibbs[#1]}^{0}}}
-\newcommand{\Denth}[1][\relax]{\optional@sub[#1]{\Delta}\ensuremath{H}}
-\newcommand{\DenthZ}[1][\relax]{\ensuremath{{\Denth[#1]}^{0}}}
-\newcommand{\Dentr}[1][\relax]{\optional@sub[#1]{\Delta}\ensuremath{S}}
-\newcommand{\DentrZ}[1][\relax]{\ensuremath{{\Dentr[#1]}^{0}}}
+\newcommand{\gibbs}   [1][\relax]{\optional@sub[#1]{g}}
+\newcommand{\enth}    [1][\relax]{\optional@sub[#1]{h}}
+\newcommand{\entr}    [1][\relax]{\optional@sub[#1]{s}}
+\newcommand{\gibbsZ}  [1][\relax]{\ensuremath{{\gibbs[#1]}^{0}}}
+\newcommand{\enthZ}   [1][\relax]{\ensuremath{{\enth[#1]}^{0}}}
+\newcommand{\entrZ}   [1][\relax]{\ensuremath{{\entr[#1]}^{0}}}
+\newcommand{\DGibbs}  [1][\relax]{\ensuremath{\optional@sub[#1]{\Delta}G}}
+\newcommand{\DGibbsZ} [1][\relax]{\ensuremath{{\DGibbs[#1]}^{0}}}
+\newcommand{\Denth}   [1][\relax]{\optional@sub[#1]{\Delta}\ensuremath{H}}
+\newcommand{\DenthZ}  [1][\relax]{\ensuremath{{\Denth[#1]}^{0}}}
+\newcommand{\Dentr}   [1][\relax]{\optional@sub[#1]{\Delta}\ensuremath{S}}
+\newcommand{\DentrZ}  [1][\relax]{\ensuremath{{\Dentr[#1]}^{0}}}
 %misc
-\newcommand{\prodReac}{\ensuremath{\prod_{\text{reactants}} \conc[\reac]^{\scoefabs[\reac]}}}
+\newcommand{\prodReac}    {\ensuremath{\prod_{\text{reactants}} \conc[\reac]^{\scoefabs[\reac]}}}
 \newcommand{\prodReacMass}{\ensuremath{\prod_{\text{reactants}} \left(\frac{\mass[\reac]}{\Mm[\reac]}\right)^{\scoefabs[\reac]}}}
-\newcommand{\prodProd}{\ensuremath{\prod_\text{products}\conc[\product]^{\scoefabs[\product]}}}
-\newcommand{\Kooij}[4][1]{\ensuremath{{#2} \left(\frac{T}{#1}\right)^{#3}\exp\left(-\frac{#4}{\Rg T}\right)}}
-\newcommand{\KooijEq}{\Kooij[\mathrm{T_{ref}}]{A}{\beta}{E_a}}
-\newcommand{\dd}{\ensuremath{\mathrm{d}}}
-\newcommand{\unit}[1]{\ensuremath{\mathtt{#1}}}
-\newcommand{\nounit}{\unit{no~unit}}
+\newcommand{\prodProd}    {\ensuremath{\prod_\text{products}\conc[\product]^{\scoefabs[\product]}}}
+\newcommand{\Kooij} [4][1]{\ensuremath{{#2} \left(\frac{T}{#1}\right)^{#3}\exp\left(-\frac{#4}{\Rg T}\right)}}
+\newcommand{\KooijEq}     {\Kooij[\mathrm{T_{ref}}]{A}{\beta}{E_a}}
+\newcommand{\dd}          {\ensuremath{\mathrm{d}}}
+\newcommand{\unit}     [1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\nounit}      {\unit{no~unit}}
 %%%%%
 \newcommand{\reactionEq}[1]{%
 \ce{#1}%
