@@ -248,3 +248,57 @@
 {\refstepcounter{chemeq}\tag{\thechemeq}%
 \end{displaymath}}
 \@addtoreset{chemeq}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% code
+%% code + output two column
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% language loading
+\lstloadlanguages{C++,XML}
+\lstset{basicstyle=\footnotesize,commentstyle=\color{blue}\bf,stringstyle=\color{magenta}\bf,
+        numbers=left,numbersep=10pt,numberstyle=\scriptsize}
+
+%% c++ code one column
+\lstnewenvironment{cpp}[1][\footnotesize]
+{\lstset{language=C++,
+         morekeywords={Scalar,CoeffType,StateType},keywordstyle=\bf,
+         morestring=[b]",
+         morecomment=[s]{/*}{*/},morecomment=[l]{//},
+         basicstyle=#1}
+}
+{}
+
+%% c++ code two column
+\lstnewenvironment{cpp|}
+{\lstset{linewidth=0.9\linewidth,frame=r,framesep=-5pt,
+         morekeywords={Scalar,CoeffType,StateType},keywordstyle=\bf,
+         morestring=[b]",
+         language=C++,morecomment=[s]{/*}{*/},morecomment=[l]{//},
+         numbers=none}
+}
+{}
+
+%% xml code one column
+\lstnewenvironment{xml}[1][\footnotesize]
+{\lstset{language=XML,
+         morestring=[b]",
+         basicstyle=#1}
+}
+{}
+
+% output in terminal
+\newlength{\outdepth}
+\newcommand{\terminal}[1]{%
+\settototalheight{\outdepth}{#1}
+\ifdim\outdepth < 4em%
+  \setlength{\outdepth}{5em}%
+\fi%
+\fcolorbox{white}{black}{%
+\begin{minipage}[c][2\outdepth][c]{0.42\linewidth}
+\color{white}
+\textsf{[user@here \$]./program.x}\\
+\textsf{#1}
+\end{minipage}}
+}

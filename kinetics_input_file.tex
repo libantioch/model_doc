@@ -6,7 +6,7 @@ supported, but soon some \verb!hdf5! joy will be added.
 Thus you want to have a proper input file, therefore providing
 \Antioch\ with the proper data, as seen in subsection~\ref{kin:data}.
 This is pretty straightforward, here what it should look like:
-\begin{verbatim}
+\begin{xml}
 <?xml version="1.0"?>
 <ctml>
   <reactionData id="some name, does not matter">
@@ -82,7 +82,7 @@ This is pretty straightforward, here what it should look like:
     </reaction>
   </reactionData>
 <\ctml>
-\end{verbatim}
+\end{xml}
 
 The things you want to know about this file are simple:
 \begin{itemize}
@@ -105,11 +105,11 @@ The things you want to know about this file are simple:
 
 Letting alone the \verb!xml! imposed rules, once you've put
 the lines
-\begin{verbatim}
+\begin{xml}
 <?xml version="1.0"?>
 <ctml>
 </ctml>
-\end{verbatim}
+\end{xml}
 you enter into \Antioch's realm, her rules apply from there, don't
 resist, there's no hero, you will eventually abide by her rules.
 Again, let's insist on the \verb!reactionData! environment, only
@@ -141,7 +141,7 @@ value is between its tags, with nothing else.
 \end{center}
 
 Let's consider a reaction closely:
-\begin{verbatim}
+\begin{xml}
     <!-- reaction 0005    -->
     <reaction reversible="yes" type="Elementary" id="0005">
       <equation>NO + O [=] O2 + N</equation>
@@ -154,7 +154,7 @@ Let's consider a reaction closely:
       <reactants>NO:1 O:1</reactants>
       <products>O2:1 N:1</products>
     </reaction>
-\end{verbatim}
+\end{xml}
 %
 \begin{table}
 \centering
@@ -219,17 +219,17 @@ Let's build it together, asking and answering every question that
 arises along the way.
 So we start from an \verb!xml! empty reaction database:
 %
-\begin{verbatim}
+\begin{xml}
 <?xml version="1.0"?>
 <ctml>
   <reactionData>
   </reactionData>
 </ctml>
-\end{verbatim}
+\end{xml}
 %
 We want to add a reaction, with a commentary for the
 reader:
-\begin{verbatim}
+\begin{xml}
 <?xml version="1.0"?>
 <ctml>
   <reactionData>
@@ -238,14 +238,14 @@ reader:
     </reaction>
   </reactionData>
 </ctml>
-\end{verbatim}
+\end{xml}
 This reaction, as can be seen in chapter~\ref{Antioch:physics},
 is characterized by its chemical process, its kinetics model and
 if it is reversible or not. So, as attribute, we will provide
 the chemical process and the reversibility of the reaction. An id
 can be provided too, \Antioch\ will use it for warning or error
 message purpose at the reading step.
-\begin{verbatim}
+\begin{xml}
 <?xml version="1.0"?>
 <ctml>
   <reactionData>
@@ -254,10 +254,10 @@ message purpose at the reading step.
     </reaction>
   </reactionData>
 </ctml>
-\end{verbatim}
+\end{xml}
 Next thing we want, is the equation, we simply put it in the
 appropriate environment:
-\begin{verbatim}
+\begin{xml}
 <?xml version="1.0"?>
 <ctml>
   <reactionData>
@@ -267,12 +267,12 @@ appropriate environment:
     </reaction>
   </reactionData>
 </ctml>
-\end{verbatim}
+\end{xml}
 Along with the equation, comes the description of the reaction
 in terms of reactants and products. There we need to define
 each reactant (resp. product) with its stoichiometric
 coefficient:
-\begin{verbatim}
+\begin{xml}
 <?xml version="1.0"?>
 <ctml>
   <reactionData>
@@ -284,7 +284,7 @@ coefficient:
     </reaction>
   </reactionData>
 </ctml>
-\end{verbatim}
+\end{xml}
 This step is needed because \Antioch\ does not parse the
 chemical equation (so basically you can get creative there),
 \Antioch\ parses these environments to internally define the
@@ -299,14 +299,14 @@ if we had a falloff, we need to define two rate constants.
 The kinetics model is an environment, each parameter is an environment
 too, having a unit attribute (except \Power).
 Thus the general layout is:
-\begin{verbatim}
+\begin{xml}
       <rateCoeff>
         <kinModel name="k0">
           <Parameter units="appropriate unit"> value of parameter</A>
         </kinModel>
         <efficiencies> molecule:efficiency ... </efficiencies>
       </rateCoeff>
-\end{verbatim}
+\end{xml}
 with the \verb!name! attribute having a sense only in a falloff
 reaction, and the \verb!efficiencies! for three-body reactions.
 The efficiencies are formatted as shown, the molecule, a colon, the
@@ -319,7 +319,7 @@ following parameters:
 \item $\AcEn = \numprint{38526.0}~\unit{cal\,mol^{-1}}$.
 \end{itemize}
 Thus, our final reaction is therefore:
-\begin{verbatim}
+\begin{xml}
 <?xml version="1.0"?>
 <ctml>
   <reactionData>
@@ -337,7 +337,7 @@ Thus, our final reaction is therefore:
     </reaction>
   </reactionData>
 </ctml>
-\end{verbatim}
+\end{xml}
 Note that the order of environments inside environment have little
 interest, at the slight exception of falloff. If ever you are
 as bold as to provide a falloff without precision as to what rate

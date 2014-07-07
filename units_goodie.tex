@@ -1,4 +1,7 @@
-\begin{verbatim}
+\begin{cpp}[\tiny]
+#include "antioch/antioch_asserts.h"
+#include "antioch/units.h"
+#include "antioch/unit_defs.h"
 
 namespace Antioch{
 
@@ -17,9 +20,19 @@ namespace Antioch{
 
         void set_unit(const std::string & unit);
 
+        void set_unit(const Units<CoeffType> & unit);
+
         const CoeffType value() const;
 
-        const Units<CoeffType> & unit() const;
+        const std::string & unit() const;
+
+        const Units<CoeffType> & unit_object() const;
+
+        /* changers */
+
+        void change_unit_to(const std::string &target);
+
+        void change_unit_to_SI();
 
         /* operators */
 
@@ -43,7 +56,7 @@ namespace Antioch{
         Units<CoeffType> _unit;
         CoeffType        _value;
 
-  }
+  };
 
   template <typename CoeffType>
   PhysicalQuantity<CoeffType>::PhysicalQuantity():
@@ -54,9 +67,15 @@ namespace Antioch{
   }
 
   template <typename CoeffType>
-  PhysicalQuantity<CoeffType>::PhysicalQuantity(const std::string & unit, const CoeffType & value):
+  PhysicalQuantity<CoeffType>::PhysicalQuantity(const CoeffType & value, const std::string & unit):
         _unit(unit),
         _value(value)
+  {
+     return;
+  }
+
+  template <typename CoeffType>
+  PhysicalQuantity<CoeffType>::~PhysicalQuantity()
   {
      return;
   }
@@ -74,15 +93,46 @@ namespace Antioch{
   }
 
   template <typename CoeffType>
+  void PhysicalQuantity<CoeffType>::set_unit(const Units<CoeffType> & unit)
+  {
+     _unit = unit;
+  }
+
+  template <typename CoeffType>
   const CoeffType PhysicalQuantity<CoeffType>::value() const
   {
      return _value;
   }
 
   template <typename CoeffType>
-  const Units<CoeffType> & PhysicalQuantity<CoeffType>::unit() const
+  const std::string & PhysicalQuantity<CoeffType>::unit() const
+  {
+     return _unit.symbol();
+  }
+
+  template <typename CoeffType>
+  const Units<CoeffType> & PhysicalQuantity<CoeffType>::unit_object() const
   {
      return _unit;
+  }
+
+  template <typename CoeffType>
+  void PhysicalQuantity<CoeffType>::change_unit_to(const std::string &target)
+  {
+      if(!_unit.is_homogeneous(target))antioch_error();
+      CoeffType t = _unit.translator_to_some_unit(target);
+      CoeffType v = _unit.factor_to_some_unit(target);
+      _value = v * _value + t;
+      _unit.set_unit(target);
+  }
+
+  template <typename CoeffType>
+  void PhysicalQuantity<CoeffType>::change_unit_to_SI()
+  {
+      CoeffType t = _unit.get_SI_translator();
+      CoeffType v = _unit.get_SI_factor();
+      _value = v * _value + t;
+      _unit.set_unit(_unit.get_SI_symb());
   }
 
   template <typename CoeffType>
@@ -113,7 +163,7 @@ namespace Antioch{
   }
 
   template <typename CoeffType>
-  PhysicalQuantity<CoeffType> & 
+  PhysicalQuantity<CoeffType> &
         PhysicalQuantity<CoeffType>::operator/=(const PhysicalQuantity<CoeffType> &rhs)
   {
      this->set_value(this->value() / rhs.value());
@@ -122,32 +172,32 @@ namespace Antioch{
   }
 
   template <typename CoeffType>
-  PhysicalQuantity<CoeffType> & 
-        PhysicalQuantity<CoeffType>::operator*(const PhysicalQuantity<CoeffType> &rhs)
+  PhysicalQuantity<CoeffType>
+        PhysicalQuantity<CoeffType>::operator*(const PhysicalQuantity<CoeffType> &rhs) const
   {
      return (PhysicalQuantity<CoeffType>(*this) *= rhs);
   }
 
   template <typename CoeffType>
-  PhysicalQuantity<CoeffType> & 
-        PhysicalQuantity<CoeffType>::operator/(const PhysicalQuantity<CoeffType> &rhs)
+  PhysicalQuantity<CoeffType>
+        PhysicalQuantity<CoeffType>::operator/(const PhysicalQuantity<CoeffType> &rhs) const
   {
      return (PhysicalQuantity<CoeffType>(*this) /= rhs);
   }
 
   template <typename CoeffType>
-  PhysicalQuantity<CoeffType> & 
-        PhysicalQuantity<CoeffType>::operator+(const PhysicalQuantity<CoeffType> &rhs)
+  PhysicalQuantity<CoeffType>
+        PhysicalQuantity<CoeffType>::operator+(const PhysicalQuantity<CoeffType> &rhs) const
   {
      return (PhysicalQuantity<CoeffType>(*this) += rhs);
   }
   
   template <typename CoeffType>
-  PhysicalQuantity<CoeffType> & 
-        PhysicalQuantity<CoeffType>::operator-(const PhysicalQuantity<CoeffType> &rhs)
+  PhysicalQuantity<CoeffType>
+        PhysicalQuantity<CoeffType>::operator-(const PhysicalQuantity<CoeffType> &rhs) const
   {
      return (PhysicalQuantity<CoeffType>(*this) -= rhs);
   }
 
 }
-\end{verbatim}
+\end{cpp}

@@ -7,7 +7,7 @@
 \usepackage{array}
 \usepackage{graphicx}
 \usepackage{tikz}
-\usepackage{lineno}
+\usepackage{listings}
 \usepackage{longtable}
 \usepackage[autolanguage]{numprint}
 \usepackage[version=3,arrows=pgf-filled]{mhchem}
@@ -120,8 +120,15 @@
 \label{progflow:kinetics}
 \input{prog_flow_kinetics}
 
-\chapter{List of units}
+\chapter{Units}
+\section{List of units supported by \Antioch}
 \label{list_units}
 \input{list_units}
+
+\section{Goodie code}
+\label{unit_goodie}
+{\footnotesize
+\input{units_goodie}
+}
 
 \end{document}
