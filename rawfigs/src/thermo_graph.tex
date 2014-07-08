@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{geometry,tikz}
+\usetikzlibrary{calc,fit}
+\geometry{paperwidth=52cm, paperheight=10cm,left=2pt,right=2pt,top=2pt,bottom=2pt}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\tikzset{%
+ref/.style={rounded corners=5mm,red},
+der/.style={rounded corners,black,stealth-,densely dotted},
+templ/.style={rounded corners,blue,-stealth},
+point/.style={rounded corners,violet,-stealth,double},
+no/.style={opacity=0.2,text opacity=0.2},
+}
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+\newcommand{\obj}[1]{\texttt{#1<CoeffType>}}
+\begin{document}
+\centering
+\begin{tikzpicture}[x=6cm,y=1cm,
+                    every node/.append style={baseline}]
+\node[no] (SpecEnum) at (-7.5,1)  {\texttt{SpeciesEnum}};
+%%
+\node[no] (ChemSpec) at (-7.5,0)  {\obj{ChemicalSpecies}};
+\node[no] (ChemMix)  at (-7.5,-1) {\obj{ChemicalMixture}};
+%%
+\node (CEAcurve)  at (-8.5,1)   {\obj{CEACurveFit}};
+\node (CEAthermo) at (-8.5,-2)  {\obj{CEAThermodynamics}};
+%%
+%\node (LenJon)   at (-8.5,1)  {\obj{LennardJonesPotential}};
+%\node (TranSpec) at (-8.5,0)  {\obj{TransportSpecies}};
+%\node (TranMix)  at (-8.5,-2) {\obj{TransportMixture}};
+%%
+\foreach \kinMod/\modName/\i/\j in {ConstantRate/Con/-2/1.5,
+                                    PhotochemicalRate/hv/-1/1.5,
+                                    ArrheniusRate/Arr/-1/0.5,
+                                    HercourtEssenRate/HE/-2/0.5,
+                                    BerthelotRate/B/-3/0.5,
+                                    BerthelotHercourtEssenRate/BHE/-1/-0.5,
+                                    KooijRate/Kooij/-2/-0.5,
+                                    VantHoffRate/VH/-3/-0.5%
+                                   }
+     \node[no] (\modName)      at (\i,\j) {\obj{\kinMod}};
+\node[no] (KinMod) at (-2,-2) {\obj{KineticsType}};
+%%
+\foreach \fall/\name/\i in {LindemannFalloff/Lin/-6.5,TroeFalloff/Troe/-5.5}
+     \node[no] (\name)   at (\i,1) {\obj{\fall}};
+%%
+\foreach \ChemPro/\modName/\i/\j in {ElementaryReaction/Elem/-4/1,
+                                  DuplicateReaction/Dupl/-4/0,
+                                  ThreeBodyReaction/TB/-5/0,
+                                  FalloffReaction/FO/-6/0%
+                                   }
+     \node[no] (\modName)      at (\i,\j) {\obj{\ChemPro}};
+%%
+\node[no] (reaction)    at (-5.5,-3) {\obj{Reaction}};
+\node[no] (reactionSet) at (-5.5,-4) {\obj{ReactionSet}};
+\node[no] (kinEval)     at (-5.5,-5) {\obj{KineticsEvaluator}};
+%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%
+%%
+\draw[ref,no] (SpecEnum) -- (ChemSpec);
+%\draw[ref,rounded corners=5pt] (SpecEnum) -| ($(TranSpec)!0.55!(SpecEnum)$) |- (TranSpec);
+%%
+\draw[ref,no] (ChemSpec) -- (ChemMix);
+%
+\draw[point] (CEAcurve) -- (CEAthermo);
+\draw[ref,no]   (ChemMix)  |- (CEAthermo);
+%
+%\draw[ref] (LenJon)   -- (TranSpec);
+%\draw[ref] (TranSpec) -- (TranMix);
+%\draw[ref] (ChemMix)  |- (TranMix);
+%%
+\draw[der,no] (Con)   -| ($(B.east)!0.8!(HE.west)$) |- ([yshift=5pt]$([xshift=-5pt]Kooij.west)!0.5!(KinMod.west)$) -| (KinMod.170);
+\draw[der,no] (hv)    -| ([yshift=5pt]$(Arr.west)!0.7!(BHE.west)$) 
+                   -| ([xshift=-5pt]$(BHE.west)!0.2!(Kooij.east)$) |- ([yshift=5pt,xshift=-5pt]$(Kooij.east)!0.5!(KinMod.east)$) 
+                   -| (KinMod.10);
+\draw[der,no] (Arr)   |- ($(Arr.west)!0.7!(BHE.west)$)  -| ($(BHE.west)!0.2!(Kooij.east)$) |- ($(Kooij.east)!0.5!(KinMod.east)$) -| (KinMod.9);
+\draw[der,no] (HE.186) |- ([yshift=10pt]$([xshift=-5pt]Kooij.west)!0.5!(KinMod.west)$) -| (KinMod.168);
+\draw[der,no] (B)     -| ($(VH.east)!0.2!(Kooij.west)$) |- ($([xshift=-5pt]Kooij.west)!0.5!(KinMod.west)$) -| (KinMod.172);
+\draw[der,no] (BHE)   |- (KinMod);
+\draw[der,no] (Kooij) -- (KinMod);
+\draw[der,no] (VH)    |- (KinMod);
+%%
+\draw[templ,no] (Lin.east)  -| ([xshift=2mm]Lin.east |- FO.north);
+\draw[templ,no] (Troe.west) -| ([xshift=-2mm]Troe.west |- FO.north);
+%%
+\draw[der,no] (Elem) -| ($(Dupl.west)!0.8!(TB.east)$) |- (reaction.2);
+\draw[der,no] (Dupl) |- (reaction.2);
+\draw[der,no] (TB)   |- ($(TB)!0.5!(reaction)$)   -| (reaction);
+\draw[der,no] (FO)   |- (reaction);
+%%
+\draw[point,no] (KinMod) |- (reaction.-2);
+%%
+\draw[point,no] (reaction) -- (reactionSet);
+\draw[ref,no]   (ChemMix)  |- (reactionSet);
+\draw[ref,no]   (ChemMix)  |- (kinEval);
+\draw[ref,no]   (reactionSet) -- (kinEval);
+%%%
+\begin{pgfonlayer}{background}
+\node[fit= (hv) (B) (BHE), fill = gray!10, rounded corners=15pt ,no] (kin) {};
+\node[fit= (Lin) (Dupl), fill = cyan!50, rounded corners=15pt ,no] (chem) {};
+\node[draw, fit = (chem) (kin) (kinEval), rounded corners=20pt, dashed, very thick,no] {};
+\node[draw, fit = (SpecEnum) (ChemSpec) (ChemMix), rounded corners=20pt, dashed, very thick,no] {};
+\node[draw, fit = (CEAcurve) (CEAthermo), rounded corners=20pt, dashed, very thick] {};
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{document}

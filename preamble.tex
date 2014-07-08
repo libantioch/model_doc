@@ -99,6 +99,30 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%layout stuff
+\newlength{\tocenter}
+\newcommand{\graphAtPaperCenter}[2][width=\paperwidth]
+{
+%%%% from geometry package
+%% inner/outer margin ratio 2:3
+%% => \parperwidth - \textwidth = 5
+%% center = (inner +) 0.5\textwidth + (\parperwidth - \textwidth)/10 %% offset from inner (odd page)
+%% center = (outer +) 0.5\textwidth - (\parperwidth - \textwidth)/10 %% offset from outer (even page)
+%%%%%%%%%%%
+\setlength{\tocenter}{\paperwidth}
+\addtolength{\tocenter}{-\textwidth}
+\ifodd\number\c@page% TeX register of LaTeX counter, late one page
+  \setlength{\tocenter}{0.1\tocenter}
+\else% even
+  \setlength{\tocenter}{-0.1\tocenter}
+\fi%
+\addtolength{\tocenter}{0.5\textwidth}
+\noindent\hspace{\tocenter}\makebox[0pt]{\includegraphics[#1]{#2}}\par
+}
+
+%% chapter
+\@addtoreset{chapter}{part}
+
 % unit defs
 \newcommand{\unitbase}{[\unit{m},\unit{kg},\unit{s},\unit{A},\unit{K},\unit{mol},\unit{cd},\unit{rad}]}
 

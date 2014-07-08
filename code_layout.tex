@@ -1,0 +1,25 @@
+The global layout can be understood as different
+parts working together:
+\begin{itemize}
+\item the core part;
+\item the thermodynamics part;
+\item the chemistry part composed of;
+        \begin{itemize}
+        \item the kinetics model part;
+        \item the chemical process part.
+        \end{itemize}
+\end{itemize}
+
+%templ/.style={rounded corners,blue,-stealth},
+%point/.style={rounded corners,violet,-stealth,double}
+%The relationships between the objects are as follow:
+\begin{itemize}
+\item \tikz[baseline=(a.base)]\draw[red,text=black] (0,0)node(a)[left]{A} -- (1,0) node[right]{B};: 
+                        B contains a reference to A;
+\item \tikz[baseline=(a.base)]\draw[stealth-,densely dotted,text=black] (0,0)node(a)[left]{A} -- (1,0) node[right]{B};: 
+                        A derives from B;
+\item \tikz[baseline=(a.base)]\draw[blue,-stealth,text=black] (0,0)node(a)[left]{A} -- (1,0) node[right]{B};: 
+                        B is templated around objects of type A;
+\item \tikz[baseline=(a.base)]\draw[violet,double,-stealth,text=black] (0,0)node(a)[left]{A} -- (1,0) node[right]{B};: 
+                        B contains a/several pointers of type A;
+\end{itemize}
