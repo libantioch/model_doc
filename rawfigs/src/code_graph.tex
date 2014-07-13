@@ -12,7 +12,7 @@ point/.style={rounded corners,violet,-stealth,double}
 }
 \pgfdeclarelayer{background}
 \pgfsetlayers{background,main}
-\newcommand{\obj}[1]{\texttt{#1<CoeffType>}}
+\newcommand{\obj}[2][\relax]{\ifx#1\relax\texttt{#2<CoeffType>}\else\texttt{#1<CoeffType,#1>}\fi}
 \begin{document}
 \centering
 \begin{tikzpicture}[x=6cm,y=1cm,
@@ -46,10 +46,10 @@ point/.style={rounded corners,violet,-stealth,double}
 %%
 \foreach \ChemPro/\modName/\i/\j in {ElementaryReaction/Elem/-4/1,
                                   DuplicateReaction/Dupl/-4/0,
-                                  ThreeBodyReaction/TB/-5/0,
-                                  FalloffReaction/FO/-6/0%
+                                  ThreeBodyReaction/TB/-5/0%
                                    }
      \node (\modName)      at (\i,\j) {\obj{\ChemPro}};
+\node (FO)      at (-6,0) {\obj[FalloffType]{FalloffReaction}};
 %%
 \node (reaction)    at (-5.5,-3) {\obj{Reaction}};
 \node (reactionSet) at (-5.5,-4) {\obj{ReactionSet}};
