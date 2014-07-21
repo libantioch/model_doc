@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{geometry,tikz,pgfplots}
+\usetikzlibrary{patterns}
+\pgfplotsset{compat=newest}
+\geometry{paperwidth=8.5cm,paperheight=7.5cm}
+\pagestyle{empty}
+\begin{document}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{axis}[at={(current page.center)}, anchor=outer center,
+              axis lines=left,
+              xlabel = {Energy (arb. unit)},
+              ylabel = {cross-section per unit of energy (arb. unit)}]
+\addplot+[fill,const plot,mark=none] coordinates{
+(0,1)
+(1,5)
+(2,3)
+(3,8)
+(4,12)
+(5,9)
+(6,7)
+(7,3)
+(8,2.5)
+(9,1)
+(10,0.3)
+} \closedcycle;
+\addplot[const plot,mark=none,pattern=dots] coordinates{
+(1.5,0)
+(1.5,5)
+(2,3)
+(2.5,0)
+(3.5,0)
+(3.5,8)
+(4,12)
+(4.5,0)
+(5.5,0)
+(5.5,9)
+(6,7)
+(6.5,0)
+(7.5,0)
+(7.5,3)
+(8,2.5)
+(8.5,0)
+};
+\addplot[const plot,mark=none,pattern=north east lines] coordinates{
+(1.5,0)
+(2.5,0)
+(2.5,3)
+(3,8)
+(3.5,0)
+(4.5,0)
+(4.5,12)
+(5,9)
+(5.5,0)
+(6.5,0)
+(6.5,7)
+(7,3)
+(7.5,0)
+(8.5,0)
+};
+\addplot[thin,red,const plot,mark=none] coordinates{
+(1.5,0)
+(1.5,4)
+(2.5,5.5)
+(3.5,10)
+(4.5,10.5)
+(5.5,8)
+(6.5,5)
+(7.5,2.75)
+(8.5,0)
+};
+\end{axis}
+\end{tikzpicture}
+\end{document}
