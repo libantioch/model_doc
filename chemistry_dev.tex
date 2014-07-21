@@ -1,0 +1,44 @@
+\section{The particle flux}
+
+A particle flux is the quantity of particles through
+a surface per second (\unit{particle\,cm^{-2}\,s^{-1}}). This
+value depends on some characteristics of the considered
+particles, usually their energy. For instance, a photochemical
+reaction will be expressed with respect to a certain photons
+flux, \textit{i.e.} a photon spectrum. Such a spectrum is
+expressed in terms of particles flux per energy. Thus the
+``classic'' units you'll find for this will be
+  \unit{photon\,cm^{-2}\,s^{-1}} or \unit{W\,m^{-2}} 
+for the photon flux, and
+  \unit{eV} or \unit{nm}
+for the energy. 
+
+Now typically, you have instrument resolution here, and you
+measure those thing per windows of resolution, per bin. Thus,
+your measured flux is per unit of energy (or equivalent). Thus,
+informations on these quantities are typically of the form
+(\unit{photon\,cm^{-2}\,s^{-1}\,nm^{-1}}~,~\unit{nm}).
+
+The rate constant is calculated by integration of the
+cross-section with the incoming particle flux 
+(Tab.~\ref{antioch::kinMod}), thus a rescaling
+is due. \Antioch\ rescale cross-sections to given
+flux.
+
+The principle is simple, let's put some units first. We
+consider a photon flux in \unit{photon\,cm^{-2}\,s^{-1}\,nm}
+on a grid of \unit{nm}. We have a cross-section on \unit{cm^2\,\AA}
+on a grid of \unit{\AA}. The principle will be to rescale
+the cross-section to obtain the wanted units, then to calculate
+the integrated value on each photon flux bin, and then deduced
+the corresponding value of the cross-section on each photon
+flux bin. Fig.~\ref{dev:particle_flux_rescaling} pictures
+this protocol.
+
+\begin{figure}
+\centering
+\includegraphics{particle_flux}
+\caption{\label{dev:particle_flux_rescaling}The rescaling of the cross section (blue) on
+a new grid (black) requires to calculate the surface (dotted/stripped areas) to rescale
+on this new grid (red).}
+\end{figure}
