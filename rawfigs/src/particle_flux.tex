@@ -10,8 +10,12 @@
               axis lines=left,
               xlabel = {Energy (arb. unit)},
               ylabel = {cross-section per unit of energy (arb. unit)},
-              axis on top]
-\addplot+[fill,const plot,mark=none] coordinates{
+              axis on top,
+              every axis/.append style={pattern color=white}]
+\addplot+[fill,const plot,mark=none,error bars/.cd,
+                error bar style={dashed,black,very thick},
+                y dir=minus,
+                y fixed relative = 1] coordinates{
 (0,1)
 (1,5)
 (2,3)
@@ -24,7 +28,7 @@
 (9,1)
 (10,0.3)
 } \closedcycle;
-\addplot[const plot,mark=none,pattern=dots] coordinates{
+\addplot[draw=none,const plot,mark=none,pattern=dots] coordinates{
 (1.5,0)
 (1.5,5)
 (2,3)
@@ -42,7 +46,7 @@
 (8,2.5)
 (8.5,0)
 };
-\addplot[const plot,mark=none,pattern=north east lines] coordinates{
+\addplot[draw=none,const plot,mark=none,pattern=north east lines] coordinates{
 (1.5,0)
 (2.5,0)
 (2.5,3)
@@ -58,7 +62,9 @@
 (7.5,0)
 (8.5,0)
 };
-\addplot[thin,red,const plot,mark=none] coordinates{
+\addplot[thin,red,const plot,mark=none,error bars/.cd,
+                y dir=minus,
+                y fixed relative = 1] coordinates{
 (1.5,0)
 (1.5,4)
 (2.5,5.5)
