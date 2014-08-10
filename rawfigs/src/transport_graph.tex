@@ -12,7 +12,7 @@ uses/.style={rounded corners,)-},
 templ/.style={rounded corners,blue,-stealth},
 point/.style={rounded corners,violet,-stealth,double},
 subpartA/.style={draw,dashed,rounded corners=20pt,very thick},
-partA/.style={draw,draw opacity=#1,fill opacity=1,dashed,rounded corners=20pt,very thick,fill = white, drop shadow={shadow xshift = 5mm, shadow yshift = -5mm, opacity=#1}},
+partA/.style={draw,draw opacity=#1,dashed,rounded corners=20pt,very thick,fill = white, drop shadow={shadow xshift = 5mm, shadow yshift = -5mm, opacity=#1}},
 no/.style={opacity=0.2,text opacity=0.2},
 partA/.default=1
 }
@@ -30,6 +30,7 @@ partA/.default=1
 %\node (SpecEnum) at (-7.5,1)  {\texttt{SpeciesEnum}};
 %%
 %% Core
+\begin{scope}[every node/.append style={no},every path/.append style={no}]
 \node (LenJon)   at (-6,-11) {\obj{LennardJonesPotential}};
 \node (TranSpec) at (-6,-10) {\obj{TransportSpecies}};
 \node (TranMix)  at (-6,-8)  {\obj{TransportMixture}};
@@ -43,7 +44,7 @@ partA/.default=1
 \node[fit = (ChemSpec) (ChemMix) (LenJon) (TranSpec) (TranMix), rounded corners=20pt, fill = teal!20, shape = ellipse] (core) {};
 \end{pgfonlayer}
 %%
-\begin{scope}[every node/.append style={no},every path/.append style={no}]
+\end{scope}
 %%%%%
 %%% transport
 %%%%
@@ -101,6 +102,7 @@ partA/.default=1
 \draw[ref] (DiffSet) |- (PureSpec);
 \draw[ref,rounded corners=10pt] (VisSet)  |- ($(VisSet.north)!0.5!(PureSpec.south)$) -|(PureSpec);
 \draw[ref] (TauSet)  |- (PureSpec);
+\begin{scope}[every node/.append style={no},every path/.append style={no}]
 %%
 %% thermo
 \node[above left = 2mm and 4cm] (CEAthermo) at (core.north west) {\obj{CEAThermodynamics}};
@@ -154,12 +156,13 @@ partA/.default=1
 \begin{pgfonlayer}{background}
 \node[fit= (Dupl) (Troe), fill = cyan!50, rounded corners=15pt ] (chem) {};
 \end{pgfonlayer}
+\end{scope}
 %% kinetics
 \begin{pgfonlayer}{behind}
 % thermo
 \node[draw, fit = (CEAcurve) (CEAthermo), partA={0.2}] (thermo) {};
 % transport
-\node[fit = (WilEval) (visco) (thermalCond) (diffusion) (diffusivity), partA={0.2}, inner sep = 5mm] (transport) {};
+\node[fit = (WilEval) (visco) (thermalCond) (diffusion) (diffusivity), partA, inner sep = 5mm] (transport) {};
 % chemistry
 \node[draw, fit = (chem) (kin) (kinEval), partA={0.2}] (kinetics) {};
 \end{pgfonlayer}
@@ -183,6 +186,7 @@ partA/.default=1
 \draw[uses]  (Stock)       -- (KinTVis);
 %% thermal conduction
 \draw[ref]   (TranMix.-10) |- ($(ChemSpec.south west)!0.5!(TranSpec.north east)$) -| (TauSet);
+\begin{scope}[every path/.append style={no}]
 %% thermo
 \draw[ref]   ([xshift=-10pt]ChemMix.north)  |- (CEAthermo);
 %%% kin
