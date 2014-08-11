@@ -14,7 +14,7 @@ parts working together:
 %point/.style={rounded corners,violet,-stealth,double}
 %The relationships between the objects are as follow:
 \begin{itemize}
-\item \tikz[baseline=(a.base)]\draw[red,text=black] (0,0)node(a)[left]{A} -- (1,0) node[right]{B};: 
+\item \tikz[baseline=(a.base)]\draw[red,-stealth,text=black] (0,0)node(a)[left]{A} -- (1,0) node[right]{B};: 
                         B contains a reference to A;
 \item \tikz[baseline=(a.base)]\draw[stealth-,densely dotted,text=black] (0,0)node(a)[left]{A} -- (1,0) node[right]{B};: 
                         A derives from B;
@@ -22,4 +22,8 @@ parts working together:
                         B is templated around objects of type A;
 \item \tikz[baseline=(a.base)]\draw[violet,double,-stealth,text=black] (0,0)node(a)[left]{A} -- (1,0) node[right]{B};: 
                         B contains a/several pointers of type A;
+\item \tikz[baseline=(a.base)]\draw[violet,double,-stealth,text=black] (0,0)node(a)[left]{A} -- (1,0) node[right]{B};: 
+                        B contains a/several pointers of type A;
+\item \tikz[baseline=(a.base)]\draw[)-,text=black] (0,0)node(a)[left]{A} -- (1,0) node[right]{B};: 
+                        B contains an instanciation of A;
 \end{itemize}
