@@ -95,7 +95,7 @@ partA/.style={draw,dashed,rounded corners=20pt,very thick,fill = white, drop sha
 \begin{pgfonlayer}{background}
 \node[fit = (LewisDiff), subpartA, rounded corners] (diffusivity) {};
 \end{pgfonlayer}
-\draw[ref] (DiffSet) |- (PureSpec);
+\draw[ref] ([xshift=5pt]DiffSet.north) |- (PureSpec);
 \draw[ref,rounded corners=10pt] (VisSet)  |- ($(VisSet.north)!0.5!(PureSpec.south)$) -|(PureSpec);
 \draw[ref] (TauSet)  |- (PureSpec);
 %%
@@ -172,14 +172,14 @@ partA/.style={draw,dashed,rounded corners=20pt,very thick,fill = white, drop sha
 %\draw[ref,rounded corners=5pt] (SpecEnum) -| ($(TranSpec)!0.55!(SpecEnum)$) |- (TranSpec);
 %%
 %%% diff
-\draw[ref]   (TranMix)    -| (DiffSet);
+\draw[ref]   (TranMix)    -| ([xshift=-5pt]DiffSet.north);
 %\draw[uses]  (TranSpec)   -| (BinMolDiff.6);
 \draw[uses]  (Stock)  -| ([xshift = -8pt]BinMolDiff.west)    |- (DiffSet);
 %% viscosity
-\draw[ref]   (TranMix.-10) |- ($(ChemSpec.south west)!0.5!(TranSpec.north east)$) -- ++(3cm,0) |- (VisSet);
+\draw[ref]   ([xshift=-5pt]TranMix.-10) |- ([xshift=-5pt,yshift=-5pt]$(ChemSpec.south west)!0.5!(TranSpec.north east)$) -- ++(3cm,0) |- (VisSet);
 \draw[uses]  (Stock)       -- (KinTVis);
 %% thermal conduction
-\draw[ref]   (TranMix.-10) |- ($(ChemSpec.south west)!0.5!(TranSpec.north east)$) -| (TauSet);
+\draw[ref]   ([xshift=5pt]TranMix.-10) |- ([xshift=5pt,yshift=5pt]$(ChemSpec.south west)!0.5!(TranSpec.north east)$) -| ([xshift=5pt]TauSet.north);
 %% thermo
 \draw[ref]   ([xshift=-10pt]ChemMix.north)  |- (CEAthermo);
 %%% kin
