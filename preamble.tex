@@ -154,6 +154,54 @@
 %%%%  stuffs start here
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\rightside}
+\newlength{\leftside}
+\newcommand{\set@length@rightside}[1]
+{\checkoddpage%
+\setlength{\leftside}{\marginparwidth}
+\setlength{\rightside}{\paperwidth - 0.5\marginparwidth - \textwidth - \marginparsep - \hoffset - 0.8in}
+\ifoddpage\setlength{#1}{\leftside}\else\setlength{#1}{\rightside}\fi
+}
+\newcommand{\set@length@leftside}[1]
+{\checkoddpage%
+\setlength{\leftside}{\marginparwidth}%
+\setlength{\rightside}{\paperwidth - 0.5\marginparwidth - \textwidth - \marginparsep - \hoffset - 0.8in}%
+\ifoddpage\setlength{#1}{\rightside}\else\setlength{#1}{\leftside}\fi%
+}
+%%%%%%%%%%%%%%%
+%%% * pretty picture next to \section
+%%% * picture absolutely in center of page
+%%%
+%%% \section:
+%%% from report.cls, adapated
+%%% added the makegraph stuff
+\setlength{\marginparwidth}{103pt}
+\setlength{\marginparsep}{5pt}
+\addtolength{\textheight}{1cm}
+
+\newcommand{\makegraph}      {\relax}
+\newcommand{\makeno@graph}   {\renewcommand{\makegraph}{\relax}}
+\newlength{\graph@size}
+\newlength{\graph@length}
+\newcommand{\make@graph@length}{\set@length@leftside{\graph@length}}
+\newcommand{\print@graph} [1]{{\includegraphics[width=\graph@length]{#1}}}
+\newcommand{\make@graph}  [1]{\renewcommand{\makegraph}{%
+                               \make@graph@length%
+                               \settoheight{\graph@size}{\print@graph{#1}}
+                                \noindent\make@@graph{\print@graph{#1}\rule{1ex}{0pt}}}}%
+\newcommand{\make@@graph} [1]{\makebox[0pt][r]{\raisebox{-0.5\graph@size}[0pt][0pt]{#1}}}%
+\newcommand{\make@@@graph}[1]{\ifx#1\relax%
+                               \makeno@graph%
+                                \else%
+                               \make@graph{#1}%
+                              \fi%
+                            }%
+\renewcommand\section[1][\relax]{\make@@@graph{#1}%
+                                 \@startsection {section}{1}{\z@}%
+                                 {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                 {2.3ex \@plus.2ex}%
+                                 {\makegraph\normalfont\Large\bfseries}
+                                }
 
 %layout stuff
 \newlength{\tocenter}
