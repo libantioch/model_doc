@@ -1,6 +1,6 @@
 \usepackage{geometry,tikz}
 \usetikzlibrary{calc,fit,arrows,positioning,shapes,shadows}
-\geometry{paperwidth=50cm, paperheight=30cm,left=2pt,right=2pt,top=2pt,bottom=2pt}
+\geometry{paperwidth=50cm, paperheight=28cm,left=2pt,right=2pt,top=2pt,bottom=2pt}
 \makeatletter%
 %
 \setlength{\parindent}{0pt}
@@ -28,6 +28,8 @@ viscosityGen/.style={see=1},
 %
 kineticsPart/.style={partA=1},
 thermoPart/.style={partA=1},
+NASASet/.style={see=1,subpartA},
+StatMechSet/.style={see=1, subpartA},
 transportPart/.style={partA=1},
 diffusionSet/.style={see=1,subpartA},
 diffusivitySet/.style={see=1,subpartA},
@@ -42,6 +44,8 @@ kineticsTypeGen/.style={see=0.2},
 kineticsProcGen/.style={see=0.2},
 thermoGen/.style={see=0.2},
 thermoPart/.style={partA=0.2},
+NASASet/.style={see=0.2,subpartA},
+StatMechSet/.style={see=0.2, subpartA},
 transportGen/.style={see=0.2},
 transportPart/.style={partA=0.2},
 viscosityGen/.style={see=0.2},
@@ -59,6 +63,8 @@ diffusivitySet/.style={see=0.2,subpartA}
 coreGen/.style={see=0.2},
 thermoGen/.style={see=0.2},
 thermoPart/.style={partA=0.2},
+NASASet/.style={see=0.2,subpartA},
+StatMechSet/.style={see=0.2, subpartA},
 transportGen/.style={see=0.2},
 transportPart/.style={partA=0.2},
 viscosityGen/.style={see=0.2},
@@ -79,6 +85,8 @@ kineticsGen/.style={see=0.2},
 kineticsTypeGen/.style={see=0.2},
 thermoGen/.style={see=0.2},
 thermoPart/.style={partA=0.2},
+NASASet/.style={see=0.2,subpartA},
+StatMechSet/.style={see=0.2, subpartA},
 transportGen/.style={see=0.2},
 transportPart/.style={partA=0.2},
 viscosityGen/.style={see=0.2},
@@ -99,6 +107,8 @@ kineticsGen/.style={see=0.2},
 kineticsProcGen/.style={see=0.2},
 thermoGen/.style={see=0.2},
 thermoPart/.style={partA=0.2},
+NASASet/.style={see=0.2,subpartA},
+StatMechSet/.style={see=0.2, subpartA},
 transportGen/.style={see=0.2},
 transportPart/.style={partA=0.2},
 viscosityGen/.style={see=0.2},
@@ -139,6 +149,8 @@ kineticsTypeGen/.style={see=0.2},
 kineticsProcGen/.style={see=0.2},
 thermoGen/.style={see=0.2},
 thermoPart/.style={partA=0.2},
+NASASet/.style={see=0.2,subpartA},
+StatMechSet/.style={see=0.2, subpartA},
 }
 }
 \newcommand{\onlyviscosity}{%
@@ -150,6 +162,8 @@ kineticsTypeGen/.style={see=0.2},
 kineticsProcGen/.style={see=0.2},
 thermoGen/.style={see=0.2},
 thermoPart/.style={partA=0.2},
+NASASet/.style={see=0.2,subpartA},
+StatMechSet/.style={see=0.2, subpartA},
 transportGen/.style={see=0.2},
 transportPart/.style={partA=0.2},
 diffusionGen/.style={see=0.2},
@@ -169,6 +183,8 @@ kineticsTypeGen/.style={see=0.2},
 kineticsProcGen/.style={see=0.2},
 thermoGen/.style={see=0.2},
 thermoPart/.style={partA=0.2},
+NASASet/.style={see=0.2,subpartA},
+StatMechSet/.style={see=0.2, subpartA},
 transportGen/.style={see=0.2},
 transportPart/.style={partA=0.2},
 viscosityGen/.style={see=0.2},
@@ -188,6 +204,8 @@ kineticsTypeGen/.style={see=0.2},
 kineticsProcGen/.style={see=0.2},
 thermoGen/.style={see=0.2},
 thermoPart/.style={partA=0.2},
+NASASet/.style={see=0.2,subpartA},
+StatMechSet/.style={see=0.2, subpartA},
 transportGen/.style={see=0.2},
 transportPart/.style={partA=0.2},
 viscosityGen/.style={see=0.2},
@@ -207,6 +225,8 @@ kineticsTypeGen/.style={see=0.2},
 kineticsProcGen/.style={see=0.2},
 thermoGen/.style={see=0.2},
 thermoPart/.style={partA=0.2},
+NASASet/.style={see=0.2,subpartA},
+StatMechSet/.style={see=0.2, subpartA},
 transportGen/.style={see=0.2},
 transportPart/.style={partA=0.2},
 viscosityGen/.style={see=0.2},
@@ -232,13 +252,14 @@ thermalCondSet/.style={see=0.2,subpartA},
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %\node (SpecEnum) at (-7.5,1)  {\texttt{SpeciesEnum}};
 %%
+\coordinate (ref) at (0,0);
 %% Core
 \begin{scope}[every node/.append style={coreGen},every path/.append style={coreGen}]
-\node (LenJon)   at (-6,-11) {\obj{LennardJonesPotential}};
-\node (TranSpec) at (-6,-10) {\obj{TransportSpecies}};
-\node (TranMix)  at (-6,-8)  {\obj{TransportMixture}};
-\node (ChemSpec) at (-5,-9)  {\obj{ChemicalSpecies}};
-\node (ChemMix)  at (-5,-8)  {\obj{ChemicalMixture}};
+\node[right = 5cm] (ChemSpec) at (ref)          {\obj{ChemicalSpecies}};
+\node[above = 1cm] (ChemMix)  at (ChemSpec)     {\obj{ChemicalMixture}};
+\node[left  = 1cm] (TranMix)  at (ChemMix.west) {\obj{TransportMixture}};
+\node[below = 2cm] (TranSpec) at (TranMix)      {\obj{TransportSpecies}};
+\node[below = 1cm] (LenJon)   at (TranSpec)     {\obj{LennardJonesPotential}};
 \draw[ref]   (ChemSpec) -- (ChemMix);
 \draw[cont]  (LenJon)   -- (TranSpec);
 \draw[point] (TranSpec) -- ([yshift=-15pt]TranMix);
@@ -252,7 +273,7 @@ thermalCondSet/.style={see=0.2,subpartA},
 %%% transport
 %%%%
 \begin{scope}[every node/.append style={transportGen},every path/.append style={transportGen}]
-\node[below = 2cm] (WilEval)  at (core.south) {\obj{WilkeEvaluator}};
+\node[below = 2cm] (WilEval)  at (core.south -| ref) {\obj{WilkeEvaluator}};
 \node[below = 1cm] (WilMix)   at (WilEval)    {\obj{WilkeMixture}};
 \node[below = 1cm] (PureSpec) at (WilMix)     {\obj{PureSpeciesMixture}};
 \draw[ref] (PureSpec) -- (WilMix);
@@ -262,7 +283,7 @@ thermalCondSet/.style={see=0.2,subpartA},
 \node[below left = 2cm and 10cm] (DiffSet)    at (PureSpec) {\obj{DiffusionSet}};
 \node[below = 1cm]               (BinMolDiff) at (DiffSet)         {\obj{MolecularBinaryDiffusion}};
 \draw[cont]  (BinMolDiff) -- (DiffSet);
-\draw[ref] ([xshift=5pt]DiffSet.north) |- (PureSpec);
+\draw[ref] ([xshift=5pt]DiffSet.north) |- ([yshift=-10pt]PureSpec);
 \begin{pgfonlayer}{background}
 \node[fit = (DiffSet) (BinMolDiff), diffusionSet] (diffusion) {};
 \end{pgfonlayer}
@@ -270,11 +291,11 @@ thermalCondSet/.style={see=0.2,subpartA},
 %%
 %%% viscosity
 \begin{scope}[every node/.append style={viscosityGen},every path/.append style={viscosityGen}]
-\node[below left = 2cm and -5mm] (VisSet)  at (PureSpec) {\obj{ViscositySet}};
-\node[below = 1cm] (Visco)   at (VisSet)     {\obj{Viscosity}};
-\node[below = 2cm] (KinTVis) at (Visco.south) {\obj{KineticsTheoryViscosity}};
-\node[below left  = 1cm] (SuthVis) at (Visco.south) {\obj{SutherlandViscosity}};
-\node[below right = 1cm] (BlotVis) at (Visco.south) {\obj{BlottnerViscosity}};
+\node[below left = 2cm and -5mm] (VisSet)  at (PureSpec)    {\obj{ViscositySet}};
+\node[below = 1cm]               (Visco)   at (VisSet)      {\obj{Viscosity}};
+\node[below = 2cm]               (KinTVis) at (Visco.south) {\obj{KineticsTheoryViscosity}};
+\node[below left  = 1cm]         (SuthVis) at (Visco.south) {\obj{SutherlandViscosity}};
+\node[below right = 1cm]         (BlotVis) at (Visco.south) {\obj{BlottnerViscosity}};
 \draw[point] (Visco)   -- (VisSet);
 \draw[der]   (BlotVis) |- (Visco);
 \draw[der]   (SuthVis) |- (Visco);
@@ -291,10 +312,10 @@ thermalCondSet/.style={see=0.2,subpartA},
 %% thermal conduction
 \begin{scope}[every node/.append style={thermalCondGen},every path/.append style={thermalCondGen}]
 \node[below right = 2cm and 10cm] (TauSet)   at (PureSpec) {\obj{ThermalConductivitySet}};
-\node[below = 1cm]                (Tau)      at (TauSet)          {\obj{ThermalConductivity}};
-\node[below right = 1cm and 1cm]  (KinTTau)  at (Tau)             {\obj{KineticsTheoryThermalConductivity}};
-\node[below left  = 1cm and 1cm]  (EuckTau)  at (Tau)             {\obj{EuckenThermalConductivity}};
-\node[below = 1cm]                (RotRelax) at (KinTTau)         {\obj{RotationalRelaxation}};
+\node[below = 1cm]                (Tau)      at (TauSet)   {\obj{ThermalConductivity}};
+\node[below right = 1cm and 1cm]  (KinTTau)  at (Tau)      {\obj{KineticsTheoryThermalConductivity}};
+\node[below left  = 1cm and 1cm]  (EuckTau)  at (Tau)      {\obj{EuckenThermalConductivity}};
+\node[below = 1cm]                (RotRelax) at (KinTTau)  {\obj{RotationalRelaxation}};
 \draw[point] (Tau)      -- (TauSet);
 \draw[der]   (KinTTau)  |- (Tau);
 \draw[der]   (EuckTau)  |- (Tau);
@@ -318,14 +339,23 @@ thermalCondSet/.style={see=0.2,subpartA},
 %%
 %% thermo
 \begin{scope}[every node/.append style={thermoGen},every path/.append style={thermoGen}]
-\node[above left = 2mm and 4cm] (CEAthermo) at (core.north west) {\obj{CEAThermodynamics}};
-\node[above = 1cm]              (CEAcurve)  at (CEAthermo.north) {\obj{CEACurveFit}};
+% NASA polynomials
+\node[above left = 1cm and 11cm] (CEAthermo) at (core.north -| ref) {\obj{CEAThermodynamics}};
+\node[above = 1cm] (CEAcurve)  at (CEAthermo.north)   {\obj{CEACurveFit}};
 \draw[point] (CEAcurve) -- (CEAthermo);
+\begin{pgfonlayer}{background}
+\node[NASASet, fit = (CEAthermo) (CEAcurve), rounded corners] (NASApolynomials) {};
+\end{pgfonlayer}
+% kinetics theory
+\node[below = 3cm] (StatMechThermo) at (NASApolynomials) {\obj{StatMechThermo}};
+\begin{pgfonlayer}{background}
+\node[StatMechSet, fit = (StatMechThermo), rounded corners] (KinTheoryThermo) {};
+\end{pgfonlayer}
 \end{scope}
 %%
 %% Kinetics
 \begin{scope}[every node/.append style={kineticsGen},every path/.append style={kineticsGen}]
-\node[above = 1cm] (kinEval)     at (core.north)        {\obj{KineticsEvaluator}};
+\node[above = 1cm] (kinEval)     at (core.north -| ref) {\obj{KineticsEvaluator}};
 \node[above = 5mm] (reactionSet) at (kinEval.north)     {\obj{ReactionSet}};
 \node[above = 5mm] (reaction)    at (reactionSet.north) {\obj{Reaction}};
 %% chem process
@@ -384,7 +414,7 @@ thermalCondSet/.style={see=0.2,subpartA},
 \end{scope}% end kin scope
 \begin{pgfonlayer}{behind}
 % thermo
-\node[thermoPart, fit = (CEAcurve) (CEAthermo)] (thermo) {};
+\node[thermoPart, inner sep=8pt,fit = (NASApolynomials) (KinTheoryThermo)] (thermo) {};
 % transport
 \node[transportPart,fit = (WilEval) (visco) (thermalCond) (diffusion) (diffusivity), inner sep = 5mm] (transport) {};
 % chemistry
@@ -401,7 +431,7 @@ thermalCondSet/.style={see=0.2,subpartA},
 %%
 %%% diff
 \begin{scope}[every node/.append style={diffusionGen},every path/.append style={diffusionGen}]
-\draw[ref]   (TranMix)    -| ([xshift=-5pt]DiffSet.north);
+\draw[ref]   ([xshift=-50pt]TranMix)   |- ++(-1,-1.8cm) -| ([xshift=-5pt]DiffSet.north);
 \draw[uses]  (TranSpec)   -| (BinMolDiff.6);
 \draw[uses]  (Stock)  -| ([xshift = -8pt]BinMolDiff.west)    |- (DiffSet);
 \end{scope}
@@ -417,14 +447,15 @@ thermalCondSet/.style={see=0.2,subpartA},
 \end{scope}
 %%%% thermo
 \begin{scope}[every node/.append style={thermoGen},every path/.append style={thermoGen}]
-\draw[ref]   ([xshift=-10pt]ChemMix.north)  |- (CEAthermo);
+\draw[ref]   ([xshift=-10pt]ChemMix.north) |- ++(-1,7mm)  -| (CEAthermo);
+\draw[ref]   (StatMechThermo) |- ([yshift=10pt]PureSpec);
 \end{scope}
 %%%% kin
 \begin{scope}[every node/.append style={kineticsGen},every path/.append style={kineticsGen}]
 \draw[ref]   ([xshift=10pt]ChemMix.north) |- (reactionSet);
 \draw[ref]   (ChemMix.north) -- ++(0,1) -|  (kinEval);
 \end{scope}
-%%%
+%%
 \ifx#1\relax\else%
 \pgfresetboundingbox%
 #1;\fi
