@@ -253,7 +253,7 @@
 %% valued constant
 \make@equation     {Rg}       {\mathrm{R}}            {8.3144621} {75}{J\,mol^{-1}\,K^{-1}}
 \make@equation[-23]{Boltzmann}{\mathrm{k}_\text{B}}   {1.3806488} {13}{J\,K^{-1}}
-\make@equation[23] {Navo}     {\mathcal{N}_\text{Avo}}{6.02214129}{27}{mol^{-1}}
+\make@equation[23] {Navo}     {\mathcal{N}_{\!\text{Avo}}}{6.02214129}{27}{mol^{-1}}
 \make@equation[8]  {cele}     {\mathrm{c}}            {2.99792458}{0} {m\,s^{-1}}
 %% computed from other constants constant
 \make@litteralEquation{vacPerme}{\mu_0}     {4\pi\,10^{-7}}{m\,kg\,s^2\,A^2}
@@ -379,6 +379,7 @@
 \newcommand{\polarizability}[1][\relax]{\optional@sub[#1]{\alpha}}
 \newcommand{\specificHeat}  [1][\relax]{\optional@sub[#1]{C}}
 \newcommand{\rotRelax}      [1][\relax]{\optional@sub[\text{rot}#1]{Z}}
+\newcommand{\Le}            [1][\relax]{\optional@sub[#1]{\mathcal{L}\!e}}
 
 %misc
 \newcommand{\prodReac}    {\ensuremath{\prod_{\text{reactants}} \conc[\reac]^{\scoefabs[\reac]}}}

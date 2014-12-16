@@ -32,7 +32,6 @@ NASASet/.style={see=1,subpartA},
 StatMechSet/.style={see=1, subpartA},
 transportPart/.style={partA=1},
 diffusionSet/.style={see=1,subpartA},
-diffusivitySet/.style={see=1,subpartA},
 thermalCondSet/.style={see=1,subpartA},
 viscositySet/.style={see=1,subpartA},
 }
@@ -54,8 +53,7 @@ diffusionGen/.style={see=0.2},
 diffusionSet/.style={see=0.2,subpartA},
 thermalCondGen/.style={see=0.2},
 thermalCondSet/.style={see=0.2,subpartA},
-diffusivityGen/.style={see=0.2},
-diffusivitySet/.style={see=0.2,subpartA}
+diffusivityGen/.style={see=0.2}
 }
 }
 \newcommand{\onlykinetics}{%
@@ -73,8 +71,7 @@ diffusionGen/.style={see=0.2},
 diffusionSet/.style={see=0.2,subpartA},
 thermalCondGen/.style={see=0.2},
 thermalCondSet/.style={see=0.2,subpartA},
-diffusivityGen/.style={see=0.2},
-diffusivitySet/.style={see=0.2,subpartA}
+diffusivityGen/.style={see=0.2}
 }
 }
 \newcommand{\onlykineticsproc}{%
@@ -95,8 +92,7 @@ diffusionGen/.style={see=0.2},
 diffusionSet/.style={see=0.2,subpartA},
 thermalCondGen/.style={see=0.2},
 thermalCondSet/.style={see=0.2,subpartA},
-diffusivityGen/.style={see=0.2},
-diffusivitySet/.style={see=0.2,subpartA}
+diffusivityGen/.style={see=0.2}
 }
 }
 \newcommand{\onlykineticstype}{%
@@ -117,8 +113,7 @@ diffusionGen/.style={see=0.2},
 diffusionSet/.style={see=0.2,subpartA},
 thermalCondGen/.style={see=0.2},
 thermalCondSet/.style={see=0.2,subpartA},
-diffusivityGen/.style={see=0.2},
-diffusivitySet/.style={see=0.2,subpartA}
+diffusivityGen/.style={see=0.2}
 }
 }
 \newcommand{\onlythermo}{%
@@ -136,8 +131,7 @@ diffusionGen/.style={see=0.2},
 diffusionSet/.style={see=0.2,subpartA},
 thermalCondGen/.style={see=0.2},
 thermalCondSet/.style={see=0.2,subpartA},
-diffusivityGen/.style={see=0.2},
-diffusivitySet/.style={see=0.2,subpartA}
+diffusivityGen/.style={see=0.2}
 }
 }
 \newcommand{\onlytransport}{%
@@ -170,8 +164,7 @@ diffusionGen/.style={see=0.2},
 diffusionSet/.style={see=0.2,subpartA},
 thermalCondGen/.style={see=0.2},
 thermalCondSet/.style={see=0.2,subpartA},
-diffusivityGen/.style={see=0.2},
-diffusivitySet/.style={see=0.2,subpartA}
+diffusivityGen/.style={see=0.2}
 }
 }
 \newcommand{\onlydiffusion}{%
@@ -191,8 +184,7 @@ viscosityGen/.style={see=0.2},
 viscositySet/.style={see=0.2,subpartA},
 thermalCondGen/.style={see=0.2},
 thermalCondSet/.style={see=0.2,subpartA},
-diffusivityGen/.style={see=0.2},
-diffusivitySet/.style={see=0.2,subpartA}
+diffusivityGen/.style={see=0.2}
 }
 }
 \newcommand{\onlythermalcond}{%
@@ -212,8 +204,7 @@ viscosityGen/.style={see=0.2},
 viscositySet/.style={see=0.2,subpartA},
 diffusionGen/.style={see=0.2},
 diffusionSet/.style={see=0.2,subpartA},
-diffusivityGen/.style={see=0.2},
-diffusivitySet/.style={see=0.2,subpartA}
+diffusivityGen/.style={see=0.2}
 }
 }
 \newcommand{\onlydiffusivity}{%
@@ -284,14 +275,18 @@ thermalCondSet/.style={see=0.2,subpartA},
 \node[below = 1cm]               (BinMolDiff) at (DiffSet)         {\obj{MolecularBinaryDiffusion}};
 \draw[cont]  (BinMolDiff) -- (DiffSet);
 \draw[ref] ([xshift=5pt]DiffSet.north) |- ([yshift=-10pt]PureSpec);
+%% lewis diffusivity
+\begin{scope}[every node/.append style={diffusivityGen},every path/.append style={diffusivityGen}]
+\node[right = 8mm]  (LewisDiff)  at (BinMolDiff.east) {\obj{ConstantLewisDiffusivity}};
+\end{scope} % scope diffusivity
 \begin{pgfonlayer}{background}
-\node[fit = (DiffSet) (BinMolDiff), diffusionSet] (diffusion) {};
+\node[fit = (DiffSet) (BinMolDiff) (LewisDiff), diffusionSet] (diffusion) {};
 \end{pgfonlayer}
 \end{scope} % scope diffusion
 %%
 %%% viscosity
 \begin{scope}[every node/.append style={viscosityGen},every path/.append style={viscosityGen}]
-\node[below left = 2cm and -5mm] (VisSet)  at (PureSpec)    {\obj{ViscositySet}};
+\node[below right = 2cm and 4cm] (VisSet)  at (PureSpec)    {\obj{ViscositySet}};
 \node[below = 1cm]               (Visco)   at (VisSet)      {\obj{Viscosity}};
 \node[below = 2cm]               (KinTVis) at (Visco.south) {\obj{KineticsTheoryViscosity}};
 \node[below left  = 1cm]         (SuthVis) at (Visco.south) {\obj{SutherlandViscosity}};
@@ -300,7 +295,7 @@ thermalCondSet/.style={see=0.2,subpartA},
 \draw[der]   (BlotVis) |- (Visco);
 \draw[der]   (SuthVis) |- (Visco);
 \draw[der]   (KinTVis) -- (Visco);
-\draw[ref,rounded corners=10pt] (VisSet)  |- ($(VisSet.north)!0.5!(PureSpec.south)$) -|(PureSpec);
+\draw[ref,rounded corners=10pt] ([xshift=-15pt]VisSet.north)  |- ($(VisSet.north)!0.5!(PureSpec.south)$) -|(PureSpec);
 \begin{pgfonlayer}{background}
 % viscosity model
 \node[fit = (KinTVis) (SuthVis) (BlotVis), rounded corners=20pt, fill = red!20] (viscosityMod) {};
@@ -311,7 +306,7 @@ thermalCondSet/.style={see=0.2,subpartA},
 %%
 %% thermal conduction
 \begin{scope}[every node/.append style={thermalCondGen},every path/.append style={thermalCondGen}]
-\node[below right = 2cm and 10cm] (TauSet)   at (PureSpec) {\obj{ThermalConductivitySet}};
+\node[below right = 2cm and 18cm] (TauSet)   at (PureSpec) {\obj{ThermalConductivitySet}};
 \node[below = 1cm]                (Tau)      at (TauSet)   {\obj{ThermalConductivity}};
 \node[below right = 1cm and 1cm]  (KinTTau)  at (Tau)      {\obj{KineticsTheoryThermalConductivity}};
 \node[below left  = 1cm and 1cm]  (EuckTau)  at (Tau)      {\obj{EuckenThermalConductivity}};
@@ -328,13 +323,6 @@ thermalCondSet/.style={see=0.2,subpartA},
 \node[fit = (thermalCondMod) (TauSet) (RotRelax), thermalCondSet] (thermalCond) {};
 \end{pgfonlayer}
 \end{scope} % scope thermal conductivity
-%% lewis diffusivity
-\begin{scope}[every node/.append style={diffusivityGen},every path/.append style={diffusivityGen}]
-\node[below right = 2cm and 23.5cm]  (LewisDiff)  at (PureSpec) {\obj{ConstantLewisDiffusivity}};
-\begin{pgfonlayer}{background}
-\node[diffusivitySet, fit = (LewisDiff), rounded corners] (diffusivity) {};
-\end{pgfonlayer}
-\end{scope} % scope diffusivity
 \end{scope} % scope transport
 %%
 %% thermo
@@ -416,7 +404,7 @@ thermalCondSet/.style={see=0.2,subpartA},
 % thermo
 \node[thermoPart, inner sep=8pt,fit = (NASApolynomials) (KinTheoryThermo)] (thermo) {};
 % transport
-\node[transportPart,fit = (WilEval) (visco) (thermalCond) (diffusion) (diffusivity), inner sep = 5mm] (transport) {};
+\node[transportPart,fit = (WilEval) (visco) (thermalCond) (diffusion), inner sep = 5mm] (transport) {};
 % chemistry
 \node[kineticsPart, fit = (chem) (kin) (kinEval)] (kinetics) {};
 \end{pgfonlayer}
@@ -437,7 +425,7 @@ thermalCondSet/.style={see=0.2,subpartA},
 \end{scope}
 %% viscosity
 \begin{scope}[every node/.append style={viscosityGen},every path/.append style={viscosityGen}]
-\draw[ref]   ([xshift=-5pt]TranMix.-10) |- ([xshift=-5pt,yshift=-5pt]$(ChemSpec.south west)!0.5!(TranSpec.north east)$) -- ++(3cm,0) |- (VisSet);
+\draw[ref]   ([xshift=-5pt]TranMix.-10) |- ([xshift=-5pt,yshift=-5pt]$(ChemSpec.south west)!0.5!(TranSpec.north east)$)  -| ([xshift=15pt]VisSet.north);
 \draw[uses]  (Stock)       -- (KinTVis);
 \end{scope}
 %% thermal conduction

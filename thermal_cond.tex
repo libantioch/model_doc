@@ -10,13 +10,13 @@ The Eucken thermal conduction is given by
 \label{thermal_cond:eucken:eq}
 \end{equation}
 
-\subsubsection{Kinetics theory thermal conduction}
+\subsubsection{Pure species thermal conduction}
 
 The thermal conduction of a species $s$ is given by
 \begin{equation}
 \begin{split}
 \thermcond[s] & = \thermcond[s]^{(\text{rot})} + \thermcond[s]^{(\text{trans})} + \thermcond[s]^{(\text{vib})} \\
-              & = \frac{\vis[s]}{\Mass[s]} \left(
+              & = \frac{\vis[s]}{\Mm[s]} \left(
                         \foreach \signe/\mode in {/vib,+/rot,+/trans}
                                 {\signe \specificHeat[\Vol,s]^{(\text{\mode})}\thermcond[s]^{(\text{\mode})}}
                                           \right)
@@ -39,7 +39,7 @@ and
 \begin{equation}
 \begin{split}
   A & = \frac{5}{2} - \mass[s] \frac{\diff[s s]}{\vis[s]} \\
-  B & = \rotRelax + \frac{2}{\pi} \left(\frac{3}{5}\frac{\specificHeat[\Vol,s]^{(\text{rot})}}{\Rg} + \mass[s] \frac{\diff[s s]}{\vis[s]}\right)
+  B & = \rotRelax + \frac{2}{\pi} \left(\frac{5}{3}\frac{\specificHeat[\Vol,s]^{(\text{rot})}}{\Rg} + \mass[s] \frac{\diff[s s]}{\vis[s]}\right)
 \end{split}
 \label{thermal_cond:A_B}
 \end{equation}

@@ -1,3 +1,15 @@
+\subsubsection{Lewis diffusion}
+
+Lewis diffusion coefficient\footnote{or diffusivity} is expressed at
+the mixture level as
+\begin{equation}
+\diff[s] = \Le \frac{\thermcond[s]}{\mass[s] \specificHeat[\Press,s]}
+\label{diff:Lewis}
+\end{equation}
+
+
+\subsubsection{Binary molecular diffusion}
+
 The diffusion model used in \Antioch\ is at the species
 level the molecular binary diffusion model as computed from kinetics
 theory, assuming the ideal gas hypothesis.
@@ -34,3 +46,4 @@ and $\Mass\Navo = \Mm$ with
                 \sqrt{\frac{\Temp}{\Mm[ij]}}\frac{1}{\left(\sum_s\conc_s\right)\LJdia[ij]^2\Stockmayer{1}}
 \label{diffusion:bimol:simplified}
 \end{equation}
+
