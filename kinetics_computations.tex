@@ -3,6 +3,16 @@ The kinetics models are all given in Tab.~\ref{antioch::kinMod}.
 The kinetics model will render the temperature evolution of
 the rate constant, thus the only differential that is needed
 at that level is the temperature differentiation.
+
+The typical interpretation of the kinetics model comes from
+Arrhenius (See Fig.~\ref{Arrhenius_interp}).
+
+\begin{figure}
+\centering
+\framebox{\rule[-2cm]{0pt}{3cm}\rule{3cm}{0pt}TO BE PRODUCED\rule{3cm}{0pt}}
+\caption{\label{Arrhenius_interp}}
+\end{figure}
+
 \begin{table}
 \centering\renewcommand{\arraystretch}{1.5}
 \begin{tabular}{clr}\toprule
@@ -56,7 +66,7 @@ we assume that every reaction modeled is an elementary step, even in the case of
 non-elementary reactions. Therefore some corrections need to be made. This is where
 the chemical process adds, if needed, more suppleness to the rate constant
 function, from adding degrees of freedom to the temperature dependency (duplicate
-chemical process) to adding a pressure dependance over the temperature dependance
+chemical process) to adding a pressure dependency over the temperature dependency
 (falloff).
 \begin{table}
 \centering\renewcommand{\arraystretch}{2}
@@ -77,14 +87,14 @@ chemical process) to adding a pressure dependance over the temperature dependanc
                   & \multirow{2}{*}{$\chemProc = \kinMod \threeBody$}
                                            & $\doverdT{\chemProc} = \ddoverdT{\kinMod}\threeBody$ \\
                   &                        & $\doverdc[I]{\chemProc} = \kinMod\epsilon_i\sum_{s\neq i}\epsilon_s\conc[S] $ \\[10pt]
-\multirow{2}{*}{Lindemann falloff}
-                  & \multirow{2}{*}{$\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\FLind$}
-                                          & \ref{Falloff:doverdT} with $F = \FLind$\\
-                  &                       & \ref{Falloff:doverdc} with $F = \FLind$\\[10pt]
-\multirow{2}{*}{Troe falloff}
-                  & \multirow{2}{*}{$\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\FTroe$}
-                                          & \ref{Falloff:doverdT} with $F = \FTroe$\\
-                  &                       & \ref{Falloff:doverdc} with $F = \FTroe$\\[10pt]
+\multirow{2}{*}{Falloff}
+                  & \multirow{2}{*}{$\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\Falloff$}
+                                          & \ref{Falloff:doverdT} with $F = \FLind\text{ or }\FTroe$\\
+                  &                       & \ref{Falloff:doverdc} with $F = \FLind\text{ or }\FTroe$\\[10pt]
+\multirow{2}{*}{Three-Body falloff}
+                  & \multirow{2}{*}{$\chemProc = \frac{\kinModZ\threeBody}{1 + \frac{\kinModZ}{\kinModI}\threeBody}\Falloff$}
+                                          & \ref{Falloff:doverdT} with $F = \FTroe\text{ or }\FLind$\\
+                  &                       & \ref{Falloff_Three:doverdc} with $F = \FTroe\text{ or }\FLind$\\[10pt]
 \bottomrule
 \end{tabular}
 \caption[Chemical processes]{\label{antioch::chemProc}Chemical processes available in \Antioch.
@@ -92,8 +102,37 @@ chemical process) to adding a pressure dependance over the temperature dependanc
 models to be mixed. The functions $F$ for the falloff are described in section~\ref{subsub:falloff}}
 \end{table}
 
-\subsubsection{Falloffs}
+\paragraph{Elementary process}
+\paragraph{Duplicate process}
+\paragraph{Three body process}
+\label{subsub:three_body}
+
+A third body may have an influence over the reaction, therefore
+changing a generic chemical equation \ce{A + B -> C + D} into
+\ce{A + B + M -> C + D + M}. It acts like an homogeneous catalyst.
+Thus the rate of the reaction will be written
+\[
+\chemProc = \kinMod[ABM]\conc[A]\conc[B]\conc[M]
+\]
+instead of
+\[
+\chemProc = \kinMod[AB]\conc[A]\conc[B]
+\]
+with typically $\kinMod[ABM] \propto \kinMod[AB]$.
+
+Not all molecules have the same effect, meaning \rcons[ABM]
+is dependant of \ce{M}. Therefore it is needed to
+consider coefficients that are specific to third-bodies,
+with a typical default of unity. Thus we derive a mixture
+formul\ae:
+\begin{equation}
+\chemProc = \threeBody\kinMod
+\label{kinproc:Three_body}
+\end{equation}
+
+\paragraph{Pressure dependency: falloffs}
 \label{subsub:falloff}
+
 The falloffs are reaction having two different regimes: a low-pressure (\kinModZ) and
 a high-pressure (\kinModI) regime. Any pressure's rate constant can be expressed in
 terms if those two regimes:
@@ -123,7 +162,15 @@ and
                           \right)
 \label{Falloff:doverdc}
 \end{equation}
-\paragraph{Lindemann}
+
+\paragraph{A twist in the physics: three-body falloff}
+
+\begin{equation}
+\label{Falloff_Three:doverdc}
+\end{equation}
+
+\paragraph{Falloff models}
+\subparagraph{Lindemann}
 The Lindemann falloff is the simplest falloff, it is given by:
 \begin{equation}
 \FLind = 1,
@@ -138,7 +185,7 @@ which gives:
 \label{Falloff:Lindemann:diff}
 \end{equation}
 
-\paragraph{Troe}
+\subparagraph{Troe}
 The Troe model is more elaborate and rely on the definition of three or
 four parameters:
 \begin{itemize}

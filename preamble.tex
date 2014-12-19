@@ -121,9 +121,10 @@
 \newcommand{\chemProc}[1][\relax]{\optional@@sub[#1]{\chi}\ensuremath{(\kinMod,\conc[M])}}
 \newcommand{\rateCons}           {\ensuremath{\rcons(T,\conc[M])}}
 \newcommand{\rate}    [1][\relax]{\optional@@sub[#1]{r}}
-\newcommand{\threeBody}          {\ensuremath{\sum_s \epsilon_s\conc[S]}}
-\newcommand{\FLind}              {\ensuremath{F_\text{Lind}}}
-\newcommand{\FTroe}              {\ensuremath{F_\text{Troe}}}
+\newcommand{\threeBody}          {\ensuremath{\sum_s \left(\epsilon_s\conc[S]\right)}}
+\newcommand{\Falloff}            {\ensuremath{F}}
+\newcommand{\FLind}              {\ensuremath{\Falloff_\text{Lind}}}
+\newcommand{\FTroe}              {\ensuremath{\Falloff_\text{Troe}}}
 %%%% kinetics model parameter
 \newcommand{\Tref}        {\ensuremath{\mathrm{T_{ref}}}}
 \newcommand{\PreExp}      {\ensuremath{A}}

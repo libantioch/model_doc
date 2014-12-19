@@ -428,13 +428,13 @@ thermalCondSet/.style={see=0.2,subpartA},
 \end{scope}
 %% viscosity
 \begin{scope}[every node/.append style={viscosityGen},every path/.append style={viscosityGen}]
-\draw[templ]   ([xshift=-5pt]TranMix.-10) |- ([xshift=-5pt,yshift=-5pt]$(ChemSpec.south west)!0.5!(TranSpec.north east)$)  -| ([xshift=15pt]VisSet.north);
+\draw[templ]   ([xshift=-5pt]TranMix.-10) |- ($(ChemSpec.south west)!0.8!(TranSpec.north east)$)  -| ([xshift=50pt]VisSet.north);
 \draw[ref]   (VisSet.north -| WilMix.south) -- (WilMix.south);
 \draw[uses]  (Stock)  -- (KinTVis);
 \end{scope}
 %% thermal conduction
 \begin{scope}[every node/.append style={thermalCondGen},every path/.append style={thermalCondGen}]
-\draw[templ]   ([xshift=5pt]TranMix.-10) |- ([xshift=5pt,yshift=5pt]$(ChemSpec.south west)!0.5!(TranSpec.north east)$) -| ([xshift=5pt]TauSet.north);
+\draw[templ]   ([xshift=5pt]TranMix.-10) |- ($(ChemSpec.south west)!0.2!(TranSpec.north east)$) -| ([xshift=5pt]TauSet.north);
 \draw[ref]   (TauSet) |- (WilMix);
 \end{scope}
 \end{scope}
