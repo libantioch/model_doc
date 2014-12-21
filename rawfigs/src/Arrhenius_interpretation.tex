@@ -3,7 +3,7 @@
 \usepackage[paperwidth=9.5cm, paperheight=5.7cm,left=0pt,right=0pt,top=2pt,bottom=2pt]{geometry}
 \begin{document}
 \centering
-\begin{tikzpicture}[x=1.5cm, every node/.append style={font=\small}]
+\begin{tikzpicture}[x=1.5cm, every node/.append style={font=\footnotesize}]
 % axis
 \draw[-stealth] (0,0) -- (0,5) node[below left] {Enthalpy};
 \draw[-stealth] (0,0) -- (5,0) node[below left] {Reaction coordinate};
@@ -12,8 +12,10 @@
 \node[below] (reac)       at (0.5,2)   {Reactants};
 \node[above] (transState) at (2.5,4.5) {Transition state};
 \node[below] (prod)       at (4.5,1)   {Products};
+\node[below=2pt,align=center, outer sep=0pt,inner sep=0pt] (interm)     at (2.5,3)   {Reaction\\intermediate};
 
 % reaction path
+\draw[rounded corners=10pt,red] (reac.150) -- (reac.north) .. controls ++(1,0) and ([xshift=-1cm]transState.north) .. (interm.north) .. controls ([xshift=1cm]transState.north) and ++(-1,0) .. (prod.north) -- (prod.30);
 \draw[blue] (reac.150) -- (reac.north) .. controls ++(1,0) and ++(-0.8,0) .. (transState.south) .. controls ++(0.8,0) and ++(-1,0) .. (prod.north) -- (prod.30);
 
 % activation energy

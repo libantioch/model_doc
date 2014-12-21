@@ -5,12 +5,32 @@ the rate constant, thus the only differential that is needed
 at that level is the temperature differentiation.
 
 The typical interpretation of the kinetics model comes from
-Arrhenius (See Fig.~\ref{Arrhenius_interp}).
+Arrhenius (See Fig.~\ref{Arrhenius_interp}). The activation
+energy is the wall the reactants have to overcome to reassemble
+into the products. This quantity is a purely kinetics one, meaning
+it is related only to the rate of the reaction. The enthalpy of reaction
+is the difference of enthalpy between the reactants and the products.
+This is, contrary of the activation energy, a purely thermodynamics
+quantity, therefore containing information upon the equilibrium
+state (the relative quantity of products/reactants).
+
+This interpretation is accurate only in an elementary reaction, when
+indeed a reaction consists of the reactants forming a transitional
+state and going to the products (Fig.~\ref{Arrhenius_interp}, blue curve).
+A reaction, more generally, will have one, or several, reaction intermediate(s), 
+and the Arrhenius interpretation will be an approximation (Fig.~\ref{Arrhenius_interp},
+red curve). This explains
+why the Arrhenius equation typically needs some modifications (see Tab.~\ref{antioch::kinMod}).
 
 \begin{figure}
 \centering
-\framebox{\rule[-2cm]{0pt}{3cm}\rule{3cm}{0pt}TO BE PRODUCED\rule{3cm}{0pt}}
-\caption{\label{Arrhenius_interp}}
+\includegraphics{Arrhenius_interpretation}
+\caption{\label{Arrhenius_interp}The activation energy (\AcEn) is the energy wall 
+(in most chemical cases the enthalpy) between the reactants and the
+transitional form. The enthalpy of reaction (\Denth[r]) is the difference
+of enthalpy between the reactants state and the products state. The activation
+energy is a purely kinetics quantity while the enthalpy of reaction is purely
+thermodynamics.}
 \end{figure}
 
 \begin{table}
@@ -103,7 +123,20 @@ models to be mixed. The functions $F$ for the falloff are described in section~\
 \end{table}
 
 \paragraph{Elementary process}
+
+An elementary process is the smallest unit of reaction. Within a chemical
+network, elementary processes are the elementary steps, when the collision
+of the reactants produces the reactants without any intermediate. All
+reactions approximated to an elementary process are therefore coded with
+a simple kinetics model.
+
 \paragraph{Duplicate process}
+
+In the case the elementary approximation breaks down, and one kinetics
+process is not sufficient to properly render measurements, it is possible
+to add several kinetics model to obtain the necessary temperature
+dependency.
+
 \paragraph{Three body process}
 \label{subsub:three_body}
 
@@ -306,6 +339,7 @@ $\TroeTthree    = \numprint{1120.0}~\unit{K}$.}
 \end{figure}
 
 \subsection{Thermodynamics}
+\subsubsection{Macroscopic description}
 \label{phys:NASA_therm}
 
 \Antioch\ uses the NASA polynoms.
@@ -384,3 +418,5 @@ and
                        + \tc{6} T^3
 \label{therm:dDS_dT}
 \end{equation}
+
+\subsubsection{Microscopic description}
