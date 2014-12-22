@@ -1,0 +1,155 @@
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{mindmap,shadings,fadings}
+\newcommand{\Cv}[1]{\ensuremath{C_{\mathrm{V}}^{(#1)}}}
+\geometry{paperwidth=33cm,paperheight=34cm,top=2pt,bottom=0pt,left=0pt,right=0pt}
+\pagestyle{empty}
+\newcommand{\rootcolor} {red!50}
+\newcommand{\datacolor} {cyan!20}
+\newcommand{\modelcolor}{blue!50}
+\newcommand{\physcolor} {teal!80}
+\tikzfading[name=fade outside,
+            inner color=transparent!0,
+            outer color=transparent!50]
+\tikzfading[name=out in out,
+            left color=transparent!0,
+            middle color=transparent!80,
+            right color=transparent!0]
+\tikzset{
+ballmeup/.style={shading=ball,ball color=#1,path fading=fade outside,thin},
+data/.style={concept color=\datacolor, every child/.append style={concept color=\datacolor}},
+model/.style={concept color=\modelcolor, every child/.append style={concept color=\modelcolor}},
+phys/.style={concept color=\physcolor, every child/.append style={concept color=\physcolor}},
+kindata/.style={font=\tiny,draw=none,fill=none}
+}
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+\newcommand{\buildboundingbox}[4]{%
+\useasboundingbox[draw=none] ([yshift=10pt]#1.north) -| ([xshift=8pt]#2.east) |- ([yshift=-10pt]#3.south) -| ([xshift=-8pt]#4.west) |- ([yshift=10pt]#1.north)
+}
+\newcommand{\parser}[1][\relax]{%
+\begin{tikzpicture}[large mindmap, every node/.append style={concept},concept color=white,
+                    every path/.append style={concept connection, path fading=out in out}]
+\node[ballmeup=white] {Parser}
+child[grow=right,concept color=\rootcolor]{
+node[ballmeup=\rootcolor] (chemspec) {chemical species}
+[clockwise from=120]
+        child[data]{node[ballmeup=\datacolor] (chemspecName)  {name}}
+        child[data]{node[ballmeup=\datacolor] (chemspecMass)  {mass}}
+        child[data]{node[ballmeup=\datacolor] (chemspecDHf)   {formation enthalpie at $0^\circ$C}}
+        child[data]{node[ballmeup=\datacolor] (chemspecTrdof) {translational-rotational number of degrees of freedom}}
+        child[data]{node[ballmeup=\datacolor] (chemspecChar)  {charge}}
+                }
+child[grow=down,concept color=\rootcolor]{
+node[ballmeup=\rootcolor] {Thermodynamics}
+[clockwise from=-60]
+        child[model]{node[ballmeup=\modelcolor] {Statistical thermo}
+         [grow=right,sibling distance=2cm]
+              child[data]{node[ballmeup=\datacolor] (elec) {electronic}}
+              child[data]{node[ballmeup=\datacolor] (vib)  {vibrations}}
+               }
+        child[model]{node[ballmeup=\modelcolor] {NASA/CEA polynomials}
+                     child[data,grow=left] {node[ballmeup=\datacolor] {$a_{ij}$ on $T_j$}}
+                    }
+    }
+child[grow=left,concept color=\rootcolor]
+{
+node[ballmeup=\rootcolor] {Transport}
+[clockwise from=-90]
+        child{
+          node[ballmeup=\rootcolor] {transport species}
+                [grow=down,sibling distance=2cm]
+            child[data]{node[ballmeup=\datacolor] {dipole moment}}
+            child[data]{node[ballmeup=\datacolor] {po\-la\-ri\-za\-bi\-li\-ty}}
+            child[data]{node[ballmeup=\datacolor] {rotational relaxation}}
+            child[data]{node[ballmeup=\datacolor] {Lennard-Jones depth well}}
+            child[data]{node[ballmeup=\datacolor] {Lennard-Jones collision diameter}}
+             }
+          child[phys]{
+          node[ballmeup=\physcolor] {Thermal conduction}
+                [clockwise from=220]
+             child[model]{node[ballmeup=\modelcolor] {Eucken}}
+           }
+          child[phys]{
+          node[ballmeup=\physcolor] {Viscosity}
+             child[grow=210,model]{
+                node[ballmeup=\modelcolor] {Sutherland}
+                [grow=left]
+                  child[data]{node[ballmeup=\datacolor] {$\mu_\mathrm{ref}$}}
+                  child[data]{node[ballmeup=\datacolor] {$\mathrm{T_{ref}}$}}
+                   }
+             child[grow=150,model]{
+                node[ballmeup=\modelcolor] {Blottner}
+                   [grow=up]
+                   child[data]{node[ballmeup=\datacolor] {a}}
+                   child[data]{node[ballmeup=\datacolor] {b}}
+                   child[data]{node[ballmeup=\datacolor] {c}}
+                 }
+              }
+          child[phys]{
+          node[ballmeup=\physcolor] {Diffusion}
+                [clockwise from=90]
+             child[model]{
+                node[ballmeup=\modelcolor] {Constant Lewis}
+                  child[data,grow=120]{node[ballmeup=\datacolor] {$\mathcal{L}_e$}}
+                  }
+               }
+}
+child[grow=up,concept color=\rootcolor]
+{
+node[ballmeup=\rootcolor] {kinetics}
+    [sibling distance=3cm]
+        child[phys]{node[ballmeup=\physcolor] (ep) {Elementary process}}
+        child[phys]{node[ballmeup=\physcolor] (dp) {Duplicate process}}
+        child[phys]{node[ballmeup=\physcolor] (tb) {Third-body process}
+                        [grow=70,level distance=20pt] child[data] {node[ballmeup=\datacolor,minimum size=10pt, inner sep=0pt,outer sep=0pt] {$\epsilon_s$}}}
+        child[phys]{
+                     node[ballmeup=\physcolor] (fa) {Falloff}
+                        child[phys]{node[ballmeup=\physcolor] (lfa) {Lindemann}}
+                        child[phys]{node[ballmeup=\physcolor] (tfa) {Troe}
+                                    [grow = -150, sibling distance=1.5cm]
+                                      child[data]{node[ballmeup=\datacolor] {$\alpha$}}
+                                      child[data]{node[ballmeup=\datacolor] {$T^*$}}
+                                      child[data]{node[ballmeup=\datacolor] {$T^{**}$}}
+                                      child[data]{node[ballmeup=\datacolor] {$T^{***}$}}
+                                   }
+                   }
+};
+\tikzset{small mindmap, every node/.append style={concept},concept color=\physcolor}
+\node[ballmeup=\physcolor] (km) at ([yshift=2.5cm]dp.north) {Kinetics model}
+        [grow=up,sibling distance=3.8cm]
+        child[model]{node[ballmeup=\modelcolor] (con) {Constant}}
+        child[model]{node[ballmeup=\modelcolor] (he)  {Hercourt-Essen}}
+        child[model]{node[ballmeup=\modelcolor] (ar)  {Arrhenius}}
+        child[model]{node[ballmeup=\modelcolor] (be)  {Berthelot}}
+        child[model]{node[ballmeup=\modelcolor] (ko)  {Kooij}}
+        child[model]{node[ballmeup=\modelcolor] (bhe) {Berthelot Hercourt-Essen}}
+        child[model]{node[ballmeup=\modelcolor] (vh)  {Van't Hoff}}
+        child[model]{node[ballmeup=\modelcolor] (hv)  {photo\-chemistry}
+                      child[data]{node[ballmeup=\datacolor] (cs) {cross-section}}
+                      child[data]{node[ballmeup=\datacolor] {flux}}
+                    };
+\node[kindata] (A)    at (ar |- cs)          {$A$};
+\node[kindata] (beta) at ([xshift=-3cm]A)    {$\beta$};
+\node[kindata] (ea)   at ([xshift=-3cm]beta) {$E_a$};
+\node[kindata] (D)    at ([xshift=-3cm]ea)   {$D$};
+%%
+\begin{pgfonlayer}{background}
+\draw (vib)  -| ([xshift=-5pt]chemspec.south);
+\draw (elec) -| ([xshift=5pt]chemspec.south);
+%%
+\coordinate (a) at ([yshift=-10pt]vh.south);
+\path[draw=none] (a) arc(270:130:1cm and 5mm) coordinate (b);
+\shade[draw=none,bottom color=\modelcolor, top color=\datacolor,path fading=north] 
+        (b) arc(130:270:1cm and 5mm) -| (con.south|- a) arc (-90:80:1cm and 5mm) -- (A.30) -- (D.150) -- cycle;
+\foreach \you in {A,ea,beta,D}
+  \draw[ballmeup=\datacolor,draw=none] (\you) circle (17pt);
+\coordinate (c) at ([yshift=-10pt]fa.south);
+\path[draw=none] (c) arc(270:130:2cm and 1cm) coordinate (d);
+\fill[draw=none,\physcolor,opacity=0.5,path fading=north] (d) arc(130:270:2cm and 1cm) -| (ep.south |- c) arc(-90:30:2cm and 1cm) -- (km.45) -- (km.135) --cycle;
+\end{pgfonlayer}
+\ifx#1\relax\else%
+\pgfresetboundingbox%
+#1;\fi
+\end{tikzpicture}
+}
