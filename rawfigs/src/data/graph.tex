@@ -206,7 +206,7 @@ diffusionSet/.style={see=0.2,subpartA},
 \pgfsetlayers{behind,background,main}
 \newcommand{\obj}[2][\relax]{\ifx#1\relax\texttt{#2<CoeffType>}\else\texttt{#2<#1,CoeffType>}\fi}
 \newcommand{\buildboundingbox}[4]{%
-\useasboundingbox ([yshift=10pt]#1.north) -| ([xshift=8pt]#2.east) |- ([yshift=-10pt]#3.south) -| ([xshift=-8pt]#4.west) |- ([yshift=10pt]#1.north)
+\path[clip] ([yshift=10pt]#1.north) -| ([xshift=8pt]#2.east) |- ([yshift=-10pt]#3.south) -| ([xshift=-8pt]#4.west) |- ([yshift=10pt]#1.north)
 }
 \newcommand{\fullGraph}[1][\relax]{%
 \begin{tikzpicture}[x=6cm,y=1cm,

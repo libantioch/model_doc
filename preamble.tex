@@ -17,11 +17,16 @@
 \make@prog{double}
 \newcommand{\stdvector}{\prog{std::vector< >}}
 \newcommand{\stdstring}{\prog{std::string}}
-%%physics
+%% physics
 \newcommand{\phenomenom}{\textcolor{red}{phenomenom}}
 \newcommand{\quantity}{\textcolor{blue!60!black}{quantity}}
 \newcommand{\Quantity}{\textcolor{blue!60!black}{Quantity}}
 \newcommand{\model}{\textcolor{green!60!black}{model}}
+%% parsing
+\make@[sl]{format}{sf}
+\make@format{XML}
+\make@format{ChemKin}
+\make@format{ascii}
 %
 
 %% fun
@@ -246,3 +251,7 @@
 #3\\[5pt]
 #1%
 \end{minipage}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% parsing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
