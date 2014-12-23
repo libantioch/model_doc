@@ -247,15 +247,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcounter{vmajor}
-\newcounter{vmedium}
 \newcounter{vminor}
+\newcounter{vmicro}
+\setcounter{vmajor}{-1}
+\setcounter{vminor}{-1}
+\setcounter{vmicro}{-1}
 
-\newcommand{\version}[3]{%
-\setcounter{vmajor}{#1}
-\setcounter{vmedium}{#2}
+\newcommand{\version}[4][\relax]{%
+\setcounter{vmajor}{#2}
 \setcounter{vminor}{#3}
+\setcounter{vmicro}{#4}
+\gdef\version@dev{#1}%
 }
-\newcommand{\theversion}{\thevmajor.\thevmedium.\thevminor}
+\newcommand{\theversion}{%
+\ifnum\thevmajor=-1%
+ \ClassWarning{documentation}{No version number provided!}%
+\else%
+ \if\version@dev\relax%
+ \thevmajor.\thevminor.\thevmicro%
+ \else%
+ \version@dev~(from~\thevmajor.\thevminor.\thevmicro)%
+ \fi%
+\fi
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -532,5 +546,102 @@
     \Huge \bfseries  #1\par\nobreak
     \vskip 40\p@
   }}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% redefining \maketitle
+%% to add the version,
+%% derived from report.cls
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\if@titlepage
+  \renewcommand\maketitle{\begin{titlepage}%
+  \let\footnotesize\small
+  \let\footnoterule\relax
+  \let \footnote \thanks
+  \null\vfil
+  \vskip 60\p@
+  \begin{center}%
+    {\LARGE \@title \par}%
+    \vskip 3em%
+    {\large
+     \lineskip .75em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+      \vskip 1.5em%
+    {\large \theversion \par}%       % Set version in \large size.
+      \vskip 0.7em%
+    {\normalsize \@date \par}%       % Set date in \normal size.
+  \end{center}\par
+  \@thanks
+  \vfil\null
+  \end{titlepage}%
+  \setcounter{footnote}{0}%
+  \global\let\thanks\relax
+  \global\let\maketitle\relax
+  \global\let\@thanks\@empty
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\@title\@empty
+  \global\let\title\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
+}
+\else
+\renewcommand\maketitle{\par
+  \begingroup
+    \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
+    \def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
+    \long\def\@makefntext##1{\parindent 1em\noindent
+            \hb@xt@1.8em{%
+                \hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
+    \if@twocolumn
+      \ifnum \col@number=\@ne
+        \@maketitle
+      \else
+        \twocolumn[\@maketitle]%
+      \fi
+    \else
+      \newpage
+      \global\@topnum\z@   % Prevents figures from going at top of page.
+      \@maketitle
+    \fi
+    \thispagestyle{plain}\@thanks
+  \endgroup
+  \setcounter{footnote}{0}%
+  \global\let\thanks\relax
+  \global\let\maketitle\relax
+  \global\let\@maketitle\relax
+  \global\let\@thanks\@empty
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\@title\@empty
+  \global\let\title\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
+}
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 2em%
+  \begin{center}%
+  \let \footnote \thanks
+    {\LARGE \@title \par}%
+    \vskip 1.5em%
+    {\large
+      \lineskip .5em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    \vskip 1em%
+    {\large \theversion \par}%       % Set version in \large size.
+    \vskip 0.5em%
+    {\normalsize \@date \par}%       % Set date in \normal size.
+  \end{center}%
+  \par
+  \vskip 1.5em}
+\fi
 
 \endinput
