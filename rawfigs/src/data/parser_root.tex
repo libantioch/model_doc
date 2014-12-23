@@ -1,6 +1,6 @@
 \usepackage{geometry}
 \usepackage{tikz}
-\usetikzlibrary{mindmap,shadings,fadings}
+\usetikzlibrary{mindmap,shadings,fadings,fit}
 \newcommand{\Cv}[1]{\ensuremath{C_{\mathrm{V}}^{(#1)}}}
 \geometry{paperwidth=33cm,paperheight=34cm,top=2pt,bottom=0pt,left=0pt,right=0pt}
 \pagestyle{empty}
@@ -102,7 +102,9 @@ node[ballmeup=\rootcolor] {kinetics}
         child[phys]{node[ballmeup=\physcolor] (ep) {Elementary process}}
         child[phys]{node[ballmeup=\physcolor] (dp) {Duplicate process}}
         child[phys]{node[ballmeup=\physcolor] (tb) {Third-body process}
-                        [grow=70,level distance=20pt] child[data] {node[ballmeup=\datacolor,minimum size=10pt, inner sep=0pt,outer sep=0pt] {$\epsilon_s$}}}
+                        [grow=80]
+                        child[data,level distance=3cm] {node[ballmeup=\datacolor,minimum size=10pt, inner sep=0pt,outer sep=0pt] {$\epsilon_s$}}
+                   }
         child[phys]{
                      node[ballmeup=\physcolor] (fa) {Falloff}
                         child[phys]{node[ballmeup=\physcolor] (lfa) {Lindemann}}
@@ -135,6 +137,10 @@ node[ballmeup=\rootcolor] {kinetics}
 \node[kindata] (D)    at ([xshift=-3cm]ea)   {$D$};
 %%
 \begin{pgfonlayer}{background}
+%%
+\node[draw,loosely dashed, rounded corners=5mm, inner sep=5pt, shape=rectangle,fit=(tb) (fa)] {};
+\draw (hv) ..controls (ko) .. (ep);
+%%
 \draw (vib)  -| ([xshift=-5pt]chemspec.south);
 \draw (elec) -| ([xshift=5pt]chemspec.south);
 %%
