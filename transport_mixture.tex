@@ -4,10 +4,12 @@ Viscosity and thermal conduction passed from
 per species to per mixture, diffusion either
 (Lewis model) stays a per species characterization
 or (binary molecular diffusion) passes from
-per couple species to per species.
-
-\noindent
-\begin{tabular}{lcc}\toprule
+per couple species to per species. Tab.~\ref{spec_to_mix}
+summarizes this.
+%
+\begin{table}
+\centering
+\begin{tabular}{l@{\hspace{3pt}}c@{\hspace{3pt}}c}\toprule
 Model  & Species level                                    & Mixture level \\\midrule
 \multicolumn{3}{l}{\hspace{\parindent}Viscosity}\\\cmidrule(lr){1-2}
 Blottner     & ($\{\vis[1],\vis[2],\dots,\vis[\nspecies]\}$) & \vis[\text{mixture}] \\
@@ -27,6 +29,9 @@ Bimolecular diffusion & $\left(\begin{array}{cccc}
                           $ & $\{\diff[1],\diff[2],\dots,\diff[\nspecies]\}$ \\
 \bottomrule
 \end{tabular}
+\caption{\label{spec_to_mix}Species to mixture values of viscosity, thermal conduction and diffusion
+                with respect to the different models available in \Antioch.}
+\end{table}
 
 
 \subsubsection{The Wilke model}
