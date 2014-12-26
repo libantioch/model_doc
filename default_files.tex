@@ -1,0 +1,31 @@
+All the default files can be found in
+the
+\file{@intall\_dir@/share/antioch\_default\_files}
+folder.
+
+%% local to this chapter
+\newcommand{\deffile}[1]{\file{antioch\_default\_#1.dat}}
+
+\section{Mixture: \deffile{chemical\_species}}
+\input{default_chem_mixture}
+
+\section{Chemical species data: \deffile{chemical\_mixture}}
+\input{default_chem_species}
+
+\section{Thermodynamics: \deffile{thermo\_data}}
+\input{default_thermo_data}
+
+\section{Transport data: \deffile{transport\_species\_data}}
+\input{default_transport_species}
+
+\section{Vibrational data: \deffile{vibrational\_data}}
+\input{default_vib_data}
+
+\section{Electronic data: \deffile{electronic\_data}}
+\input{default_elec_data}
+
+\section{Blottner viscosity: \deffile{blottner\_coefficient}}
+\input{default_blottner}
+
+\section{Sutherland viscosity: \large\deffile{sutherland\_coefficient}}
+\input{default_sutherland}
