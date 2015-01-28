@@ -106,14 +106,14 @@ chemical process) to adding a pressure dependency over the temperature dependenc
 \multirow{2}{*}{Three-Body}
                   & \multirow{2}{*}{$\chemProc = \kinMod \threeBody$}
                                            & $\doverdT{\chemProc} = \ddoverdT{\kinMod}\threeBody$ \\
-                  &                        & $\doverdc[I]{\chemProc} = \kinMod\epsilon_i\sum_{s\neq i}\epsilon_s\conc[S] $ \\[10pt]
+                  &                        & $\doverdc[I]{\chemProc} = \kinMod\epsilon_i$ \\[10pt]
 \multirow{2}{*}{Falloff}
                   & \multirow{2}{*}{$\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\Falloff$}
                                           & \ref{Falloff:doverdT} with $F = \FLind\text{ or }\FTroe$\\
                   &                       & \ref{Falloff:doverdc} with $F = \FLind\text{ or }\FTroe$\\[10pt]
 \multirow{2}{*}{Three-Body falloff}
                   & \multirow{2}{*}{$\chemProc = \frac{\kinModZ\threeBody}{1 + \frac{\kinModZ}{\kinModI}\threeBody}\Falloff$}
-                                          & \ref{Falloff:doverdT} with $F = \FTroe\text{ or }\FLind$\\
+                                          & \ref{Falloff:doverdT} with $F = \FTroe\text{ or }\FLind \text{ and } [M] = \threeBody$\\
                   &                       & \ref{Falloff_Three:doverdc} with $F = \FTroe\text{ or }\FLind$\\[10pt]
 \bottomrule
 \end{tabular}
@@ -166,7 +166,7 @@ formul\ae:
 \paragraph{Pressure dependency: falloffs}
 \label{subsub:falloff}
 
-The falloffs are reaction having two different regimes: a low-pressure (\kinModZ) and
+The falloffs are reactions having two different regimes: a low-pressure (\kinModZ) and
 a high-pressure (\kinModI) regime. Any pressure's rate constant can be expressed in
 terms if those two regimes:
 \begin{equation}
@@ -189,8 +189,7 @@ The differentiations are:
 and
 \begin{equation}
 \doverdc[I]{\chemProc} = \chemProc
-                          \left(\frac{1}{\conc[M]} 
-                               + \frac{\kinModZ}{\kinModI}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}} 
+                          \left(\frac{1}{\conc[M]} \frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}
                                + \doverdT{F}\frac{1}{F}
                           \right)
 \label{Falloff:doverdc}
@@ -198,7 +197,33 @@ and
 
 \paragraph{A twist in the physics: three-body falloff}
 
+As all models above are approximations of the ``truth'', it can
+happen that some reactions do not fit well into any category.
+In the case of a pressure-dependant reaction that behaves
+differently depending of a third-body, the third-body model
+and the falloff model can be combined. Note that this is not
+very rigorous, we're mixing here two different hypothesises that
+do not belong together. 
+
+A pressure-dependance reaction is a collision-driven reaction, hence
+the change of regime depending of the collisions rate regime. Whereas
+a three-body reaction is the contraction of $N$ reactions, one per
+third-body. An increase in pressure for each of these $N$ reactions
+is not the increase of the \threeBody\ term.
+
+The rate of this type of reaction is:
 \begin{equation}
+\chemProc = \frac{\threeBody\kinModZ}{1 + \threeBody\frac{\kinModZ}{\kinModI}} F
+\label{Falloff_Three:chem_proc}
+\end{equation}
+%
+with the derivative with respect to densities:
+%
+\begin{equation}
+\doverdc[I]{\chemProc} = \chemProc\epsilon_i
+                          \left(\frac{1}{\threeBody} \frac{1}{1 + \threeBody\frac{\kinModZ}{\kinModI}}
+                               + \doverdT{F}\frac{1}{F}
+                          \right)
 \label{Falloff_Three:doverdc}
 \end{equation}
 
