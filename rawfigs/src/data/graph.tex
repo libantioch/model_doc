@@ -221,7 +221,7 @@ diffusionSet/.style={see=0.2,subpartA},
 \begin{scope}[every node/.append style={coreGen},every path/.append style={coreGen}]
 \node[right = 1cm] (ChemSpec) at (ref)          {\obj{ChemicalSpecies}};
 \node[above = 1cm] (ChemMix)  at (ChemSpec)     {\obj{ChemicalMixture}};
-\node[left  = 1cm] (TranMix)  at (ChemMix.west) {\obj{TransportMixture}};
+\node[left  = 1cm] (TranMix)  at (ChemMix.west) {\obj[ThermoEval]{TransportMixture}};
 \node[below = 2cm] (TranSpec) at (TranMix)      {\obj{TransportSpecies}};
 \node[below = 1cm] (LenJon)   at (TranSpec)     {\obj{LennardJonesPotential}};
 \draw[ref]   (ChemSpec) -- (ChemMix);
@@ -416,6 +416,7 @@ diffusionSet/.style={see=0.2,subpartA},
 %%%% thermo
 \begin{scope}[every node/.append style={thermoGen},every path/.append style={thermoGen}]
 \draw[ref,rounded corners=5pt]   (ChemMix.170) |- ++(-1,7mm) -| (NASAMixture.9);
+\draw[templ,rounded corners=5pt] (ThermoEval) -| ++(1.5,7mm) |- (TranMix);
 \end{scope}
 %%%% kin
 \begin{scope}[every node/.append style={kineticsGen},every path/.append style={kineticsGen}]
