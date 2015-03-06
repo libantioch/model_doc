@@ -239,11 +239,11 @@ diffusionSet/.style={see=0.2,subpartA},
 %%%%
 \begin{scope}[every node/.append style={transportGen},every path/.append style={transportGen}]
 \node[below = 2cm] (WilEval)  at (core.south -| ref) {\obj{WilkeEvaluator}};
-\node[below = 1cm] (WilMix)   at (WilEval)           {\obj{WilkeMixture}};
+\node[left  = 3cm] (WilMix)   at (WilEval)           {\obj{WilkeMixture}};
 \draw[ref] (WilMix)   -- (WilEval);
 %%% diffusion
 \begin{scope}[every node/.append style={diffusionGen},every path/.append style={diffusionGen}]
-\node[below left = 2cm and 10cm] (DiffSet)    at (WilMix)  {\obj[DiffusionModel,Mixture]{PhysicalSet}};
+\node[below left = 2cm and 12cm] (DiffSet)    at (WilEval) {\obj[DiffusionModel,Mixture]{PhysicalSet}};
 \node[below left = 1cm]          (BinMolDiff) at (DiffSet) {\obj{MolecularBinaryDiffusion}};
 \draw[templ]  (BinMolDiff) -| ([xshift=-5pt]DiffSet.south);
 %% lewis diffusivity
@@ -293,12 +293,12 @@ diffusionSet/.style={see=0.2,subpartA},
 %%
 %% thermo
 \begin{scope}[every node/.append style={thermoGen},every path/.append style={thermoGen}]
-\node[left =  4cm] (ThermoEval) at (core.west) {\obj[MacroThermo,MicroThermo]{ThermoEvaluator}};
+\node[left =  4cm] (ThermoEval) at (core.west) {\obj[MacroThermo,MicroThermo]{ThermoHandler}};
 % Macro
-\node[above = 1cm]               (NASAEval)    at (ThermoEval)     {\obj[CurveFit]{NASAEvaluator}};
+\node[above = 1cm]                 (NASAEval)    at (ThermoEval)     {\obj[CurveFit]{NASAEvaluator}};
 \node[above right = 3mm and 1.2cm] (NASAMixture) at (NASAEval.north) {\obj{NASAMixture}};
-\node[above right = 1cm and 5mm] (CEAcurve)    at (NASAEval.north) {\obj{CEACurveFit}};
-\node[above left  = 1cm and 5mm] (NASAcurve)   at (NASAEval.north) {\obj{NASACurveFit}};
+\node[above right = 1cm and 5mm]   (CEAcurve)    at (NASAEval.north) {\obj{CEACurveFit}};
+\node[above left  = 1cm and 5mm]   (NASAcurve)   at (NASAEval.north) {\obj{NASACurveFit}};
 \draw[templ] (CEAcurve)  -| ([xshift=5pt]NASAEval.north);
 \draw[templ] (NASAcurve) -| ([xshift=-5pt]NASAEval.north);
 \draw[ref]   (NASAMixture.south -| NASAEval.10) -- (NASAEval.10);
@@ -397,20 +397,20 @@ diffusionSet/.style={see=0.2,subpartA},
 %%
 %%% diff
 \begin{scope}[every node/.append style={diffusionGen},every path/.append style={diffusionGen}]
-\draw[templ]   ([xshift=-50pt]TranMix)   |- ++(-0.1,-1.8cm) -| ++(-0.5,-6cm) -| ([xshift=-5pt]DiffSet.6);
-\draw[ref]   (DiffSet.5) |- (WilMix);
+\draw[templ] ([xshift=-50pt]TranMix)   |- ++(-0.1,-1.8cm) -| ++(-0.5,-6cm) -| ([xshift=-5pt]DiffSet.6);
+\draw[ref]   (DiffSet.5) -- ++(0,1) -| (WilEval.-150);
 \draw[uses]  (Stock)     -| (BinMolDiff);
 \end{scope}
 %% viscosity
 \begin{scope}[every node/.append style={viscosityGen},every path/.append style={viscosityGen}]
-\draw[templ]   ([xshift=-5pt]TranMix.-10) |- ($(ChemSpec.south west)!0.8!(TranSpec.north east)$)  -| ([xshift=50pt]VisSet.north);
-\draw[ref]   (VisSet.north -| WilMix.south) -- (WilMix.south);
+\draw[templ] ([xshift=-5pt]TranMix.-10) |- ($(ChemSpec.south west)!0.8!(TranSpec.north east)$) -| ([xshift=40pt]WilEval.east) |- (VisSet);
+\draw[ref]   (VisSet.north -| WilEval.south) -- (WilEval.south);
 \draw[uses]  (Stock)  -- (KinTVis);
 \end{scope}
 %% thermal conduction
 \begin{scope}[every node/.append style={thermalCondGen},every path/.append style={thermalCondGen}]
-\draw[templ]   ([xshift=5pt]TranMix.-10) |- ($(ChemSpec.south west)!0.2!(TranSpec.north east)$) -| ([xshift=5pt]TauSet.north);
-\draw[ref]   (TauSet) |- (WilMix);
+\draw[templ] ([xshift=5pt]TranMix.-10) |- ($(ChemSpec.south west)!0.2!(TranSpec.north east)$) -| ([xshift=5pt]TauSet.north);
+\draw[ref]   (TauSet) -- ++(0,1) -| (WilEval.-30);
 \end{scope}
 \end{scope}
 %%%% thermo
