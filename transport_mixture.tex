@@ -1,0 +1,75 @@
+From species to mixture consists in reducing the
+dimension of the three quantities discussed above.
+Viscosity and thermal conduction passed from
+per species to per mixture, diffusion either
+(Lewis model) stays a per species characterization
+or (binary molecular diffusion) passes from
+per couple species to per species. Tab.~\ref{spec_to_mix}
+summarizes this.
+%
+\begin{table}
+\centering
+\begin{tabular}{l@{\hspace{3pt}}c@{\hspace{3pt}}c}\toprule
+Model  & Species level                                    & Mixture level \\\midrule
+\multicolumn{3}{l}{\hspace{\parindent}Viscosity}\\\cmidrule(lr){1-2}
+Blottner     & ($\{\vis[1],\vis[2],\dots,\vis[\nspecies]\}$) & \vis[\text{mixture}] \\
+Sutherland   & ($\{\vis[1],\vis[2],\dots,\vis[\nspecies]\}$) & \vis[\text{mixture}] \\
+Pure species & ($\{\vis[1],\vis[2],\dots,\vis[\nspecies]\}$) & \vis[\text{mixture}] \\\\
+\multicolumn{3}{l}{\hspace{\parindent}Thermal conduction}\\\cmidrule(rl){1-2}
+Eucken       & ($\{\thermcond[1],\thermcond[2],\dots,\thermcond[\nspecies]\}$) & \thermcond[\text{mixture}] \\
+Pure species & ($\{\thermcond[1],\thermcond[2],\dots,\thermcond[\nspecies]\}$) & \thermcond[\text{mixture}] \\\\
+\multicolumn{3}{l}{\hspace{\parindent}Diffusion}\\\cmidrule(lr){1-2}
+Lewis                 &  ($\{\diff[1],\diff[2],\dots,\diff[\nspecies]\}$) & $\{\diff[1],\diff[2],\dots,\diff[\nspecies]\}$ \\
+Bimolecular diffusion & $\left(\begin{array}{cccc}
+                          \diff[1,1]         & \diff[1,2]         & \dots  & \diff[1,\nspecies]\\
+                          \diff[2,1]         & \diff[2,2]         & \dots  & \diff[2,\nspecies]\\
+                          \vdots             &  \vdots            & \vdots & \vdots \\
+                          \diff[\nspecies,1] & \diff[\nspecies,2] & \dots  & \diff[\nspecies,\nspecies]\\
+                         \end{array}\right)
+                          $ & $\{\diff[1],\diff[2],\dots,\diff[\nspecies]\}$ \\
+\bottomrule
+\end{tabular}
+\caption{\label{spec_to_mix}Species to mixture values of viscosity, thermal conduction and diffusion
+                with respect to the different models available in \Antioch.}
+\end{table}
+
+
+\subsubsection{The Wilke model}
+Or mixture-averaged model.
+
+\paragraph{Diffusion}
+In case of Lewis model, nothing need to be done.
+
+For the bimolecular diffusion model, we use:
+\begin{equation}
+\diff[s] = \frac{1-\massfrac[s]}{\sum_{j\ne s}^{\nspecies}\frac{\molarfrac[s]}{\diff[js]}}
+         = \frac{\sum_{j\neq s}^{\nspecies}\molarfrac[j]\Mm[j]}{\Mm[\text{mixture}]\sum_{j\ne s}^{\nspecies}\frac{\molarfrac[s]}{\diff[js]}}
+\label{Wilke:diff}
+\end{equation}
+
+\paragraph{Viscosity} The Wilke formul\ae\ for viscosity, independant of
+the viscosity model, is
+\begin{equation}
+\vis[\text{mixture}] = \sum_{s=1}^{\nspecies} \frac{\molarfrac[s]\vis[s]}{\sum_{j=1}^{\nspecies}\molarfrac[j]\Phi_{sj}}
+\label{Wilke:viscosity}
+\end{equation}
+with
+\begin{equation}
+\Phi_{sj} = \frac{
+                \left[
+                     1 + \sqrt{\frac{\vis[s]}{\vis[j]}\sqrt{\frac{\Mm[j]}{\Mm[s]}}}
+                \right]^2
+                }{\sqrt{8\left(1 + \frac{\Mm[s]}{\Mm[j]}\right)}}
+\label{Wilke:viscosity:Phi}
+\end{equation}
+
+\paragraph{Thermal conduction}
+Thermal conduction mixture value is also independant of
+the model used:
+\begin{equation}
+\thermcond[\text{mixture}] = \frac{1}{2} \left[
+                                                \sum_{s=1}^{\nspecies} \molarfrac[s]\thermcond[s] + 
+                                                \frac{1}{\sum_{s=1}^{\nspecies} \frac{\molarfrac[s]}{\thermcond[s]}}
+                                        \right]
+\label{Wilke:therm_cond}
+\end{equation}

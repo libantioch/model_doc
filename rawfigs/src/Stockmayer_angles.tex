@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage{tikz,geometry,pgfplots}
+\pgfplotsset{compat=newest}
+\geometry{paperwidth=15cm, paperheight=15cm, left=0pt, right=0pt, top=2pt,bottom=0pt}
+\pagestyle{empty}
+\begin{document}
+\centering
+\def\eps{1.5}
+\def\sig{2.5}
+\tikzset{%
+plan/.style={shading=axis,
+            left color=gray!70,right color=gray!10,
+            shading angle=-225,
+            fill opacity=0.7}
+}
+\begin{tikzpicture}[scale=1.5]
+%
+\coordinate (tip1) at (70:1cm);
+\draw[dashdotted,very thin,gray] (0,0) circle(2);
+\draw (0,0) -- (70:-1cm); %% dipole bottom
+\shade[plan] (0,0) circle(0.82 and 2);
+\draw[dashdotted,gray] (100:-0.7) -- (100:0.7) -- (tip1);
+\draw[red,-stealth] (0,0,0) -- (0,0,2)node[above left]  {$y$};
+\draw[red,-stealth] (0,0,0) -- (0,2,0)node[below left]  {$x$};
+\draw[-stealth] (0,0) -- (70:1cm); %% dipole top
+\draw[dotted] (70:0.7) arc(70:16:0.3 and 1);
+\path (0,0) ++(30:7mm)node {$\theta_1$};
+\draw[dotted] (100:0.35) arc(100:185:0.15 and 0.5);
+\path (0,0) ++(170:0.5cm)node {$\phi_1$};
+%
+\draw[fill] (0,0)circle(0.5pt) -- (5,0)circle(0.5pt) node[pos=0.5,above]{r};
+\draw[dashdotted,very thin,gray] (5,0) circle(2);
+\path (5,0) ++(140:2cm) coordinate(tip2); %% dipole
+\draw[dashdotted,gray] (5,0) ++(-110:1.3cm) -- ++(-110:-2.6cm) -- (tip2);
+\draw[-stealth] (5,0) -- ++(-40:-2cm) ; %% dipole top
+\shade[plan] (5,0) circle(0.82 and 2);
+\draw (5,0) -- ++(-40:2cm); %% dipole bottom
+\draw[red,-stealth] (5,0,0) -- (5,0,2)node[above left]  {$y$};
+\draw[red,-stealth] (5,0,0) -- (5,2,0)node[below left]  {$x$};
+\draw[dotted] (5,0) ++(0:0.2) arc(10:100:0.4 and 0.28);
+\path (5,0) ++(50:4mm)node {$\theta_2$};
+%
+\draw[dotted]  (5,0) ++(70:1)  arc(60:200:0.45 and 1);
+\path (5,0) ++(120:1cm)node {$\phi_2$};
+%%
+\draw[red,-stealth] (5,0,0) -- (7,0,0)node[above left] {$z$};
+\coordinate (youpi) at (2.5,-2.5);
+\begin{axis}[anchor=outer north, at={(youpi)},scale=0.66,
+             title = {$\varphi(r) = 4 \epsilon \left[\left(\frac{\sigma_0}{r}\right)^6 - \left(\frac{\sigma_0}{r}\right)^{12}\right]$},
+             axis lines=center,
+             ymax=2,xmin=0,
+             xlabel=$r$,
+             ylabel=$\varphi(r)$]
+\addplot[red,domain=2:10,samples=100] {4 * \eps * ((\sig/x)^12 - (\sig/x)^6)}; 
+\draw[stealth-stealth] (axis cs:2.81,0) --  (axis cs:2.81,-\eps) node[right,pos=0.5]{$\epsilon$};
+\draw[stealth-stealth] (axis cs:0,0.5) --  (axis cs:\sig,0.5) node[above,pos=0.5]{$\sigma_0$};
+\draw[dashed] (axis cs:\sig,0.5) --  (axis cs:\sig,0);
+\end{axis}
+\end{tikzpicture}
+\end{document}

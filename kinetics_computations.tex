@@ -3,6 +3,36 @@ The kinetics models are all given in Tab.~\ref{antioch::kinMod}.
 The kinetics model will render the temperature evolution of
 the rate constant, thus the only differential that is needed
 at that level is the temperature differentiation.
+
+The typical interpretation of the kinetics model comes from
+Arrhenius (See Fig.~\ref{Arrhenius_interp}). The activation
+energy is the wall the reactants have to overcome to reassemble
+into the products. This quantity is a purely kinetics one, meaning
+it is related only to the rate of the reaction. The enthalpy of reaction
+is the difference of enthalpy between the reactants and the products.
+This is, contrary of the activation energy, a purely thermodynamics
+quantity, therefore containing information upon the equilibrium
+state (the relative quantity of products/reactants).
+
+This interpretation is accurate only in an elementary reaction, when
+indeed a reaction consists of the reactants forming a transitional
+state and going to the products (Fig.~\ref{Arrhenius_interp}, blue curve).
+A reaction, more generally, will have one, or several, reaction intermediate(s), 
+and the Arrhenius interpretation will be an approximation (Fig.~\ref{Arrhenius_interp},
+red curve). This explains
+why the Arrhenius equation typically needs some modifications (see Tab.~\ref{antioch::kinMod}).
+
+\begin{figure}
+\centering
+\includegraphics{Arrhenius_interpretation}
+\caption{\label{Arrhenius_interp}The activation energy (\AcEn) is the energy wall 
+(in most chemical cases the enthalpy) between the reactants and the
+transitional form. The enthalpy of reaction (\Denth[r]) is the difference
+of enthalpy between the reactants state and the products state. The activation
+energy is a purely kinetics quantity while the enthalpy of reaction is purely
+thermodynamics.}
+\end{figure}
+
 \begin{table}
 \centering\renewcommand{\arraystretch}{1.5}
 \begin{tabular}{clr}\toprule
@@ -39,7 +69,7 @@ at that level is the temperature differentiation.
                 & $\ddoverdT{\kinMod} = 0$\\
 \bottomrule
 \end{tabular}
-\caption{\label{antioch::kinMod}Kinetics models available in \Antioch. In the photochemical
+\caption[Kinetics models]{\label{antioch::kinMod}Kinetics models available in \Antioch. In the photochemical
 kinetics model, $f$ is the photon flux, which is user-defined, \wavelength\ and \crosssection\
 are vectors.}
 \end{table}
@@ -56,7 +86,7 @@ we assume that every reaction modeled is an elementary step, even in the case of
 non-elementary reactions. Therefore some corrections need to be made. This is where
 the chemical process adds, if needed, more suppleness to the rate constant
 function, from adding degrees of freedom to the temperature dependency (duplicate
-chemical process) to adding a pressure dependance over the temperature dependance
+chemical process) to adding a pressure dependency over the temperature dependency
 (falloff).
 \begin{table}
 \centering\renewcommand{\arraystretch}{2}
@@ -76,25 +106,68 @@ chemical process) to adding a pressure dependance over the temperature dependanc
 \multirow{2}{*}{Three-Body}
                   & \multirow{2}{*}{$\chemProc = \kinMod \threeBody$}
                                            & $\doverdT{\chemProc} = \ddoverdT{\kinMod}\threeBody$ \\
-                  &                        & $\doverdc[I]{\chemProc} = \kinMod\epsilon_i\sum_{s\neq i}\epsilon_s\conc[S] $ \\[10pt]
-\multirow{2}{*}{Lindemann falloff}
-                  & \multirow{2}{*}{$\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\FLind$}
-                                          & \ref{Falloff:doverdT} with $F = \FLind$\\
-                  &                       & \ref{Falloff:doverdc} with $F = \FLind$\\[10pt]
-\multirow{2}{*}{Troe falloff}
-                  & \multirow{2}{*}{$\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\FTroe$}
-                                          & \ref{Falloff:doverdT} with $F = \FTroe$\\
-                  &                       & \ref{Falloff:doverdc} with $F = \FTroe$\\[10pt]
+                  &                        & $\doverdc[I]{\chemProc} = \kinMod\epsilon_i$ \\[10pt]
+\multirow{2}{*}{Falloff}
+                  & \multirow{2}{*}{$\chemProc = \frac{\conc[M]\kinModZ}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}\Falloff$}
+                                          & \ref{Falloff:doverdT} with $F = \FLind\text{ or }\FTroe$\\
+                  &                       & \ref{Falloff:doverdc} with $F = \FLind\text{ or }\FTroe$\\[10pt]
+\multirow{2}{*}{Three-Body falloff}
+                  & \multirow{2}{*}{$\chemProc = \frac{\kinModZ\threeBody}{1 + \frac{\kinModZ}{\kinModI}\threeBody}\Falloff$}
+                                          & \parbox{5cm}{\ref{Falloff:doverdT} with $F = \FTroe$ or $\FLind$ 
+                                                         and $[M] = \threeBody$}\\
+                  &                       & \ref{Falloff_Three:doverdc} with $F = \FTroe\text{ or }\FLind$\\[10pt]
 \bottomrule
 \end{tabular}
-\caption{\label{antioch::chemProc}Chemical processes available in \Antioch.
+\caption[Chemical processes]{\label{antioch::chemProc}Chemical processes available in \Antioch.
 \dag: the duplicate chemical process do not permit several kinetics
 models to be mixed. The functions $F$ for the falloff are described in section~\ref{subsub:falloff}}
 \end{table}
 
-\subsubsection{Falloffs}
+\paragraph{Elementary process}
+
+An elementary process is the smallest unit of reaction. Within a chemical
+network, elementary processes are the elementary steps, when the collision
+of the reactants produces the reactants without any intermediate. All
+reactions approximated to an elementary process are therefore coded with
+a simple kinetics model.
+
+\paragraph{Duplicate process}
+
+In the case the elementary approximation breaks down, and one kinetics
+process is not sufficient to properly render measurements, it is possible
+to add several kinetics model to obtain the necessary temperature
+dependency.
+
+\paragraph{Three body process}
+\label{subsub:three_body}
+
+A third body may have an influence over the reaction, therefore
+changing a generic chemical equation \ce{A + B -> C + D} into
+\ce{A + B + M -> C + D + M}. It acts like an homogeneous catalyst.
+Thus the rate of the reaction will be written
+\[
+\chemProc = \kinMod[ABM]\conc[A]\conc[B]\conc[M]
+\]
+instead of
+\[
+\chemProc = \kinMod[AB]\conc[A]\conc[B]
+\]
+with typically $\kinMod[ABM] \propto \kinMod[AB]$.
+
+Not all molecules have the same effect, meaning \rcons[ABM]
+is dependant of \ce{M}. Therefore it is needed to
+consider coefficients that are specific to third-bodies,
+with a typical default of unity. Thus we derive a mixture
+formul\ae:
+\begin{equation}
+\chemProc = \threeBody\kinMod
+\label{kinproc:Three_body}
+\end{equation}
+
+\paragraph{Pressure dependency: falloffs}
 \label{subsub:falloff}
-The falloffs are reaction having two different regimes: a low-pressure (\kinModZ) and
+
+The falloffs are reactions having two different regimes: a low-pressure (\kinModZ) and
 a high-pressure (\kinModI) regime. Any pressure's rate constant can be expressed in
 terms if those two regimes:
 \begin{equation}
@@ -117,13 +190,46 @@ The differentiations are:
 and
 \begin{equation}
 \doverdc[I]{\chemProc} = \chemProc
-                          \left(\frac{1}{\conc[M]} 
-                               + \frac{\kinModZ}{\kinModI}\frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}} 
+                          \left(\frac{1}{\conc[M]} \frac{1}{1 + \conc[M]\frac{\kinModZ}{\kinModI}}
                                + \doverdT{F}\frac{1}{F}
                           \right)
 \label{Falloff:doverdc}
 \end{equation}
-\paragraph{Lindemann}
+
+\paragraph{A twist in the physics: three-body falloff}
+
+As all models above are approximations of the ``truth'', it can
+happen that some reactions do not fit well into any category.
+In the case of a pressure-dependant reaction that behaves
+differently depending of a third-body, the third-body model
+and the falloff model can be combined. Note that this is not
+very rigorous, we're mixing here two different hypothesises that
+do not belong together. 
+
+A pressure-dependance reaction is a collision-driven reaction, hence
+the change of regime depending of the collisions rate regime. Whereas
+a three-body reaction is the contraction of $N$ reactions, one per
+third-body. An increase in pressure for each of these $N$ reactions
+is not the increase of the \threeBody\ term.
+
+The rate of this type of reaction is:
+\begin{equation}
+\chemProc = \frac{\threeBody\kinModZ}{1 + \threeBody\frac{\kinModZ}{\kinModI}} F
+\label{Falloff_Three:chem_proc}
+\end{equation}
+%
+with the derivative with respect to densities:
+%
+\begin{equation}
+\doverdc[I]{\chemProc} = \chemProc\epsilon_i
+                          \left(\frac{1}{\threeBody} \frac{1}{1 + \threeBody\frac{\kinModZ}{\kinModI}}
+                               + \doverdT{F}\frac{1}{F}
+                          \right)
+\label{Falloff_Three:doverdc}
+\end{equation}
+
+\paragraph{Falloff models}
+\subparagraph{Lindemann}
 The Lindemann falloff is the simplest falloff, it is given by:
 \begin{equation}
 \FLind = 1,
@@ -138,7 +244,7 @@ which gives:
 \label{Falloff:Lindemann:diff}
 \end{equation}
 
-\paragraph{Troe}
+\subparagraph{Troe}
 The Troe model is more elaborate and rely on the definition of three or
 four parameters:
 \begin{itemize}
@@ -243,7 +349,7 @@ and
 \begin{figure}
 \centering
 \includegraphics{falloffs}
-\caption{\label{kinetics::falloffs}%
+\caption[Example of falloff reaction]{\label{kinetics::falloffs}%
 Example of falloff for the reaction \ce{CH3 + CH3 ( + M) -> C2H6 ( + M)}.
 The rate constants are calculated for a temperature of $T = 1000~\unit{K}$. The kinetics model
 used is a Kooij model. Parameters are:
@@ -259,6 +365,7 @@ $\TroeTthree    = \numprint{1120.0}~\unit{K}$.}
 \end{figure}
 
 \subsection{Thermodynamics}
+\subsubsection{Macroscopic description}
 \label{phys:NASA_therm}
 
 \Antioch\ uses the NASA polynoms.
@@ -308,7 +415,7 @@ Parameter & homegeneous SI unit \\\midrule
 \tc{9} & \nounit            \\
 \bottomrule
 \end{tabular}
-\caption{\label{therm:unit}Units of the parameters of the NASA polynoms, as defined in
+\caption[Units of NASA polynoms parameters]{\label{therm:unit}Units of the parameters of the NASA polynoms, as defined in
 Eq.~\ref{therm:DH} and \ref{therm:DS}.}
 \end{table}
 %
@@ -337,3 +444,5 @@ and
                        + \tc{6} T^3
 \label{therm:dDS_dT}
 \end{equation}
+
+\subsubsection{Microscopic description}

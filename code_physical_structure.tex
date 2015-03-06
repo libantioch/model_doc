@@ -1,0 +1,59 @@
+The scientific goal is to model a physical phenomenom. This
+phenomenom can be affected by several physical quantities, which
+in turn are usually modeled using a model chosen within several
+existing models.
+
+Therefore a natural hierarchy emerges:
+a phenomenom (\ie{transport}) requires physical quantities
+(\ie{diffusion, viscosity, thermal conductivity}) which are
+represented by models (\ie{Eucken viscosity, kinetics theory}).
+
+The code structure respects this hierarchy, for each
+phenomenom, there is a \phenomenom\ folder (\ie{\file{src/transport}}),
+containing the files representing the mixture: 
+\file{\phenomenom\_mixture.h},
+\file{\phenomenom\_set.h},
+\file{\phenomenom\_evaluator.h}.
+The choice between \file{mixture} and/or \file{set}
+file is up to the developper, as the phenomenom characterized
+may be better represented by a mixture or a set. The
+\file{evaluator} is mandatory, a lightweight user-friendly object
+to be spawned all over the cluster.
+
+The quantities modeled are stored in \quantity\ folder (\ie{\file{src/viscosity}}):
+\file{\model\_\quantity.h}, derived from
+\file{\quantity.h}, sorted with
+\file{\quantity\_enum.h} and constructed with
+\file{\quantity\_parsing.h}, stored in
+\file{\quantity\_set.h}.
+
+And in the \file{src/parsing} folder
+\file{\model\_ascii\_parsing.h} that fills a \object{\Quantity Set}
+
+
+\begin{tabular}{ll}\toprule
+file                             & example                                   \\\midrule
+\phenomenom                      & transport                                 \\
+folder                           & \file{src/transport/include/antioch}      \\
+\file{\phenomenom\_mixture.h}    & -                                         \\
+\file{\phenomenom\_set.h}        & \file{transport\_set.h}                   \\
+\file{\phenomenom\_evaluator.h}  & \file{transport\_evaluator.h}             \\[10pt]
+\quantity                        & viscosity                                 \\
+folder                           & \file{src/viscosity}                      \\
+\file{\quantity.h}               & \file{viscosity.h}                        \\
+\file{\quantity\_enum.h}         & \file{viscosity\_enum.h}                  \\
+\file{\quantity\_parsing.h}      & \file{viscosity\_parsing.h}               \\
+\file{\quantity\_set.h}          & \file{viscosity\_set.h}                   \\[10pt]
+\multirow{3}{*}{\model}
+                                 & Blottner                                  \\ 
+                                 & Sutherland                                \\ 
+                                 & kinetics theory                           \\\cmidrule(r@{2cm}l@{1cm}){2-2}
+\multirow{3}{*}{\file{\model\_\quantity.h}}
+                                 & \file{blottner\_viscosity.h}              \\ 
+                                 & \file{sutherland\_viscosity.h}            \\ 
+                                 & \file{kinetics\_theory\_viscosity.h}      \\\cmidrule(r@{2cm}l@{1cm}){2-2}
+\multirow{3}{*}{\file{\model\_ascii\_parsing.h}}
+                                 & \file{blottner\_ascii\_parsing.h}         \\ 
+                                 & \file{sutherland\_ascii\_parsing.h}       \\ 
+                                 & \file{kinetics\_theory\_ascii\_parsing.h} \\\bottomrule
+\end{tabular}

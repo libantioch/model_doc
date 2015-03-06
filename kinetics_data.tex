@@ -1,9 +1,36 @@
 We consider a simple mixture of five species:
 \ce{N2}, \ce{O2}, \ce{N}, \ce{O}, \ce{NO}.
 
-Let's consider the following reactions:
+The characteristics of these molecules are given
+in Tab.~\ref{data:systeme}. These characteristics are
+mandatory, \Antioch\ requires you to provide a file
+(necessarily in the \ascii\ format). If you do not
+have such description, \Antioch\ will fall back on
+her default files, but if some molecule does not belong
+in \Antioch's default mixture, she will complain and
+quit.
 
 \noindent
+\begin{table}
+\centering
+\begin{tabular}{lcccc}\toprule
+molecule & mass (\unit{g\,mol^{-1}}) & \Denth[f] (\unit{J\,kg^{-1}})     & trans/rot degrees of freedom & charge \\\midrule
+\ce{N2}  & \numprint{28.01600}       & \numprint{0.000000000000}         &  2.5                         &   0  \\
+\ce{O2}  & \numprint{32.00000}       & \numprint{0.000000000000}         &  2.5                         &   0  \\
+\ce{N}   & \numprint{14.00800}       & $\numprint{3.3621610000}\,10^{7}$ &  1.5                         &   0  \\
+\ce{O}   & \numprint{16.00000}       & $\numprint{1.5420000000}\,10^{7}$ &  1.5                         &   0  \\
+\ce{NO}  & \numprint{30.00800}       & $\numprint{2.9961230000}\,10^{6}$ &  2.5                         &   0  \\
+\bottomrule
+\end{tabular}
+\caption{\label{data:systeme}Species core characteristics for the toy system.}
+\end{table}
+
+Secondary we want a chemical system, we consider the five reactions given in
+Tab.~\ref{data:chemistry}.
+
+\begin{table}
+\centering
+\begin{tabular}{c@{\hspace{2cm}}c}
 \reactionParameter
 [\TBcoeff{N2}{1.0}, 
 \TBcoeff{O2}{1.0},
@@ -13,7 +40,7 @@ Let's consider the following reactions:
 {\reactionEq{N2 + M <=> 2 N + M}} 
 {\KooijPar{7\,10^{18}}{m^3\,kmol^{-1}\,s^{-1}}{-1.6}{\numprint{224801.3}}{cal\,mol^{-1}}}
 %
-\hspace{1cm}
+&
 %
 \reactionParameter
 [\TBcoeff{N2}{1.0},
@@ -24,7 +51,7 @@ Let's consider the following reactions:
 {\reactionEq{O2 + M <=> 2 O + M}}
 {\KooijPar{2\,10^{18}}{m^3\,kmol^{-1}\,s^{-1}}{-1.5}{\numprint{117881.7}}{cal\,mol^{-1}}}
 %
-\\
+\\[15pt]
 %
 \reactionParameter
 [\TBcoeff{N2}{1.0},  
@@ -35,14 +62,17 @@ Let's consider the following reactions:
 {\reactionEq{NO + M <=> N + O + M}}
 {\ArrjPar{5\,10^{12}}{m^3\,kmol^{-1}\,s^{-1}}{\numprint{149943.0}}{cal\,mol^{-1}}}
 %
-\hspace{1cm}
+&
 %
 \reactionParameter
 {\reactionEq{N2 + O <=> NO + N}} 
 {\KooijPar{5.7\,10^{9}}{m^3\,kmol^{-1}\,s^{-1}}{0.42}{\numprint{85269.6}}{cal\,mol^{-1}}}
 %
-\\
+\\[15pt]
 %     
 \reactionParameter
 {\reactionEq{NO + O <=> O2 + N}}
 {\ArrjPar{8.4\,10^{9}}{m^3\,kmol^{-1}\,s^{-1}}{\numprint{38526.0}}{cal\,mol^{-1}}}
+\end{tabular}
+\caption{\label{data:chemistry}Five reactions for a toy problem.}
+\end{table}

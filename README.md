@@ -30,3 +30,5 @@ Producing the pdf
 -----------------
 
 Just type ``make''
+
+It uses the class [documentation.cls](https://github.com/SylvainPlessis/documentation-latex-class)

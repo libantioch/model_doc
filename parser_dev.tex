@@ -1,0 +1,72 @@
+\section{Different parsers}
+
+\Antioch's supports three different parsing format,
+\ChemKin, \XML\ and \ascii\ free format.
+
+\subsection{\XML\ inputs}
+
+The \XML\ format consists of tags and labels. It is an interesting
+format in the sense that it is explicit, therefore nothing is
+left to the imagination, the defaults are defined (and should be
+regarded as) a backup for user's laziness.
+
+\subsection{\ChemKin\ inputs}
+
+\Antioch's follow the rules as given in \citet{ChemKinReacDesign2000}.
+This format is fully constrained, only the units are, within
+certain limits, customizable.
+
+\subsection{\ascii\ free format inputs}
+
+The \ascii\ free format is a column-based format. The parser can
+ignore arbitrary columns, designed by their index, but the order
+is imposed.
+
+The first column is \emph{always} the name of the molecule. It is
+not counted when specifying the ignored columns index. The index
+are \prog{C} indexes, they start at zero. Thus the second column,
+being the first characteristic read, has index zero.
+
+\section{Different quantities to parse}
+
+\subsection{Defining the species, mandatory description.}
+
+A \object{ChemicalSpecies} is defined by:\\
+\begin{minipage}{0.48\linewidth}
+\begin{itemize}
+\item a name;
+\item a molar mass (\unit{kg\,mol^{-1}});
+\item a formation enthalpie at 0$^\circ$\unit{C};
+\item a translational/rotational number of degrees of freedom;
+\item a charge number.
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\linewidth}
+\centering
+\includegraphics[width=0.8\linewidth]{parser_chem_spec}
+\end{minipage}
+\smallskip
+
+This is mandatory, and currently only an \ascii\ file
+will be used for this. Thus the file requires at least
+five columns in the order:
+\begin{enumerate}
+\item molecular weight in \unit{g\,mol^{-1}};
+\item heat of formation in \unit{J\,kg};
+\item the number of translational/rotational degrees of freedom, \nounit;
+\item the charge, \nounit.
+\end{enumerate}
+
+\subsection{The kinetics description}
+
+The kinetics is structured in two levels: the chemical
+process level and the kinetics model level.
+
+The restrictions are:
+when a chemical process requires several rate constants to
+be defined, different models are not allowed.
+
+\subsection{The transport description}
+
+\subsection{The thermodynamics description}

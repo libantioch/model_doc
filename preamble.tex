@@ -1,23 +1,3 @@
-%first thing first
-\graphicspath{{./figs/}}
-%%%% meta-meta-function
-\newcommand{\make@}[3][upshape]{%
-\expandafter\gdef\csname font@#2\endcsname##1{% create font@something macro
-{\csname#1\endcsname\csname#3\endcsname{##1}}%
-}%
-\expandafter\gdef\csname make@#2\endcsname##1{% create make@something meta macro
-\expandafter\gdef\csname ##1\endcsname{\csname font@#2\endcsname{##1}}%
-}
-\expandafter\gdef\csname#2\endcsname##1{\csname font@#2\endcsname{##1}}%create the \something macro
-}
-%% meta font
-\newcommand{\prog@type}[1]{\textcolor{green!60!black}{\object{#1}}}
-%% meta function
-\make@{program}{sf}
-\make@{library}{tt}
-\make@[bf]{object}{tt}
-\make@{file}{sf}
-\make@{prog}{prog@type}
 %% macros
 \make@program{Doxygen}
 \make@library{Antioch}
@@ -35,19 +15,20 @@
 \make@object{CEAThermodynamics}
 \make@object{Units}
 \make@prog{double}
-\newcommand{\stdvector}{\prog{std::vector< >}}
+\newcommand{\stdvector}[1][]{\prog{std::vector< #1 >}}
 \newcommand{\stdstring}{\prog{std::string}}
+%% physics
+\newcommand{\phenomenom}{\textcolor{red}{phenomenom}}
+\newcommand{\quantity}{\textcolor{blue!60!black}{quantity}}
+\newcommand{\Quantity}{\textcolor{blue!60!black}{Quantity}}
+\newcommand{\model}{\textcolor{green!60!black}{model}}
+%% parsing
+\make@[sl]{format}{sf}
+\make@format{XML}
+\make@format{ChemKin}
+\make@format{ascii}
 %
-%%% versions
-\newcommand{\version}[3]{%
-\setcounter{vmajor}{#1}
-\setcounter{vmedium}{#2}
-\setcounter{vminor}{#3}
-}
-\newcounter{vmajor}
-\newcounter{vmedium}
-\newcounter{vminor}
-\newcommand{\theversion}{\thevmajor.\thevmedium.\thevminor}
+
 %% fun
 \newcommand{\ANTIOCH}{\font@library{A}
                       \font@library{N}ew
@@ -93,61 +74,50 @@
 %% a little hack
 \newcommand{\spacehack}{\ensuremath{\textcolor{white}{=}}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%
-%%%%  stuffs start here
-%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%layout stuff
-\newlength{\tocenter}
-\newcommand{\graphAtPaperCenter}[2][width=\paperwidth]
-{
-%%%% from geometry package
-%% inner/outer margin ratio 2:3
-%% => \parperwidth - \textwidth = 5
-%% center = (inner +) 0.5\textwidth + (\parperwidth - \textwidth)/10 %% offset from inner (odd page)
-%% center = (outer +) 0.5\textwidth - (\parperwidth - \textwidth)/10 %% offset from outer (even page)
-%%%%%%%%%%%
-\setlength{\tocenter}{\paperwidth}
-\addtolength{\tocenter}{-\textwidth}
-\ifodd\number\c@page% TeX register of LaTeX counter, late one page
-  \setlength{\tocenter}{0.1\tocenter}
-\else% even
-  \setlength{\tocenter}{-0.1\tocenter}
-\fi%
-\addtolength{\tocenter}{0.5\textwidth}
-\noindent\hspace{\tocenter}\makebox[0pt]{\includegraphics[#1]{#2}}\par
-}
-
-%% chapter
-\@addtoreset{chapter}{part}
-
 % unit defs
 \newcommand{\unitbase}{[\unit{m},\unit{kg},\unit{s},\unit{A},\unit{K},\unit{mol},\unit{cd},\unit{rad}]}
 
-%internal stuff
-\newcommand{\optional@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{{#2}_{#1}}}\fi}
-\newcommand{\optional@@sub}[2][\relax]{\ifx#1\relax\ensuremath{#2}\else\ensuremath{{#2}_{#1}}\fi}
-\newcommand{\d@d}[2]{\ensuremath{\frac{\partial#2}{\partial #1}}}
-\newcommand{\dd@d}[2]{\ensuremath{\frac{\dd #2}{\dd #1}}}
-%chem def
-\newcommand{\doverdt}[1]{\d@d{t}{#1}}
-\newcommand{\doverdT}[1]{\d@d{\Temp}{#1}}
-\newcommand{\ddoverdT}[1]{\dd@d{\Temp}{#1}}
-\newcommand{\doverdm}[2][\relax]{\d@d{\mass[#1]}{#2}}
-\newcommand{\doverdc}[2][\relax]{\d@d{\conc[#1]}{#2}}
-\newcommand{\doverdn}[2][\relax]{\d@d{\Mol[#1]}{#2}}
-\newcommand{\doverdext}[2][\relax]{\d@d{\ext[#1]}{#2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% universal constant, using
+%% meta macro make@equation and
+%% meta macro make@litteralEquation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% valued constant
+\make@equation     {Rg}       {\mathrm{R}}            {8.3144621} {75}{J\,mol^{-1}\,K^{-1}}
+\make@equation[-23]{Boltzmann}{\mathrm{k}_\text{B}}   {1.3806488} {13}{J\,K^{-1}}
+\make@equation[23] {Navo}     {\mathcal{N}_{\!\text{Avo}}}{6.02214129}{27}{mol^{-1}}
+\make@equation[8]  {cele}     {\mathrm{c}}            {2.99792458}{0} {m\,s^{-1}}
+%% computed from other constants constant
+\make@litteralEquation{vacPerme}{\mu_0}     {4\pi\,10^{-7}}{m\,kg\,s^2\,A^2}
+\make@litteralEquation{vacPermi}{\epsilon_0}{\frac{1}{\vacPerme\cele^2}}{A^2\,s^4\,kg^{-1}\,m^{-3}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% mathematical stuff
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\doverdt}    [1]{\d@d{t}{#1}}
+\newcommand{\doverdT}    [1]{\d@d{\Temp}{#1}}
+\newcommand{\ddoverdT}   [1]{\dd@d{\Temp}{#1}}
+\newcommand{\doverdm}    [2][\relax]{\d@d{\mass[#1]}{#2}}
+\newcommand{\doverdc}    [2][\relax]{\d@d{\conc[#1]}{#2}}
+\newcommand{\doverdn}    [2][\relax]{\d@d{\Mol[#1]}{#2}}
+\newcommand{\doverdext}  [2][\relax]{\d@d{\ext[#1]}{#2}}
 \newcommand{\ddoverddext}[3]{\ensuremath{\frac{\partial^2#1}{\partial\ext[#2]\partial\ext[#3]}}}
-\newcommand{\Rg}{\ensuremath{\mathrm{R}}}
-\newcommand{\pz}{\ensuremath{\mathrm{p^0}}}
-\newcommand{\Tz}{\ensuremath{\mathrm{T^0}}}
-\newcommand{\eq}{\ensuremath{\text{eq}}}
-\newcommand{\Rmix}{\ensuremath{\mathrm{R}_\text{mix}}}
-\newcommand{\reac}{\ce{R}}
-\newcommand{\product}{\ce{P}}
-\newcommand{\tc}[1]{\ensuremath{a_{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%  chemical definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\pz}            {\ensuremath{\mathrm{p^0}}}
+\newcommand{\Tz}            {\ensuremath{\mathrm{T^0}}}
+\newcommand{\eq}            {\ensuremath{\text{eq}}}
+\newcommand{\Rmix}          {\ensuremath{\mathrm{R}_\text{mix}}}
+\newcommand{\reac}          {\ce{R}}
+\newcommand{\product}       {\ce{P}}
+\newcommand{\tc}         [1]{\ensuremath{a_{#1}}}
 %%stuff for kinetics
 \newcommand{\rcons}   [1][\relax]{\optional@@sub[#1]{k}}
 \newcommand{\kinMod}  [1][\relax]{\optional@@sub[#1]{\alpha}\ensuremath{(\Temp)}}
@@ -156,9 +126,10 @@
 \newcommand{\chemProc}[1][\relax]{\optional@@sub[#1]{\chi}\ensuremath{(\kinMod,\conc[M])}}
 \newcommand{\rateCons}           {\ensuremath{\rcons(T,\conc[M])}}
 \newcommand{\rate}    [1][\relax]{\optional@@sub[#1]{r}}
-\newcommand{\threeBody}          {\ensuremath{\sum_s \epsilon_s\conc[S]}}
-\newcommand{\FLind}              {\ensuremath{F_\text{Lind}}}
-\newcommand{\FTroe}              {\ensuremath{F_\text{Troe}}}
+\newcommand{\threeBody}          {\ensuremath{\sum_s \left(\epsilon_s\conc[S]\right)}}
+\newcommand{\Falloff}            {\ensuremath{F}}
+\newcommand{\FLind}              {\ensuremath{\Falloff_\text{Lind}}}
+\newcommand{\FTroe}              {\ensuremath{\Falloff_\text{Troe}}}
 %%%% kinetics model parameter
 \newcommand{\Tref}        {\ensuremath{\mathrm{T_{ref}}}}
 \newcommand{\PreExp}      {\ensuremath{A}}
@@ -225,24 +196,39 @@
 \newcommand{\DenthZ}  [1][\relax]{\ensuremath{{\Denth[#1]}^{0}}}
 \newcommand{\Dentr}   [1][\relax]{\optional@sub[#1]{\Delta}\ensuremath{S}}
 \newcommand{\DentrZ}  [1][\relax]{\ensuremath{{\Dentr[#1]}^{0}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% transport definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\reduced}[1]{\ensuremath{{#1}^*}}
+
+\newcommand{\vis}           [1][\relax]{\optional@sub[#1]{\eta}}
+\newcommand{\diff}          [1][\relax]{\optional@sub[#1]{D}}
+\newcommand{\thermcond}     [1][\relax]{\optional@sub[#1]{\lambda}}
+\newcommand{\LJdepth}       [1][\relax]{\optional@sub[#1]{\epsilon}}
+\newcommand{\LJdia}         [1][\relax]{\optional@sub[#1]{\sigma}}
+\newcommand{\Stockmayer}    [1]        {\ensuremath{\left<\Omega^{(#1,#1)*}\right>}}
+\newcommand{\dipole}        [1][\relax]{\optional@sub[#1]{\mu}}
+\newcommand{\polarizability}[1][\relax]{\optional@sub[#1]{\alpha}}
+\newcommand{\specificHeat}  [1][\relax]{\optional@sub[#1]{C}}
+\newcommand{\rotRelax}      [1][\relax]{\optional@sub[\text{rot}#1]{Z}}
+\newcommand{\Le}            [1][\relax]{\optional@sub[#1]{\mathcal{L}\!e}}
+
 %misc
 \newcommand{\prodReac}    {\ensuremath{\prod_{\text{reactants}} \conc[\reac]^{\scoefabs[\reac]}}}
 \newcommand{\prodReacMass}{\ensuremath{\prod_{\text{reactants}} \left(\frac{\mass[\reac]}{\Mm[\reac]}\right)^{\scoefabs[\reac]}}}
 \newcommand{\prodProd}    {\ensuremath{\prod_\text{products}\conc[\product]^{\scoefabs[\product]}}}
 \newcommand{\Kooij} [4][1]{\ensuremath{{#2} \left(\frac{T}{#1}\right)^{#3}\exp\left(-\frac{#4}{\Rg T}\right)}}
 \newcommand{\KooijEq}     {\Kooij[\mathrm{T_{ref}}]{A}{\beta}{E_a}}
-\newcommand{\dd}          {\ensuremath{\mathrm{d}}}
-\newcommand{\unit}     [1]{\ensuremath{\mathtt{#1}}}
-\newcommand{\nounit}      {\unit{no~unit}}
 %%%%%
 \newcommand{\reactionEq}[1]{%
 \ce{#1}%
 }
 \newcommand{\ArrjPar}[4]{%
 \texttt{Arrhenius} model\\*[4pt]
-\null\hspace{12pt}$\left\{%
-\renewcommand{\arraystretch}{1.2}
-\begin{array}{l@{~=~}l}
+\null\hspace{12pt}$\left\{\begin{array}{l@{~=~}l}
 \PreExp & #1~\unit{#2} \\
 \AcEn   & #3~\unit{#4} \\
 \end{array}\right.$%
@@ -270,65 +256,3 @@
 \fi%
 \end{minipage}%
 \vspace{5pt plus 2pt minus 4pt}}
-%% chemistry equation 
-\newcounter{chemeq}
-\setcounter{chemeq}{0}
-\renewcommand{\thechemeq}{$\chi$~\thesection-\arabic{chemeq}}
-\newenvironment{chemicalEquation}
-{\begin{displaymath}}
-{\refstepcounter{chemeq}\tag{\thechemeq}%
-\end{displaymath}}
-\@addtoreset{chemeq}{section}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%% code
-%% code + output two column
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% language loading
-\lstloadlanguages{C++,XML}
-\lstset{basicstyle=\footnotesize,commentstyle=\color{blue}\bf,stringstyle=\color{magenta}\bf,
-        numbers=left,numbersep=10pt,numberstyle=\scriptsize}
-
-%% c++ code one column
-\lstnewenvironment{cpp}[1][\footnotesize]
-{\lstset{language=C++,
-         morekeywords={Scalar,CoeffType,StateType},keywordstyle=\bf,
-         morestring=[b]",
-         morecomment=[s]{/*}{*/},morecomment=[l]{//},
-         basicstyle=#1}
-}
-{}
-
-%% c++ code two column
-\lstnewenvironment{cpp|}
-{\lstset{linewidth=0.9\linewidth,frame=r,framesep=-5pt,
-         morekeywords={Scalar,CoeffType,StateType},keywordstyle=\bf,
-         morestring=[b]",
-         language=C++,morecomment=[s]{/*}{*/},morecomment=[l]{//}}
-}
-{}
-
-%% xml code one column
-\lstnewenvironment{xml}[1][\footnotesize]
-{\lstset{language=XML,
-         morestring=[b]",
-         basicstyle=#1}
-}
-{}
-
-% output in terminal
-\newlength{\outdepth}
-\newcommand{\terminal}[1]{%
-\settototalheight{\outdepth}{#1}
-\ifdim\outdepth < 4em%
-  \setlength{\outdepth}{5em}%
-\fi%
-\fcolorbox{white}{black}{%
-\begin{minipage}[c][2\outdepth][c]{0.42\linewidth}
-\color{green!80}
-\textsf{[user@here \$]./program.x}\\
-\textsf{#1}
-\end{minipage}}
-}

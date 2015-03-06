@@ -1,11 +1,10 @@
-At this point, \antioch-\theversion, only the \verb!xml! format is
-supported, but soon some \verb!hdf5! joy will be added.
+\subsubsection{The \XML\ version}
 
-\subsubsection{The file}
+\paragraph{The file}
 
 Thus you want to have a proper input file, therefore providing
 \Antioch\ with the proper data, as seen in subsection~\ref{kin:data}.
-This is pretty straightforward, here what it should look like:
+This is pretty straightforward. Here is what the \XML\ file should look like:
 \begin{xml}
 <?xml version="1.0"?>
 <ctml>
@@ -101,7 +100,7 @@ The things you want to know about this file are simple:
         behavior, but she'll complain.
 \end{itemize}
 
-\subsubsection{Formatting your inputs}
+\paragraph{Formatting your inputs}
 
 Letting alone the \verb!xml! imposed rules, once you've put
 the lines
@@ -197,7 +196,7 @@ Unit              & \verb!units!            & see Tab. \ref{unit:default}
                                                              & attribute \\
 \bottomrule
 \end{tabular}
-\caption{\label{antioch:keyword_reading}Keyword for the \texttt{xml} input file.}
+\caption{\label{antioch:keyword_reading}Keywords for the \XML\ input file.}
 \end{table}
 
 \begin{table}
@@ -211,7 +210,7 @@ Falloff (\kinModZ) & \unit{(m^3\,mol^{-1})^{\orderReac}\,s^{-1}}     & \nounit  
 Falloff (\kinModI) & \unit{(m^3\,mol^{-1})^{\orderReac - 1}\,s^{-1}} & \nounit  & \unit{cal\,mol^{-1}} & \unit{K^{-1}}  &   --          & -- \\
 \bottomrule
 \end{tabular}
-\caption{\label{unit:default}Default units given to the parameters by \Antioch\ 
+\caption[Default units for kinetics parameters]{\label{unit:default}Default units given to the parameters by \Antioch\ 
 if not provided in the input file.}
 \end{table}
 
