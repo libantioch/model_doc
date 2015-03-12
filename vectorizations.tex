@@ -1,0 +1,32 @@
+\subsection{So many templates}
+\Antioch\ is designed to be extremely flexible as for
+the precision and the type of data that is wanted. Therefore
+the quantity are all templated, as for state quantities (temperature,
+compositions,\dots) as for data, kinetics and transport. This design
+is mostly interesting in case of vectorization. A brief summary of the
+possibility is given in the reminder of this part.
+
+\subsection{\EIGEN}
+\EIGEN\footnote{The \href{eigen.tuxfamily.org}{\EIGEN} library on tuxfamily}
+is a powerful and extremely efficient library that is highly advised for
+vectorization, if no choice is obvious.
+
+This is a header-only library, as \Antioch\ and is therefore an easy install.
+
+\subsection{\MetaPhysicL}
+
+This library is mostly intended for automatic differenciation.
+
+\subsection{Off to the GPU with \VexCL}
+\VexCL\footnote{\href{https://github.com/ddemidov/vexcl}{\VexCL} on github.}
+is a header-only library that enables GPU offload. It requires the \Boost\
+library and either \ViennaCL\ or \openCL.
+
+\subsection{\GRVY}
+
+For timer purposes.
+
+\subsection{Don't forget \Doxygen}
+\label{dox}
+\input{doxygen}
+
