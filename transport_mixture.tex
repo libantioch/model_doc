@@ -64,12 +64,18 @@ with
 \end{equation}
 
 \paragraph{Thermal conduction}
-Thermal conduction mixture value is also independant of
-the model used:
+Thermal conduction mixture value is using also the Wilke rule:
+\begin{equation}
+\thermcond[\text{mixture}] = \sum_{s=1}^{\nspecies} \frac{\molarfrac[s]\thermcond[s]}{\sum_{j=1}^{\nspecies}\molarfrac[j]\Phi_{sj}}
+\label{Wilke:therm_cond}
+\end{equation}
+
+Note that \ChemKin\ transport is using an approximation of
+the Wilke rule:
 \begin{equation}
 \thermcond[\text{mixture}] = \frac{1}{2} \left[
                                                 \sum_{s=1}^{\nspecies} \molarfrac[s]\thermcond[s] + 
                                                 \frac{1}{\sum_{s=1}^{\nspecies} \frac{\molarfrac[s]}{\thermcond[s]}}
                                         \right]
-\label{Wilke:therm_cond}
+\label{ChemKin:therm_cond}
 \end{equation}
