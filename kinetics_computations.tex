@@ -270,7 +270,8 @@ The falloff calculations need the definition of several parameters:
 to finally have
 \newcommand{\pr}{\ensuremath{\log_{10}\left(\frac{\conc[M]\kinMod_0}{\kinMod_\infty}\right)}}
 \begin{equation}
-\FTroe = \frac{\log_{10}\left(\TroeFcent\right)}
+\log_{10}\left(\FTroe\right) 
+        = \frac{\log_{10}\left(\TroeFcent\right)}
               {1 + \left[
                         \log_{10}\left(
                                         \frac{\pr + \Troec}
@@ -334,18 +335,29 @@ When we derive, we obtain:
 \end{equation}
 Thus, we have:
 \begin{equation}
-\doverdT{\FTroe} = \FTroe \left[
+\doverdT{\log_{10}\left(\FTroe\right)} = \log_{10}\left(\FTroe\right) 
+                           \left[
                                   \frac{1}{\ln(10)\log_{10}(\TroeFcent)}\doverdT{\TroeFcent}
                                 - \frac{2 l}{1 + l^2} \doverdT{l}
                           \right]
 \end{equation}
 and
 \begin{equation}
-\doverdc{\FTroe} = \FTroe \left[
+\doverdc{\log_{10}\left(\FTroe\right)} = \log_{10}\left(\FTroe\right)
+                           \left[
                                   \frac{1}{\ln(10)\log_{10}(\TroeFcent)}\doverdc{\TroeFcent}
                                 - \frac{2 l}{1 + l^2} \doverdc{l}
                           \right]
 \end{equation}
+the final values are given by:
+\begin{equation}
+\doverdpar{\FTroe} = \ln(10)\FTroe\doverdpar{\log_{10}\left(\FTroe\right)}
+                           \left[
+                                  \frac{1}{\ln(10)\log_{10}(\TroeFcent)}\doverdpar{\TroeFcent}
+                                - \frac{2 l}{1 + l^2} \doverdpar{l}
+                          \right]
+\end{equation}
+with $x = \Temp$ or $x = \conc$.
 \begin{figure}
 \centering
 \includegraphics{falloffs}
